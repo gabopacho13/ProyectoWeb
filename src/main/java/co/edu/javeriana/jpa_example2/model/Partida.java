@@ -1,9 +1,14 @@
 package co.edu.javeriana.jpa_example2.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+
 import java.time.LocalDateTime;
 
 @Entity
@@ -16,6 +21,9 @@ public class Partida {
     private double gananciaMinima;
     private LocalDateTime tiempoInicio;
     private Long tiempoActual;
+
+    @OneToMany(mappedBy = "partida")
+    private List<Caravana> caravanas = new ArrayList<>();
 
     public Partida() {
         this.tiempoInicio = LocalDateTime.now();
@@ -63,5 +71,19 @@ public class Partida {
 
     public void setTiempoActual(Long tiempoActual) {
         this.tiempoActual = tiempoActual;
+    }
+
+    public List<Caravana> getCaravanas() {
+        return caravanas;
+    }
+
+    public void addCaravana(Caravana caravana) {
+        this.caravanas.add(caravana);
+        caravana.setPartida(this);
+    }
+
+    public void removeCaravana(Caravana caravana) {
+        this.caravanas.remove(caravana);
+        caravana.setPartida(null);
     }
 }

@@ -45,6 +45,9 @@ public class Caravana {
     @ManyToOne
     private Ciudad ciudad_actual;
 
+    @ManyToOne
+    private Partida partida;
+
     public Caravana() {
         fecha_creacion = LocalDateTime.now();
         tiempo_acumulado = 0L;
@@ -216,5 +219,13 @@ public class Caravana {
     public void removeTransaccion(Transaccion transaccion) {
         this.transacciones.remove(transaccion);
         transaccion.setCaravana(null);
+    }
+
+    public Partida getPartida() {
+        return partida;
+    }
+
+    public void setPartida(Partida partida) {
+        this.partida = partida;
     }
 }
