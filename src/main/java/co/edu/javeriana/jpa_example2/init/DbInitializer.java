@@ -11,8 +11,20 @@ import org.springframework.stereotype.Component;
 
 import co.edu.javeriana.jpa_example2.model.Company;
 import co.edu.javeriana.jpa_example2.model.Person;
+import co.edu.javeriana.jpa_example2.repository.CaravanaRepository;
+import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
 import co.edu.javeriana.jpa_example2.repository.CompanyRepository;
+import co.edu.javeriana.jpa_example2.repository.InventarioCaravanaRepository;
+import co.edu.javeriana.jpa_example2.repository.JugadorRepository;
+import co.edu.javeriana.jpa_example2.repository.PartidaRepository;
 import co.edu.javeriana.jpa_example2.repository.PersonRepository;
+import co.edu.javeriana.jpa_example2.repository.ProductoCiudadRepository;
+import co.edu.javeriana.jpa_example2.repository.ProductoRepository;
+import co.edu.javeriana.jpa_example2.repository.RutaRepository;
+import co.edu.javeriana.jpa_example2.repository.ServicioCiudadRepository;
+import co.edu.javeriana.jpa_example2.repository.ServicioRepository;
+import co.edu.javeriana.jpa_example2.repository.ServiciosCompradosRepository;
+import co.edu.javeriana.jpa_example2.repository.TransaccionRepository;
 import jakarta.transaction.Transactional;
 
 @Component
@@ -23,6 +35,42 @@ public class DbInitializer implements CommandLineRunner {
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private CaravanaRepository caravanaRepository;
+
+    @Autowired
+    private CiudadRepository ciudadRepository;
+
+    @Autowired 
+    private InventarioCaravanaRepository inventarioCaravanaRepository;
+
+    @Autowired
+    private JugadorRepository jugadorRepository;
+
+    @Autowired
+    private PartidaRepository partidaRepository;
+
+    @Autowired
+    private ProductoCiudadRepository productoCiudadRepository;
+
+    @Autowired
+    private ProductoRepository productoRepository;
+
+    @Autowired
+    private RutaRepository rutaRepository;
+
+    @Autowired
+    private ServicioCiudadRepository servicioCiudadRepository;
+
+    @Autowired
+    private ServicioRepository servicioRepository;
+
+    @Autowired
+    private ServiciosCompradosRepository serviciosCompradosRepository;
+
+    @Autowired
+    private TransaccionRepository transaccionRepository;
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
