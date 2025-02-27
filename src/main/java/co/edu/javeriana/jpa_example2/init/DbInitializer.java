@@ -9,15 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import co.edu.javeriana.jpa_example2.model.Company;
-import co.edu.javeriana.jpa_example2.model.Person;
+import co.edu.javeriana.jpa_example2.model.Ciudad;
 import co.edu.javeriana.jpa_example2.repository.CaravanaRepository;
 import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
-import co.edu.javeriana.jpa_example2.repository.CompanyRepository;
 import co.edu.javeriana.jpa_example2.repository.InventarioCaravanaRepository;
 import co.edu.javeriana.jpa_example2.repository.JugadorRepository;
 import co.edu.javeriana.jpa_example2.repository.PartidaRepository;
-import co.edu.javeriana.jpa_example2.repository.PersonRepository;
 import co.edu.javeriana.jpa_example2.repository.ProductoCiudadRepository;
 import co.edu.javeriana.jpa_example2.repository.ProductoRepository;
 import co.edu.javeriana.jpa_example2.repository.RutaRepository;
@@ -31,18 +28,12 @@ import jakarta.transaction.Transactional;
 public class DbInitializer implements CommandLineRunner {
 
     @Autowired
-    private PersonRepository personRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
-
-    @Autowired
     private CaravanaRepository caravanaRepository;
 
     @Autowired
     private CiudadRepository ciudadRepository;
 
-    @Autowired 
+    @Autowired
     private InventarioCaravanaRepository inventarioCaravanaRepository;
 
     @Autowired
@@ -77,36 +68,49 @@ public class DbInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) throws Exception {
-        List<Person> persons = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Person person = personRepository.save(new Person("5567" + i, "Carla" + i, "Carlson" + 1));
-            persons.add(person);
+
+        // Lista para almacenar las ciudades
+        List<Ciudad> ciudades = new ArrayList<>();
+
+        // Crear 5 ciudades como ejemplo
+        for (int i = 0; i < 20; i++) {
+            Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10)); // Nombre y impuesto_entrada variables
+            ciudades.add(ciudad);
         }
 
-        List<Company> companies = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            Company company = companyRepository.save(new Company("compay" + i, "1234" + i));
-            companies.add(company);
-        }
-
-        for (int i = 0; i < persons.size(); i++) {
-            Person person = persons.get(i);
-            person.getCompanies().add(companies.get(i % 3));
-            personRepository.save(person);
-        }
-
-
-        List<Person> retrievedPersons = personRepository.findAll();
-
-        for (Person person : retrievedPersons) {
-            // System.out.println(person.getFirstName() + " " + person.getLastName());
-            log.info("{} {}", person.getFirstName(), person.getLastName());
-            for (Company company : person.getCompanies()) {
-                log.info("{}", company.getName());
-            }
-
-        }
-
+        /*
+         * List<Person> persons = new ArrayList<>();
+         * for (int i = 0; i < 100; i++) {
+         * Person person = personRepository.save(new Person("5567" + i, "Carla" + i,
+         * "Carlson" + 1));
+         * persons.add(person);
+         * }
+         * 
+         * List<Company> companies = new ArrayList<>();
+         * for (int i = 0; i < 100; i++) {
+         * Company company = companyRepository.save(new Company("compay" + i, "1234" +
+         * i));
+         * companies.add(company);
+         * }
+         * 
+         * for (int i = 0; i < persons.size(); i++) {
+         * Person person = persons.get(i);
+         * person.getCompanies().add(companies.get(i % 3));
+         * personRepository.save(person);
+         * }
+         * 
+         * 
+         * List<Person> retrievedPersons = personRepository.findAll();
+         * 
+         * for (Person person : retrievedPersons) {
+         * // System.out.println(person.getFirstName() + " " + person.getLastName());
+         * log.info("{} {}", person.getFirstName(), person.getLastName());
+         * for (Company company : person.getCompanies()) {
+         * log.info("{}", company.getName());
+         * }
+         * 
+         * }
+         */
     }
 
 }
