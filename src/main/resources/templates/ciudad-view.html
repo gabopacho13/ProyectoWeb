@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciudad</title>
+</head>
+<body>
+    <h1>Datos Ciudad</h1>
+
+    <ul>
+        <li th:text="${ciudad.nombre}"></li>
+        <li th:text="${ciudad.impuesto_entrada}"></li>
+    </ul>
+    <a th:href="@{/ciudad/lista}">volver</a>
+</body>
+</html>

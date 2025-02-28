@@ -77,40 +77,6 @@ public class DbInitializer implements CommandLineRunner {
             Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10)); // Nombre y impuesto_entrada variables
             ciudades.add(ciudad);
         }
-
-        /*
-         * List<Person> persons = new ArrayList<>();
-         * for (int i = 0; i < 100; i++) {
-         * Person person = personRepository.save(new Person("5567" + i, "Carla" + i,
-         * "Carlson" + 1));
-         * persons.add(person);
-         * }
-         * 
-         * List<Company> companies = new ArrayList<>();
-         * for (int i = 0; i < 100; i++) {
-         * Company company = companyRepository.save(new Company("compay" + i, "1234" +
-         * i));
-         * companies.add(company);
-         * }
-         * 
-         * for (int i = 0; i < persons.size(); i++) {
-         * Person person = persons.get(i);
-         * person.getCompanies().add(companies.get(i % 3));
-         * personRepository.save(person);
-         * }
-         * 
-         * 
-         * List<Person> retrievedPersons = personRepository.findAll();
-         * 
-         * for (Person person : retrievedPersons) {
-         * // System.out.println(person.getFirstName() + " " + person.getLastName());
-         * log.info("{} {}", person.getFirstName(), person.getLastName());
-         * for (Company company : person.getCompanies()) {
-         * log.info("{}", company.getName());
-         * }
-         * 
-         * }
-         */
     }
 
 }
