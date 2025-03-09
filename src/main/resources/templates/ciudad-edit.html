@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar ciudad</title>
+</head>
+<body>
+    <form action="/ciudad/save" method="post">
+        <input type="hidden" name="id" th:value="${ciudad.id}">
+        <label>Nombre:</label>
+        <input type="text" id="nombre" name="nombre" th:value="${ciudad.nombre}">
+        <label>Impuesto de entrada:</label>
+        <input type="number" id="impuesto_entrada" name="impuesto_entrada" th:value="${ciudad.impuesto_entrada}">
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

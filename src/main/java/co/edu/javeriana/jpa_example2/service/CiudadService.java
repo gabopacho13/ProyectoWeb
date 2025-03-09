@@ -26,4 +26,13 @@ public class CiudadService {
         return ciudadRepository.findById(id)
                 .map(CiudadMapper::toDTO);
     }
+
+    public void guardarCiudad(CiudadDTO ciudadDTO){//sirve tambien para crear
+        Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
+        ciudadRepository.save(ciudad);
+    }
+
+    public void borrarCiudad(Long id) {
+        ciudadRepository.deleteById(id);
+    }
 }

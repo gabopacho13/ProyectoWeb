@@ -30,7 +30,7 @@ public class Partida {
         this.tiempoActual = 0L;
     }
 
-    public Partida(int tiempoLimite, double gananciaMinima) {
+    public Partida(Long tiempoLimite, double gananciaMinima) {
         this.tiempoLimite = tiempoLimite;
         this.gananciaMinima = gananciaMinima;
         this.tiempoInicio = LocalDateTime.now();
@@ -45,7 +45,7 @@ public class Partida {
         return tiempoLimite;
     }
 
-    public void setTiempoLimite(int tiempoLimite) {
+    public void setTiempoLimite(Long tiempoLimite) {
         this.tiempoLimite = tiempoLimite;
     }
 
