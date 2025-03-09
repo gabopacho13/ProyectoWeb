@@ -6,13 +6,15 @@
 </head>
 <body>
     <h1>Lista de Ciudades</h1>
-
+    <p><a th:href="@{/ciudad/create}">Crear una Ciudad</a></p>
     <table>
         <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Impuesto</th>
-                <th>View</th>
+                <th>Detalles</th>
+                <th>Editar</th>
+                <th>Borrar</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +22,13 @@
                 <td th:text="${ciudad.nombre}" ></td>
                 <td th:text="${ciudad.impuesto_entrada}" ></td>
                 <td>
-                    <a th:href="@{/ciudad/view/{id}(id=${ciudad.id})}">View</a>
+                    <a th:href="@{/ciudad/view/{id}(id=${ciudad.id})}">Ver</a>
+                </td>
+                <td>
+                    <a th:href="@{/ciudad/edit/{id}(id=${ciudad.id})}">Editar</a>
+                </td>
+                <td>
+                    <a th:href="@{/ciudad/delete/{id}(id=${ciudad.id})}">Borrar</a>
                 </td>
             </tr>
         </tbody>

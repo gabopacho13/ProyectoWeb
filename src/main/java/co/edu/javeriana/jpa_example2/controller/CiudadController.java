@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import co.edu.javeriana.jpa_example2.dto.CiudadDTO;
 import co.edu.javeriana.jpa_example2.model.Ciudad;
 import co.edu.javeriana.jpa_example2.service.CiudadService;
 
@@ -25,7 +26,7 @@ public class CiudadController {
     @GetMapping("/lista")
     public ModelAndView listarCiudades(){
         log.info("Lista de Ciudades");
-        List<Ciudad> ciudades = ciudadService.listarCiudades();
+        List<CiudadDTO> ciudades = ciudadService.listarCiudades();
         ModelAndView modelAndView = new ModelAndView("ciudad-lista");
         modelAndView.addObject("listaCiudades",ciudades);
         return modelAndView;
@@ -33,7 +34,7 @@ public class CiudadController {
 
     @GetMapping("/view/{idCiudad}")
     public ModelAndView listarCiudad(@PathVariable("idCiudad") Long id){
-        Ciudad ciudad = ciudadService.buscarCiudad(id);
+        CiudadDTO ciudad = ciudadService.buscarCiudad(id).orElseThrow();
         ModelAndView modelAndView = new ModelAndView("ciudad-view");
         modelAndView.addObject("ciudad",ciudad);
         return modelAndView;
