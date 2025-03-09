@@ -17,7 +17,7 @@ public class Partida {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int tiempoLimite;
+    private Long tiempoLimite;
     private double gananciaMinima;
     private LocalDateTime tiempoInicio;
     private Long tiempoActual;

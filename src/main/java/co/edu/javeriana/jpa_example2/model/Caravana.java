@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Caravana {
-    //holi
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
