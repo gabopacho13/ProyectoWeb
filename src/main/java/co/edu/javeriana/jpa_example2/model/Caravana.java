@@ -161,16 +161,6 @@ public class Caravana {
         return jugadores;
     }
 
-    public void addJugador(Jugador jugador) {
-        jugadores.add(jugador);
-        jugador.setCaravana(this);
-    }
-
-    public void removeJugador(Jugador jugador) {
-        jugadores.remove(jugador);
-        jugador.setCaravana(null);
-    }
-
     public Ciudad getCiudad_actual() {
         return ciudad_actual;
     }
@@ -183,42 +173,12 @@ public class Caravana {
         return inventarioCaravanas;
     }
 
-    public void addInventarioCaravana(InventarioCaravana inventarioCaravana) {
-        inventarioCaravanas.add(inventarioCaravana);
-        inventarioCaravana.setCaravana(this);
-    }
-
-    public void removeInventarioCaravana(InventarioCaravana inventarioCaravana) {
-        inventarioCaravanas.remove(inventarioCaravana);
-        inventarioCaravana.setCaravana(null);
-    }
-
     public List<ServiciosComprados> getServiciosComprados() {
         return serviciosComprados;
     }
 
-    public void addServiciosComprados(ServiciosComprados serviciosComprados) {
-        this.serviciosComprados.add(serviciosComprados);
-        serviciosComprados.setCaravana(this);
-    }
-
-    public void removeServiciosComprados(ServiciosComprados serviciosComprados) {
-        this.serviciosComprados.remove(serviciosComprados);
-        serviciosComprados.setCaravana(null);
-    }
-
     public List<Transaccion> getTransacciones() {
         return transacciones;
-    }
-
-    public void addTransaccion(Transaccion transaccion) {
-        this.transacciones.add(transaccion);
-        transaccion.setCaravana(this);
-    }
-
-    public void removeTransaccion(Transaccion transaccion) {
-        this.transacciones.remove(transaccion);
-        transaccion.setCaravana(null);
     }
 
     public Partida getPartida() {

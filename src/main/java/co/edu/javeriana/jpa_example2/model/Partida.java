@@ -76,14 +76,4 @@ public class Partida {
     public List<Caravana> getCaravanas() {
         return caravanas;
     }
-
-    public void addCaravana(Caravana caravana) {
-        this.caravanas.add(caravana);
-        caravana.setPartida(this);
-    }
-
-    public void removeCaravana(Caravana caravana) {
-        this.caravanas.remove(caravana);
-        caravana.setPartida(null);
-    }
 }
