@@ -41,7 +41,7 @@ public class Partida {
         return id;
     }
 
-    public int getTiempoLimite() {
+    public Long getTiempoLimite() {
         return tiempoLimite;
     }
 
