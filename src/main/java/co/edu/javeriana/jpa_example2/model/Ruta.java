@@ -22,7 +22,6 @@ public class Ruta {
     @ManyToOne
     private Ciudad destino;
 
-    //holi
     public Ruta() {
         es_segura = true;
     }
