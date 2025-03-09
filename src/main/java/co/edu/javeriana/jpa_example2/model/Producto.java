@@ -50,41 +50,11 @@ public class Producto {
         return productoCiudades;
     }
 
-    public void addProductoCiudad(ProductoCiudad productoCiudad) {
-        this.productoCiudades.add(productoCiudad);
-        productoCiudad.setProducto(this);
-    }
-
-    public void removeProductoCiudad(ProductoCiudad productoCiudad) {
-        this.productoCiudades.remove(productoCiudad);
-        productoCiudad.setProducto(null);
-    }
-
     public List<InventarioCaravana> getInventarioCaravanas() {
         return inventarioCaravanas;
     }
 
-    public void addInventarioCaravana(InventarioCaravana inventarioCaravana) {
-        this.inventarioCaravanas.add(inventarioCaravana);
-        inventarioCaravana.setProducto(this);
-    }
-
-    public void removeInventarioCaravana(InventarioCaravana inventarioCaravana) {
-        this.inventarioCaravanas.remove(inventarioCaravana);
-        inventarioCaravana.setProducto(null);
-    }
-
     public List<Transaccion> getTransacciones() {
         return transacciones;
-    }
-
-    public void addTransaccion(Transaccion transaccion) {
-        this.transacciones.add(transaccion);
-        transaccion.setProducto(this);
-    }
-
-    public void removeTransaccion(Transaccion transaccion){
-        this.transacciones.remove(transaccion);
-        transaccion.setProducto(null);
     }
 }

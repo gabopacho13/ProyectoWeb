@@ -46,27 +46,7 @@ public class Servicio {
         return servicioCiudades;
     }
 
-    public void addServicioCiudad(ServicioCiudad servicioCiudad) {
-        this.servicioCiudades.add(servicioCiudad);
-        servicioCiudad.setServicio(this);
-    }
-
-    public void removeServicioCiudad(ServicioCiudad servicioCiudad) {
-        this.servicioCiudades.remove(servicioCiudad);
-        servicioCiudad.setServicio(null);
-    }
-
     public List<ServiciosComprados> getServiciosComprados() {
         return serviciosComprados;
-    }
-
-    public void addServiciosComprados(ServiciosComprados serviciosComprados) {
-        this.serviciosComprados.add(serviciosComprados);
-        serviciosComprados.setServicio(this);
-    }
-
-    public void removeServiciosComprados(ServiciosComprados serviciosComprados) {
-        this.serviciosComprados.remove(serviciosComprados);
-        serviciosComprados.setServicio(null);
     }
 }

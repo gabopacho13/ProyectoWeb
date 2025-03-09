@@ -72,83 +72,23 @@ public class Ciudad {
         return caravanas;
     }
 
-    public void addCaravana(Caravana caravana) {
-        this.caravanas.add(caravana);
-        caravana.setCiudad_actual(this);
-    }
-
-    public void removeCaravana(Caravana caravana) {
-        this.caravanas.remove(caravana);
-        caravana.setCiudad_actual(null);
-    }
-
     public List<Ruta> getRutasOrigen() {
         return rutasOrigen;
-    }
-
-    public void addRutaOrigen(Ruta ruta) {
-        this.rutasOrigen.add(ruta);
-        ruta.setOrigen(this);
-    }
-
-    public void removeRutaOrigen(Ruta ruta) {
-        this.rutasOrigen.remove(ruta);
-        ruta.setOrigen(null);
     }
 
     public List<Ruta> getRutasDestino() {
         return rutasDestino;
     }
 
-    public void addRutaDestino(Ruta ruta) {
-        this.rutasDestino.add(ruta);
-        ruta.setDestino(this);
-    }
-
-    public void removeRutaDestino(Ruta ruta) {
-        this.rutasDestino.remove(ruta);
-        ruta.setDestino(null);
-    }
-
     public List<ProductoCiudad> getProductoCiudades() {
         return productoCiudades;
-    }
-
-    public void addProductoCiudad(ProductoCiudad productoCiudad) {
-        this.productoCiudades.add(productoCiudad);
-        productoCiudad.setCiudad(this);
-    }
-
-    public void removeProductoCiudad(ProductoCiudad productoCiudad) {
-        this.productoCiudades.remove(productoCiudad);
-        productoCiudad.setCiudad(null);
     }
 
     public List<ServicioCiudad> getServicioCiudades() {
         return servicioCiudades;
     }
 
-    public void addServicioCiudad(ServicioCiudad servicioCiudad) {
-        this.servicioCiudades.add(servicioCiudad);
-        servicioCiudad.setCiudad(this);
-    }
-
-    public void removeServicioCiudad(ServicioCiudad servicioCiudad) {
-        this.servicioCiudades.remove(servicioCiudad);
-        servicioCiudad.setCiudad(null);
-    }
-
     public List<Transaccion> getTransacciones() {
         return transacciones;
-    }
-
-    public void addTransaccion(Transaccion transaccion) {
-        this.transacciones.add(transaccion);
-        transaccion.setCiudad(this);
-    }
-
-    public void removeTransaccion(Transaccion transaccion) {
-        this.transacciones.remove(transaccion);
-        transaccion.setCiudad(null);
     }
 }
