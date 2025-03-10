@@ -1,42 +1,34 @@
-package co.edu.javeriana.jpa_example2.model;
+package co.edu.javeriana.jpa_example2.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import co.edu.javeriana.jpa_example2.model.Caravana;
 
-@Entity
-public class Jugador {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class JugadorDTO {
     private Long id;
     private String nombre;
     private String rol;
-
-    @ManyToOne
     private Caravana caravana;
 
-    public Jugador() {
+    public JugadorDTO() {
     }
-
-    public Jugador(String nombre, String rol, Caravana caravana) {
+   
+    public JugadorDTO(Long id, String nombre, String rol, Caravana caravana) {
+        this.id = id;
         this.nombre = nombre;
         this.rol = rol;
         this.caravana = caravana;
     }
 
+
     public Long getId() {
-        return id;
+        return this.id;
     }
-    
+
     public void setId(Long id) {
         this.id = id;
     }
 
     public String getNombre() {
-        return nombre;
+        return this.nombre;
     }
 
     public void setNombre(String nombre) {
@@ -44,7 +36,7 @@ public class Jugador {
     }
 
     public String getRol() {
-        return rol;
+        return this.rol;
     }
 
     public void setRol(String rol) {
@@ -52,10 +44,12 @@ public class Jugador {
     }
 
     public Caravana getCaravana() {
-        return caravana;
+        return this.caravana;
     }
 
     public void setCaravana(Caravana caravana) {
         this.caravana = caravana;
     }
+
+
 }

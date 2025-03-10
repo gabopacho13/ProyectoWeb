@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar jugador</title>
+</head>
+<body>
+    <form action="/jugador/save" method="post">
+        <input type="hidden" name="id" th:value="${jugador.id}">
+        <label>Nombre:</label>
+        <input type="text" id="nombre" name="nombre" th:value="${jugador.nombre}">
+        <label>Rol:</label>
+        <input type="text" id="rol" name="rol" th:value="${jugador.rol}">
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jugador</title>
+</head>
+<body>
+    <h1>Datos Jugador</h1>
+
+    <ul>
+        <li th:text="${jugador.nombre}"></li>
+        <li th:text="${jugador.rol}"></li>
+        <li th:text="${jugador.id}"></li>
+    </ul>
+    <a th:href="@{/jugador/lista}">volver</a>
+</body>
+</html>
