@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ruta</title>
+</head>
+<body>
+    <h1>Datos de la Ruta</h1>
+
+    <ul>
+        <li>ID: <span th:text="${ruta.id}"></span></li>
+        <li>Distancia: <span th:text="${ruta.distancia}"></span> km</li>
+        <li>Es Segura: <span th:text="${ruta.es_segura ? 'Sí' : 'No'}"></span></li>
+        <li>Daño: <span th:text="${ruta.dano}"></span></li>
+    </ul>
+    
+    <a th:href="@{/ruta/lista}">Volver</a>
+</body>
+</html>

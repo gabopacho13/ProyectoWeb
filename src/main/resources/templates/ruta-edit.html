@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Ruta</title>
+</head>
+<body>
+    <form action="/ruta/save" method="post">
+        <input type="hidden" name="id" th:value="${ruta.id}">
+        <label>Distancia:</label>
+        <input type="number" step="0.1" id="distancia" name="distancia" th:value="${ruta.distancia}">
+        <label>Es Segura:</label>
+        <input type="checkbox" id="es_segura" name="es_segura" th:checked="${ruta.es_segura}">
+        <label>Daño:</label>
+        <input type="number" step="0.1" id="dano" name="dano" th:value="${ruta.dano}">
+        <button type="submit">Guardar</button>
+    </form>
+</body>
+</html>

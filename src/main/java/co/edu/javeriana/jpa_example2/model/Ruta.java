@@ -38,6 +38,10 @@ public class Ruta {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public float getDistancia() {
         return distancia;
     }

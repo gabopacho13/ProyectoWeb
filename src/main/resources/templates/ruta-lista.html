@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Rutas</title>
+</head>
+<body>
+    <h1>Lista de Rutas</h1>
+    <p><a th:href="@{/ruta/create}">Crear una Ruta</a></p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Distancia</th>
+                <th>Es Segura</th>
+                <th>Daño</th>
+                <th>Detalles</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="ruta : ${listaRutas}">
+                <td th:text="${ruta.id}" ></td>
+                <td th:text="${ruta.distancia}" ></td>
+                <td th:text="${ruta.es_segura ? 'Sí' : 'No'}" ></td>
+                <td th:text="${ruta.dano}" ></td>
+                <td>
+                    <a th:href="@{/ruta/view/{id}(id=${ruta.id})}">Ver</a>
+                </td>
+                <td>
+                    <a th:href="@{/ruta/edit/{id}(id=${ruta.id})}">Editar</a>
+                </td>
+                <td>
+                    <a th:href="@{/ruta/delete/{id}(id=${ruta.id})}">Borrar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
