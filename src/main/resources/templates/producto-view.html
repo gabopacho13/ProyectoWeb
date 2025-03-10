@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Producto</title>
+</head>
+<body>
+    <h1>Datos del Producto</h1>
+
+    <ul>
+        <li>ID: <span th:text="${producto.id}"></span></li>
+        <li>Nombre: <span th:text="${producto.nombre}"></span></li>
+    </ul>
+    <a th:href="@{/producto/lista}">Volver</a>
+</body>
+</html>

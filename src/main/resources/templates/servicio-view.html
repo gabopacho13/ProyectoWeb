@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Servicio</title>
+</head>
+<body>
+    <h1>Datos del Servicio</h1>
+
+    <ul>
+        <li>ID: <span th:text="${servicio.id}"></span></li>
+        <li>Tipo: <span th:text="${servicio.tipo}"></span></li>
+    </ul>
+    <a th:href="@{/servicio/lista}">Volver</a>
+</body>
+</html>

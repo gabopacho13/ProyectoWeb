@@ -23,7 +23,6 @@ public class Ruta {
     private Ciudad destino;
 
     public Ruta() {
-        es_segura = true;
     }
 
     public Ruta(float distancia, boolean es_segura, float dano, Ciudad origen, Ciudad destino) {

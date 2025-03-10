@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Servicios</title>
+</head>
+<body>
+    <h1>Lista de Servicios</h1>
+    <p><a th:href="@{/servicio/create}">Crear un Servicio</a></p>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Tipo</th>
+                <th>Detalles</th>
+                <th>Editar</th>
+                <th>Borrar</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="servicio : ${listaServicios}">
+                <td th:text="${servicio.id}"></td>
+                <td th:text="${servicio.tipo}"></td>
+                <td>
+                    <a th:href="@{/servicio/view/{id}(id=${servicio.id})}">Ver</a>
+                </td>
+                <td>
+                    <a th:href="@{/servicio/edit/{id}(id=${servicio.id})}">Editar</a>
+                </td>
+                <td>
+                    <a th:href="@{/servicio/delete/{id}(id=${servicio.id})}">Borrar</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,17 +1,12 @@
 package co.edu.javeriana.jpa_example2.dto;
 
-import co.edu.javeriana.jpa_example2.model.Ciudad;
-import jakarta.persistence.ManyToOne;
-
 public class RutaDTO {
     private Long id;
     private float distancia;
     private boolean es_segura;
     private float dano;
 
-
     public RutaDTO() {
-        es_segura = true;
     }
 
     public RutaDTO(Long id, float distancia, boolean es_segura, float dano) {
