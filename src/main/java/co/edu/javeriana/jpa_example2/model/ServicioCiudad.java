@@ -14,7 +14,6 @@ public class ServicioCiudad {
     private Long id;
 
     private int precio;
-    private String efecto;
 
     @ManyToOne
     private Servicio servicio;
@@ -25,9 +24,8 @@ public class ServicioCiudad {
     public ServicioCiudad() {
     }
 
-    public ServicioCiudad(int precio, String efecto, Servicio servicio, Ciudad ciudad) {
+    public ServicioCiudad(int precio, Servicio servicio, Ciudad ciudad) {
         this.precio = precio;
-        this.efecto = efecto;
         this.servicio = servicio;
         this.ciudad = ciudad;
     }
@@ -40,10 +38,6 @@ public class ServicioCiudad {
         return precio;
     }
 
-    public String getEfecto() {
-        return efecto;
-    }
-
     public Servicio getServicio() {
         return servicio;
     }
@@ -54,10 +48,6 @@ public class ServicioCiudad {
 
     public void setPrecio(int precio) {
         this.precio = precio;
-    }
-
-    public void setEfecto(String efecto) {
-        this.efecto = efecto;
     }
 
     public void setServicio(Servicio servicio) {

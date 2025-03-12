@@ -27,6 +27,11 @@ public class Jugador {
         this.caravana = caravana;
     }
 
+    public Jugador(String nombre, String rol) {
+        this.nombre = nombre;
+        this.rol = rol;
+    }
+
     public Long getId() {
         return id;
     }
