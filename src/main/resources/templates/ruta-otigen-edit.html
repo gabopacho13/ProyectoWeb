@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ciudad Origen edit</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <form action="/ruta/origen/save" method="post">
+        <input type="hidden", name="ciudadId" th:value="${ciudadOrigen.ciudadID}">
+    </form>
+
+    <ul>
+        <li th:each="ciudad : ${allCiudades}">
+            <input type="checkbox" name="ciudadesIds" th:value="${ciudad.id}">
+        </li>
+        <label th:text="${ciudad.name}"></label>
+    </ul>
+    <button type="submit">Save</button>
+</body>
+</html>

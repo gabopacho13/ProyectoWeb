@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.javeriana.jpa_example2.dto.CiudadDTO;
+import co.edu.javeriana.jpa_example2.dto.RutaOrigenDTO;
 import co.edu.javeriana.jpa_example2.mapper.CiudadMapper;
 import co.edu.javeriana.jpa_example2.model.Ciudad;
+import co.edu.javeriana.jpa_example2.model.Ruta;
 import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
 
 @Service
@@ -34,5 +36,18 @@ public class CiudadService {
 
     public void borrarCiudad(Long id) {
         ciudadRepository.deleteById(id);
+    }
+
+    public Optional<RutaOrigenDTO> getRutaOrigen(Long ciudadID){
+        Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadID);
+
+        if(ciudadOpt.isEmpty()){
+            return Optional.empty();
+        }
+
+        Ciudad ciudad = ciudadOpt.get();
+        RutaOrigenDTO rutaOrigenDTO = new RutaOrigenDTO(ciudadID);
+
+        return Optional.of(rutaOrigenDTO);
     }
 }
