@@ -2,6 +2,7 @@ package co.edu.javeriana.jpa_example2.init;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -69,11 +70,32 @@ public class DbInitializer implements CommandLineRunner {
     @Transactional
     public void run(String... args) throws Exception {
 
-        // Lista para almacenar las ciudades
+        List<Ruta> rutas = new ArrayList<>();
         List<Ciudad> ciudades = new ArrayList<>();
+        Random random = new Random();
 
+        // Crear 10 rutas aleatorias
+        for (int i = 0; i < 10; i++) {
+            float distancia = 5 + random.nextFloat() * 95; // Distancia entre 5 y 100 km
+            boolean esSegura = random.nextBoolean(); // Aleatorio entre true o false
+            float dano = random.nextFloat() * 50; // Daño entre 0 y 50%
+            Ruta ruta = rutaRepository.save(new Ruta(distancia, esSegura, dano));
+            rutas.add(ruta);
+        }
+
+        // Crear 100 ciudades y asignarles rutas
         for (int i = 0; i < 100; i++) {
-            Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10)); 
+            List<Ruta> rutasAsignadas = new ArrayList<>();
+
+            // Solo la mitad de las ciudades tendrán rutas asignadas
+            if (i % 2 == 0) {
+                int numRutas = 1 + random.nextInt(5); // Cada ciudad tendrá entre 1 y 5 rutas
+                for (int j = 0; j < numRutas; j++) {
+                    rutasAsignadas.add(rutas.get(random.nextInt(rutas.size()))); // Selección aleatoria de rutas
+                }
+            }
+
+            Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10, rutasAsignadas));
             ciudades.add(ciudad);
         }
 

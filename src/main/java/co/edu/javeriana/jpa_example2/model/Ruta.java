@@ -33,6 +33,12 @@ public class Ruta {
         this.destino = destino;
     }
 
+    public Ruta(float distancia, boolean es_segura, float dano) {
+        this.distancia = distancia;
+        this.es_segura = es_segura;
+        this.dano = dano;
+    }
+
     public Long getId() {
         return id;
     }

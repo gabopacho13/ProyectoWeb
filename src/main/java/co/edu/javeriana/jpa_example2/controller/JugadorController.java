@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import co.edu.javeriana.jpa_example2.dto.JugadorDTO;
-import co.edu.javeriana.jpa_example2.model.Jugador;
 import co.edu.javeriana.jpa_example2.service.JugadorService;
 
 @Controller

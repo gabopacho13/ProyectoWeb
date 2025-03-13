@@ -1,5 +1,4 @@
 package co.edu.javeriana.jpa_example2.dto;
-import java.util.Objects;
 
 public class ProductoDTO {
     private Long id;

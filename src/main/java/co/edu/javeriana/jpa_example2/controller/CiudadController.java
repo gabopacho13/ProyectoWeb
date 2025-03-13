@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
-
 import co.edu.javeriana.jpa_example2.dto.CiudadDTO;
-import co.edu.javeriana.jpa_example2.model.Ciudad;
 import co.edu.javeriana.jpa_example2.service.CiudadService;
 
 @Controller

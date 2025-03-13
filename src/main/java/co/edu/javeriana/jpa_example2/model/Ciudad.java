@@ -44,6 +44,12 @@ public class Ciudad {
         this.impuesto_entrada = impuesto_entrada;
     }
 
+    public Ciudad(String nombre, int impuesto_entrada, List<Ruta> rutasOrigen) {
+        this.nombre = nombre;
+        this.impuesto_entrada = impuesto_entrada;
+        this.rutasOrigen = rutasOrigen;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }

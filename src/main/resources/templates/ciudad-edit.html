@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Editar ciudad</title>
     <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}">
+    
 </head>
 <body>
     <form action="/ciudad/save" method="post">
@@ -14,5 +15,8 @@
         <input type="number" id="impuesto_entrada" name="impuesto_entrada" th:value="${ciudad.impuesto_entrada}">
         <button type="submit">Save</button>
     </form>
+    <p>
+        <a th:href="@{/ciudad/origen/edit/{id}(id=${ciudad.id})}">Editar ruta Origen</a>
+    </p>
 </body>
 </html>
