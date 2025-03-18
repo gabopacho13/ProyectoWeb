@@ -32,13 +32,22 @@ public class CiudadService {
                 .map(CiudadMapper::toDTO);
     }
 
-    public void guardarCiudad(CiudadDTO ciudadDTO){//sirve tambien para crear
+    public CiudadDTO guardarCiudad(CiudadDTO ciudadDTO){//sirve tambien para crear
+        ciudadDTO.setId(null);
         Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
-        ciudadRepository.save(ciudad);
+        return CiudadMapper.toDTO(ciudadRepository.save(ciudad));
     }
 
     public void borrarCiudad(Long id) {
         ciudadRepository.deleteById(id);
+    }
+
+    public CiudadDTO actualizarCiudad(CiudadDTO ciudadDTO){
+        if (ciudadDTO.getId() == null) {
+            throw new IllegalArgumentException("El id de la ciudad no puede ser nulo");
+        }
+        Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
+        return CiudadMapper.toDTO(ciudadRepository.save(ciudad));
     }
 
     public Optional<CiudadRutasOrigenDTO> getCiudadRutasOrigen(Long ciudadId){
