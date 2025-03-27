@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import co.edu.javeriana.jpa_example2.model.Ciudad;
+import co.edu.javeriana.jpa_example2.model.*;
 import co.edu.javeriana.jpa_example2.repository.CaravanaRepository;
 import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
 import co.edu.javeriana.jpa_example2.repository.InventarioCaravanaRepository;
@@ -72,10 +72,33 @@ public class DbInitializer implements CommandLineRunner {
         // Lista para almacenar las ciudades
         List<Ciudad> ciudades = new ArrayList<>();
 
-        // Crear 5 ciudades como ejemplo
-        for (int i = 0; i < 20; i++) {
-            Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10)); // Nombre y impuesto_entrada variables
+        for (int i = 0; i < 100; i++) {
+            Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10)); 
             ciudades.add(ciudad);
+        }
+
+        // Lista para almacenar los productos
+        List<Producto> productos = new ArrayList<>();
+
+        for (int i = 0; i < 50; i++) {
+            Producto producto = productoRepository.save(new Producto("producto_" + i)); 
+            productos.add(producto);
+        }
+
+        // Lista para almacenar los servicios
+        List<Servicio> servicios = new ArrayList<>();
+
+        for (int i = 0; i < 50; i++) {
+            Servicio servicio = servicioRepository.save(new Servicio("servicio_" + i, "efecto_" + i)); 
+            servicios.add(servicio);
+        }
+
+        // Lista para almacenar los jugadores
+        List<Jugador> jugadores = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            Jugador jugador = jugadorRepository.save(new Jugador("jugador_" + i , "rol_" + i)); 
+            jugadores.add(jugador);
         }
     }
 

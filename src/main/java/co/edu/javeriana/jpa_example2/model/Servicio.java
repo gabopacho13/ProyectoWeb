@@ -16,6 +16,7 @@ public class Servicio {
     private Long id;
 
     private String tipo;
+    private String efecto;
 
     @OneToMany(mappedBy = "servicio")
     private List<ServicioCiudad> servicioCiudades = new ArrayList<>();
@@ -26,8 +27,9 @@ public class Servicio {
     public Servicio() {
     }
 
-    public Servicio(String tipo) {
+    public Servicio(String tipo, String efecto) {
         this.tipo = tipo;
+        this.efecto = efecto;
     }
 
     public Long getId() {
@@ -44,6 +46,14 @@ public class Servicio {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getEfecto() {
+        return efecto;
+    }
+
+    public void setEfecto(String efecto) {
+        this.efecto = efecto;
     }
 
     public List<ServicioCiudad> getServicioCiudades() {
