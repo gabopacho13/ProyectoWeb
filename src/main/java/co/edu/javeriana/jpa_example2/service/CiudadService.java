@@ -29,9 +29,16 @@ public class CiudadService {
                 .map(CiudadMapper::toDTO);
     }
 
-    public void guardarCiudad(CiudadDTO ciudadDTO){//sirve tambien para crear
+    public CiudadDTO crearCiudad(CiudadDTO ciudadDTO){//sirve tambien para crear
+        ciudadDTO.setId(null);
         Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
-        ciudadRepository.save(ciudad);
+        return CiudadMapper.toDTO(ciudadRepository.save(ciudad));
+    }
+
+    public CiudadDTO actualizarCiudad(CiudadDTO ciudadDTO) {
+        // chequear que el id sea null
+        Ciudad ciudad = CiudadMapper.toEntity(ciudadDTO);
+        return CiudadMapper.toDTO(ciudadRepository.save(ciudad));
     }
 
     public void borrarCiudad(Long id) {
@@ -50,4 +57,5 @@ public class CiudadService {
 
         return Optional.of(rutaOrigenDTO);
     }
+
 }
