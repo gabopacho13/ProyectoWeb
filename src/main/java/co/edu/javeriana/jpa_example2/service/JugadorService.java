@@ -27,9 +27,18 @@ public class JugadorService {
                 .map(JugadorMapper::toDTO);
     }
 
-    public void guardarJugador(JugadorDTO jugadorDTO){//sirve tambien para crear
+    public JugadorDTO actualizarJugador(JugadorDTO jugadorDTO){
+        if(jugadorDTO.getId() == null){
+            throw new IllegalArgumentException("El id del jugador no puede ser nulo");
+        }
         Jugador jugador = JugadorMapper.toEntity(jugadorDTO);
-        jugadorRepository.save(jugador);
+        return JugadorMapper.toDTO(jugadorRepository.save(jugador));
+    }
+
+    public JugadorDTO guardarJugador(JugadorDTO jugadorDTO){//sirve tambien para crear
+        jugadorDTO.setId(null);
+        Jugador jugador =JugadorMapper.toEntity(jugadorDTO);
+        return JugadorMapper.toDTO(jugadorRepository.save(jugador));
     }
 
     public void borrarJugador(Long id) {

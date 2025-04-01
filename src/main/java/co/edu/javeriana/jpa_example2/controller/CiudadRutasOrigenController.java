@@ -1,46 +1,35 @@
 package co.edu.javeriana.jpa_example2.controller;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.*;
 import co.edu.javeriana.jpa_example2.dto.CiudadRutasOrigenDTO;
 import co.edu.javeriana.jpa_example2.dto.RutaDTO;
 import co.edu.javeriana.jpa_example2.service.CiudadService;
 import co.edu.javeriana.jpa_example2.service.RutaService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
 
-
-@Controller
+@RestController
 @RequestMapping("/ciudad/origen")
 public class CiudadRutasOrigenController {
+    
     @Autowired
     private CiudadService ciudadService;
+    
     @Autowired
     private RutaService rutaService;
 
-    @GetMapping("edit/{ciudadId}")
-    public ModelAndView editCiudadOrigenForm(@PathVariable Long ciudadId) {
-        CiudadRutasOrigenDTO ciudadRutasOrigenDTO = ciudadService.getCiudadRutasOrigen(ciudadId).orElseThrow();
-        List<RutaDTO> allRutas = rutaService.recuperarRutas();
-
-        ModelAndView modelAndView = new ModelAndView("ciudad-origen-edit");
-        modelAndView.addObject("ciudadOrigen",ciudadRutasOrigenDTO);
-        modelAndView.addObject("allRutas",allRutas);
-        return modelAndView;
+    @GetMapping("/{ciudadId}")
+    public CiudadRutasOrigenDTO getCiudadRutasOrigen(@PathVariable Long ciudadId) {
+        return ciudadService.getCiudadRutasOrigen(ciudadId).orElseThrow();
     }
 
-    @PostMapping("/save")
-    public RedirectView saveCiudadOrigenForm(@ModelAttribute CiudadRutasOrigenDTO ciudadRutasOrigenDTO) {
+    @GetMapping("/rutas")
+    public List<RutaDTO> getAllRutas() {
+        return rutaService.recuperarRutas();
+    }
+
+    @PutMapping("/actualizar")
+    public void updateCiudadRutasOrigen(@RequestBody CiudadRutasOrigenDTO ciudadRutasOrigenDTO) {
         ciudadService.updateCiudadRutasOrigen(ciudadRutasOrigenDTO);
-        return new RedirectView("/ciudad/lista");
     }
-    
 }

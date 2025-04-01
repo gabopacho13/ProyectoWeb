@@ -27,9 +27,18 @@ public class ServicioService {
                 .map(ServicioMapper::toDTO);
     }
 
-    public void guardarServicio(ServicioDTO servicioDTO) {
+    public ServicioDTO guardarServicio(ServicioDTO servicioDTO) {
+        servicioDTO.setId(null);
         Servicio servicio = ServicioMapper.toEntity(servicioDTO);
-        servicioRepository.save(servicio);
+        return ServicioMapper.toDTO(servicioRepository.save(servicio));
+    }
+
+    public ServicioDTO actualizarServicio(ServicioDTO servicioDTO) {
+        if (servicioDTO.getId() == null) {
+            throw new IllegalArgumentException("El ID del servicio no puede ser nulo");
+        }
+        Servicio servicio = ServicioMapper.toEntity(servicioDTO);
+        return ServicioMapper.toDTO(servicioRepository.save(servicio));
     }
 
     public void borrarServicio(Long id) {

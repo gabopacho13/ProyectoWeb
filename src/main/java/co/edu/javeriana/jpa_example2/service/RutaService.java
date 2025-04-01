@@ -29,9 +29,18 @@ public class RutaService {
                 .map(RutaMapper::toDTO);
     }
 
-    public void guardarRuta(RutaDTO rutaDTO){//sirve tambien para crear
+    public RutaDTO  guardarRuta(RutaDTO rutaDTO){//sirve tambien para crear
+        rutaDTO.setId(null);
         Ruta ruta = RutaMapper.toEntity(rutaDTO);
-        rutaRepository.save(ruta);
+        return RutaMapper.toDTO(rutaRepository.save(ruta));
+    }
+
+    public RutaDTO actualizarRuta(RutaDTO rutaDTO) {
+        if (rutaDTO.getId() == null) {
+            throw new IllegalArgumentException("El ID de la ruta no puede ser nulo");
+        }
+        Ruta ruta = RutaMapper.toEntity(rutaDTO);
+        return RutaMapper.toDTO(rutaRepository.save(ruta));
     }
 
     public void borrarRuta(Long id) {

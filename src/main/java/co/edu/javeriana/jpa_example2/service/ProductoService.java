@@ -27,10 +27,19 @@ public class ProductoService {
                 .map(ProductoMapper::toDTO);
     }
 
-    public void guardarProducto(ProductoDTO productoDTO){
+    public ProductoDTO guardarProducto(ProductoDTO productoDTO){
+        productoDTO.setId(null);
         Producto producto = ProductoMapper.toEntity(productoDTO);
-        productoRepository.save(producto);
+        return ProductoMapper.toDTO(productoRepository.save(producto));
     }
+
+    public ProductoDTO actualizarProducto(ProductoDTO productoDTO) {
+        if (productoDTO.getId() == null) {
+            throw new IllegalArgumentException("El id del producto no puede ser nulo");
+        }
+        Producto producto = ProductoMapper.toEntity(productoDTO);
+        return ProductoMapper.toDTO(productoRepository.save(producto));
+    }    
 
     public void borrarProducto(Long id) {
         productoRepository.deleteById(id);
