@@ -52,14 +52,12 @@ public class CiudadService {
 
     public Optional<CiudadRutasOrigenDTO> getCiudadRutasOrigen(Long ciudadId){
         Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
-
         if(ciudadOpt.isEmpty()){
             return Optional.empty();
         }
-
+    
         Ciudad ciudad = ciudadOpt.get();
         List<Long> rutasIds = ciudad.getRutasOrigen().stream().map(Ruta::getId).toList();
-
         CiudadRutasOrigenDTO ciudadRutasOrigenDTO = new CiudadRutasOrigenDTO(ciudadId, rutasIds);
         return Optional.of(ciudadRutasOrigenDTO);
     }

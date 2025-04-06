@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 public class Jugador {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
     private String rol;
@@ -30,6 +30,7 @@ public class Jugador {
     public Jugador(String nombre, String rol) {
         this.nombre = nombre;
         this.rol = rol;
+        this.caravana = null;
     }
 
     public Long getId() {

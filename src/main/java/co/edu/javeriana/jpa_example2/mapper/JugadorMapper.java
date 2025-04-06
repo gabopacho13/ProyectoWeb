@@ -11,7 +11,6 @@ public class JugadorMapper {
         jugadorDTO.setId(jugador.getId());
         jugadorDTO.setNombre(jugador.getNombre());
         jugadorDTO.setRol(jugador.getRol());
-        jugadorDTO.setCaravana(jugador.getCaravana());
 
         return jugadorDTO;
     }
@@ -20,7 +19,6 @@ public class JugadorMapper {
         jugador.setId(jugadorDTO.getId());
         jugador.setNombre(jugadorDTO.getNombre());
         jugador.setRol(jugadorDTO.getRol());
-        jugador.setCaravana(jugadorDTO.getCaravana());
         
         return jugador;
     }

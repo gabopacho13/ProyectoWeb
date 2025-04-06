@@ -23,6 +23,7 @@ import co.edu.javeriana.jpa_example2.repository.ServicioCiudadRepository;
 import co.edu.javeriana.jpa_example2.repository.ServicioRepository;
 import co.edu.javeriana.jpa_example2.repository.ServiciosCompradosRepository;
 import co.edu.javeriana.jpa_example2.repository.TransaccionRepository;
+import co.edu.javeriana.jpa_example2.service.CiudadService;
 import jakarta.transaction.Transactional;
 
 @Component
@@ -64,6 +65,9 @@ public class DbInitializer implements CommandLineRunner {
     @Autowired
     private TransaccionRepository transaccionRepository;
 
+    @Autowired
+    private CiudadService ciudadService;
+
     private Logger log = LoggerFactory.getLogger(getClass());
 
     @Override
@@ -74,29 +78,27 @@ public class DbInitializer implements CommandLineRunner {
         List<Ciudad> ciudades = new ArrayList<>();
         Random random = new Random();
 
+        // Crear 100 ciudades y asignarles rutas
+        for (int i = 0; i < 100; i++) {
+            Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10));
+            ciudades.add(ciudad);
+        }
+
         // Crear 10 rutas aleatorias
         for (int i = 0; i < 10; i++) {
             float distancia = 5 + random.nextFloat() * 95; // Distancia entre 5 y 100 km
             boolean esSegura = random.nextBoolean(); // Aleatorio entre true o false
             float dano = random.nextFloat() * 50; // Daño entre 0 y 50%
-            Ruta ruta = rutaRepository.save(new Ruta(distancia, esSegura, dano));
-            rutas.add(ruta);
-        }
-
-        // Crear 100 ciudades y asignarles rutas
-        for (int i = 0; i < 100; i++) {
-            List<Ruta> rutasAsignadas = new ArrayList<>();
-
-            // Solo la mitad de las ciudades tendrán rutas asignadas
-            if (i % 2 == 0) {
-                int numRutas = 1 + random.nextInt(5); // Cada ciudad tendrá entre 1 y 5 rutas
-                for (int j = 0; j < numRutas; j++) {
-                    rutasAsignadas.add(rutas.get(random.nextInt(rutas.size()))); // Selección aleatoria de rutas
-                }
+            Ciudad origen = ciudades.get(random.nextInt(ciudades.size()));
+            while (origen.getRutasOrigen().size() >= 5) {
+                origen = ciudades.get(random.nextInt(ciudades.size()));
             }
-
-            Ciudad ciudad = ciudadRepository.save(new Ciudad("Ciudad_" + i, 100 + i * 10, rutasAsignadas));
-            ciudades.add(ciudad);
+            Ciudad destino = ciudades.get(random.nextInt(ciudades.size()));
+            while (origen.equals(destino) || destino.getRutasDestino().size() >= 5) {
+                destino = ciudades.get(random.nextInt(ciudades.size()));
+            }
+            Ruta ruta = rutaRepository.save(new Ruta(distancia, esSegura, dano, origen, destino));
+            rutas.add(ruta);
         }
 
         // Lista para almacenar los productos
@@ -111,7 +113,7 @@ public class DbInitializer implements CommandLineRunner {
         List<Servicio> servicios = new ArrayList<>();
 
         for (int i = 0; i < 50; i++) {
-            Servicio servicio = servicioRepository.save(new Servicio("servicio_" + i, "efecto_" + i)); 
+            Servicio servicio = servicioRepository.save(new Servicio("servicio_" + i, "efecto_" + i));
             servicios.add(servicio);
         }
 

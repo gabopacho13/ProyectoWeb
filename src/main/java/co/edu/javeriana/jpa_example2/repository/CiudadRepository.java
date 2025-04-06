@@ -7,5 +7,4 @@ import co.edu.javeriana.jpa_example2.model.Ciudad;
 
 @Repository
 public interface CiudadRepository extends JpaRepository<Ciudad, Long> {
-
 }
