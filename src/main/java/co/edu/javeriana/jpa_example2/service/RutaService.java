@@ -46,10 +46,4 @@ public class RutaService {
     public void borrarRuta(Long id) {
         rutaRepository.deleteById(id);
     }
-
-    public List<RutaDTO> recuperarRutas(){
-        return rutaRepository.findAll()
-                .stream().map(RutaMapper::toDTO)
-                .toList();
-    }
 }

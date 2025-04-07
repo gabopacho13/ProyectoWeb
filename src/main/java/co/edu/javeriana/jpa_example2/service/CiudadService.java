@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import co.edu.javeriana.jpa_example2.dto.CiudadDTO;
+import co.edu.javeriana.jpa_example2.dto.CiudadRutasDestinoDTO;
 import co.edu.javeriana.jpa_example2.dto.CiudadRutasOrigenDTO;
 import co.edu.javeriana.jpa_example2.mapper.CiudadMapper;
 import co.edu.javeriana.jpa_example2.model.Ciudad;
@@ -62,11 +63,31 @@ public class CiudadService {
         return Optional.of(ciudadRutasOrigenDTO);
     }
 
+    public Optional<CiudadRutasDestinoDTO> getCiudadRutasDestino(Long ciudadId){
+        Optional<Ciudad> ciudadOpt = ciudadRepository.findById(ciudadId);
+        if(ciudadOpt.isEmpty()){
+            return Optional.empty();
+        }
+    
+        Ciudad ciudad = ciudadOpt.get();
+        List<Long> rutasIds = ciudad.getRutasDestino().stream().map(Ruta::getId).toList();
+        CiudadRutasDestinoDTO ciudadRutasDestinoDTO = new CiudadRutasDestinoDTO(ciudadId, rutasIds);
+        return Optional.of(ciudadRutasDestinoDTO);
+    }
+
     public void updateCiudadRutasOrigen(CiudadRutasOrigenDTO ciudadRutasOrigenDTO){
         Ciudad ciudad = ciudadRepository.findById(ciudadRutasOrigenDTO.getCiudadId()).orElseThrow();
         List<Ruta> selectedRutas = rutaRepository.findAllById(ciudadRutasOrigenDTO.getRutasOrigenIds());
         ciudad.getRutasOrigen().clear();
         ciudad.getRutasOrigen().addAll(selectedRutas);
+        ciudadRepository.save(ciudad);
+    }
+
+    public void updateCiudadRutasDestino(CiudadRutasDestinoDTO ciudadRutasDestinoDTO){
+        Ciudad ciudad = ciudadRepository.findById(ciudadRutasDestinoDTO.getCiudadId()).orElseThrow();
+        List<Ruta> selectedRutas = rutaRepository.findAllById(ciudadRutasDestinoDTO.getRutasDestinoIds());
+        ciudad.getRutasDestino().clear();
+        ciudad.getRutasDestino().addAll(selectedRutas);
         ciudadRepository.save(ciudad);
     }
 }

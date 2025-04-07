@@ -25,7 +25,7 @@ public class CiudadRutasOrigenController {
 
     @GetMapping("/rutas")
     public List<RutaDTO> getAllRutas() {
-        return rutaService.recuperarRutas();
+        return rutaService.listarRutas();
     }
 
     @PutMapping("/actualizar")
