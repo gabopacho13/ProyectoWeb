@@ -5,59 +5,59 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import co.edu.javeriana.jpa_example2.dto.TransaccionDTO;
-import co.edu.javeriana.jpa_example2.mapper.TransaccionMapper;
-import co.edu.javeriana.jpa_example2.model.Transaccion;
+import co.edu.javeriana.jpa_example2.dto.TransaccionServicioDTO;
+import co.edu.javeriana.jpa_example2.mapper.TransaccionServicioMapper;
+import co.edu.javeriana.jpa_example2.model.TransaccionServicio;
 import co.edu.javeriana.jpa_example2.repository.CaravanaRepository;
 import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
-import co.edu.javeriana.jpa_example2.repository.ProductoRepository;
-import co.edu.javeriana.jpa_example2.repository.TransaccionRepository;
+import co.edu.javeriana.jpa_example2.repository.ServicioRepository;
+import co.edu.javeriana.jpa_example2.repository.TransaccionServicioRepository;
 import co.edu.javeriana.jpa_example2.model.Caravana;
 import co.edu.javeriana.jpa_example2.model.Ciudad;
-import co.edu.javeriana.jpa_example2.model.Producto;
+import co.edu.javeriana.jpa_example2.model.Servicio;
 
 @Service
-public class TransaccionService {
+public class TransaccionServicioService {
     
     @Autowired
-    private TransaccionRepository transaccionRepository;
+    private TransaccionServicioRepository transaccionRepository;
     @Autowired
     private CaravanaRepository caravanaRepository;
     @Autowired
     private CiudadRepository ciudadRepository;
     @Autowired
-    private ProductoRepository productoRepository;
+    private ServicioRepository servicioRepository;
 
-    public List<TransaccionDTO> listarTransacciones() {
+    public List<TransaccionServicioDTO> listarTransacciones() {
         return transaccionRepository.findAll().stream()
-                .map(TransaccionMapper::toDTO)
+                .map(TransaccionServicioMapper::toDTO)
                 .toList();
     }
 
-    public Optional<TransaccionDTO> buscarTransaccion(Long id) {
+    public Optional<TransaccionServicioDTO> buscarTransaccion(Long id) {
         return transaccionRepository.findById(id)
-                .map(TransaccionMapper::toDTO);
+                .map(TransaccionServicioMapper::toDTO);
     }
 
-    public List<TransaccionDTO> buscarTransaccionesPorCaravana(Long idCaravana){
+    public List<TransaccionServicioDTO> buscarTransaccionesPorCaravana(Long idCaravana){
         return caravanaRepository.findById(idCaravana)
-                .map(Caravana::getTransacciones)
+                .map(Caravana::getTransaccionesServicio)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró la caravana con id: " + idCaravana))
                 .stream()
-                .map(TransaccionMapper::toDTO)
+                .map(TransaccionServicioMapper::toDTO)
                 .toList();
     }
 
-    public TransaccionDTO guardarTransaccion(TransaccionDTO transaccionDTO) {
+    public TransaccionServicioDTO guardarTransaccion(TransaccionServicioDTO transaccionDTO) {
         transaccionDTO.setId(null);
-        return TransaccionMapper.toDTO(transaccionRepository.save(TransaccionMapper.toEntity(transaccionDTO)));
+        return TransaccionServicioMapper.toDTO(transaccionRepository.save(TransaccionServicioMapper.toEntity(transaccionDTO)));
     }
 
-    public TransaccionDTO actualizarTransaccion(TransaccionDTO transaccionDTO) {
+    public TransaccionServicioDTO actualizarTransaccion(TransaccionServicioDTO transaccionDTO) {
         if (transaccionDTO.getId() == null) {
             throw new IllegalArgumentException("El id de la transaccion no puede ser nulo");
         }
-        Transaccion transaccion = transaccionRepository.findById(transaccionDTO.getId())
+        TransaccionServicio transaccion = transaccionRepository.findById(transaccionDTO.getId())
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró la transaccion con id: " + transaccionDTO.getId()));
         Optional<Caravana> caravanaOptional = caravanaRepository.findById(transaccionDTO.getIdCaravana());
         if (caravanaOptional.isPresent()) {
@@ -73,18 +73,18 @@ public class TransaccionService {
         } else {
             throw new IllegalArgumentException("No se encontró la ciudad con id: " + transaccionDTO.getIdCiudad());
         }
-        Optional<Producto> productoOptional = productoRepository.findById(transaccionDTO.getIdProducto());
-        if (productoOptional.isPresent()) {
-            Producto producto = productoOptional.get();
-            transaccion.setProducto(producto);
+        Optional<Servicio> servicioOptional = servicioRepository.findById(transaccionDTO.getIdServicio());
+        if (servicioOptional.isPresent()) {
+            Servicio servicio = servicioOptional.get();
+            transaccion.setServicio(servicio);
         } else {
-            throw new IllegalArgumentException("No se encontró el producto con id: " + transaccionDTO.getIdProducto());
+            throw new IllegalArgumentException("No se encontró el servicio con id: " + transaccionDTO.getIdServicio());
         }
         transaccion.setTipo(transaccionDTO.getTipo());
         transaccion.setCantidad(transaccionDTO.getCantidad());
         transaccion.setPrecio_unitario(transaccionDTO.getPrecioUnitario());
         transaccion.setFecha(transaccionDTO.getFecha());
-        return TransaccionMapper.toDTO(transaccionRepository.save(transaccion));
+        return TransaccionServicioMapper.toDTO(transaccionRepository.save(transaccion));
     }
 
     public void borrarTransaccion(Long id) {

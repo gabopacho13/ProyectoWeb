@@ -24,6 +24,9 @@ public class Servicio {
     @OneToMany(mappedBy = "servicio")
     private List<ServiciosComprados> serviciosComprados = new ArrayList<>();
 
+    @OneToMany(mappedBy = "servicio")
+    private List<TransaccionServicio> transaccionesServicio = new ArrayList<>();
+
     public Servicio() {
     }
 
@@ -62,5 +65,9 @@ public class Servicio {
 
     public List<ServiciosComprados> getServiciosComprados() {
         return serviciosComprados;
+    }
+
+    public List<TransaccionServicio> getTransaccionesServicio() {
+        return transaccionesServicio;
     }
 }

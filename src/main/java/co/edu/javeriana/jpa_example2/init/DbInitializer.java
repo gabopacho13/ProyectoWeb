@@ -1,6 +1,7 @@
 package co.edu.javeriana.jpa_example2.init;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -22,7 +23,7 @@ import co.edu.javeriana.jpa_example2.repository.RutaRepository;
 import co.edu.javeriana.jpa_example2.repository.ServicioCiudadRepository;
 import co.edu.javeriana.jpa_example2.repository.ServicioRepository;
 import co.edu.javeriana.jpa_example2.repository.ServiciosCompradosRepository;
-import co.edu.javeriana.jpa_example2.repository.TransaccionRepository;
+import co.edu.javeriana.jpa_example2.repository.TransaccionProductoRepository;
 import co.edu.javeriana.jpa_example2.service.CiudadService;
 import jakarta.transaction.Transactional;
 
@@ -63,7 +64,7 @@ public class DbInitializer implements CommandLineRunner {
     private ServiciosCompradosRepository serviciosCompradosRepository;
 
     @Autowired
-    private TransaccionRepository transaccionRepository;
+    private TransaccionProductoRepository transaccionRepository;
 
     @Autowired
     private CiudadService ciudadService;
@@ -109,6 +110,13 @@ public class DbInitializer implements CommandLineRunner {
             productos.add(producto);
         }
 
+        // Lista para almacenar las partidas
+        List<Partida> partidas = new ArrayList<>();
+        for (int i = 0; i < 1; i++) {
+            Partida partida = partidaRepository.save(new Partida(3600L, 300)); 
+            partidas.add(partida);
+        }
+
         // Lista para almacenar los servicios
         List<Servicio> servicios = new ArrayList<>();
 
@@ -117,11 +125,26 @@ public class DbInitializer implements CommandLineRunner {
             servicios.add(servicio);
         }
 
+        // Lista para almacenar las caravanas
+        List<Caravana> caravanas = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            Caravana caravana = new Caravana("caravana_" + i, 10 + i, 100 + i * 10, 1000 + i * 100, 100 + i * 10, ciudades.get(random.nextInt(ciudades.size())));
+            caravana.setPartida(partidas.get(0));
+            caravanaRepository.save(caravana);
+            caravanas.add(caravana);
+        }
+
+        
         // Lista para almacenar los jugadores
         List<Jugador> jugadores = new ArrayList<>();
 
         for (int i = 0; i < 10; i++) {
-            Jugador jugador = jugadorRepository.save(new Jugador("jugador_" + i , "rol_" + i)); 
+            List<Integer> idsCaravanas = new ArrayList<>();
+            for (int j= 0; j < caravanas.size(); j++) {
+                idsCaravanas.add(j);
+            }
+            Collections.shuffle(idsCaravanas);
+            Jugador jugador = jugadorRepository.save(new Jugador("jugador_" + i , "rol_" + i, caravanas.get(idsCaravanas.get(i)))); 
             jugadores.add(jugador);
         }
     }

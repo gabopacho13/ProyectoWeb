@@ -34,7 +34,10 @@ public class Ciudad {
     private List<ServicioCiudad> servicioCiudades = new ArrayList<>();
 
     @OneToMany(mappedBy = "ciudad")
-    private List<Transaccion> transacciones = new ArrayList<>();
+    private List<TransaccionProducto> transaccionesProducto = new ArrayList<>();
+
+    @OneToMany(mappedBy = "ciudad")
+    private List<TransaccionServicio> transaccionesServicio = new ArrayList<>();
 
     public Ciudad() {
     }
@@ -94,7 +97,11 @@ public class Ciudad {
         return servicioCiudades;
     }
 
-    public List<Transaccion> getTransacciones() {
-        return transacciones;
+    public List<TransaccionProducto> getTransaccionesProducto() {
+        return transaccionesProducto;
+    }
+
+    public List<TransaccionServicio> getTransaccionesServicio() {
+        return transaccionesServicio;
     }
 }

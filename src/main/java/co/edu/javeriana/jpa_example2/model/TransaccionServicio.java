@@ -10,7 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 
 @Entity
-public class Transaccion {
+public class TransaccionServicio {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -24,21 +24,21 @@ public class Transaccion {
     private Caravana caravana;
 
     @ManyToOne
-    private Producto producto;
+    private Servicio servicio;
 
     @ManyToOne
     private Ciudad ciudad;
 
-    public Transaccion() {
+    public TransaccionServicio() {
     }
 
-    public Transaccion(String tipo, int cantidad, float precio_unitario, Date fecha, Caravana caravana, Producto producto, Ciudad ciudad) {
+    public TransaccionServicio(String tipo, int cantidad, float precio_unitario, Date fecha, Caravana caravana, Servicio servicio, Ciudad ciudad) {
         this.tipo = tipo;
         this.cantidad = cantidad;
         this.precio_unitario = precio_unitario;
         this.fecha = fecha;
         this.caravana = caravana;
-        this.producto = producto;
+        this.servicio = servicio;
         this.ciudad = ciudad;
     }
 
@@ -86,12 +86,12 @@ public class Transaccion {
         this.caravana = caravana;
     }
 
-    public Producto getProducto() {
-        return producto;
+    public Servicio getServicio() {
+        return servicio;
     }
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
+    public void setServicio(Servicio servicio) {
+        this.servicio = servicio;
     }
 
     public Ciudad getCiudad() {

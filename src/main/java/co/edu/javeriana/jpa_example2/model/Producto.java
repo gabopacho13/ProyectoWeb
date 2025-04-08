@@ -25,7 +25,7 @@ public class Producto {
     private List<InventarioCaravana> inventarioCaravanas = new ArrayList<>();
 
     @OneToMany(mappedBy = "producto")
-    private List<Transaccion> transacciones = new ArrayList<>();
+    private List<TransaccionProducto> transaccionesProducto = new ArrayList<>();
 
     public Producto() {
     }
@@ -58,7 +58,7 @@ public class Producto {
         return inventarioCaravanas;
     }
 
-    public List<Transaccion> getTransacciones() {
-        return transacciones;
+    public List<TransaccionProducto> getTransaccionesProducto() {
+        return transaccionesProducto;
     }
 }

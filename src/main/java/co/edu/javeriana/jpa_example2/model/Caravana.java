@@ -40,7 +40,10 @@ public class Caravana {
     private List<ServiciosComprados> serviciosComprados = new ArrayList<>();
 
     @OneToMany(mappedBy = "caravana")
-    private List<Transaccion> transacciones = new ArrayList<>();
+    private List<TransaccionProducto> transaccionesProducto = new ArrayList<>();
+
+    @OneToMany(mappedBy = "caravana")
+    private List<TransaccionServicio> transaccionesServicio = new ArrayList<>();
 
     @ManyToOne
     private Ciudad ciudad_actual;
@@ -177,8 +180,12 @@ public class Caravana {
         return serviciosComprados;
     }
 
-    public List<Transaccion> getTransacciones() {
-        return transacciones;
+    public List<TransaccionProducto> getTransaccionesProducto() {
+        return transaccionesProducto;
+    }
+
+    public List<TransaccionServicio> getTransaccionesServicio() {
+        return transaccionesServicio;
     }
 
     public Partida getPartida() {

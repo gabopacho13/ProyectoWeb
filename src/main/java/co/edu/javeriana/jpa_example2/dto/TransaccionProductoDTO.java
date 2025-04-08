@@ -2,7 +2,7 @@ package co.edu.javeriana.jpa_example2.dto;
 
 import java.sql.Date;
 
-public class TransaccionDTO {
+public class TransaccionProductoDTO {
     private Long id;
     private Long idCaravana;
     private Long idProducto;
@@ -12,10 +12,10 @@ public class TransaccionDTO {
     private float precioUnitario;
     private Date fecha;
 
-    public TransaccionDTO() {
+    public TransaccionProductoDTO() {
     }
 
-    public TransaccionDTO(Long id, Long idCaravana, Long idProducto, Long idCiudad, String tipo, int cantidad, float precioUnitario, Date fecha) {
+    public TransaccionProductoDTO(Long id, Long idCaravana, Long idProducto, Long idCiudad, String tipo, int cantidad, float precioUnitario, Date fecha) {
         this.id = id;
         this.idCaravana = idCaravana;
         this.idProducto = idProducto;
