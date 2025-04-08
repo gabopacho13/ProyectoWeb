@@ -4,6 +4,9 @@ import java.sql.Date;
 
 public class TransaccionDTO {
     private Long id;
+    private Long idCaravana;
+    private Long idProducto;
+    private Long idCiudad;
     private String tipo;
     private int cantidad;
     private float precioUnitario;
@@ -12,8 +15,11 @@ public class TransaccionDTO {
     public TransaccionDTO() {
     }
 
-    public TransaccionDTO(Long id, String tipo, int cantidad, float precioUnitario, Date fecha) {
+    public TransaccionDTO(Long id, Long idCaravana, Long idProducto, Long idCiudad, String tipo, int cantidad, float precioUnitario, Date fecha) {
         this.id = id;
+        this.idCaravana = idCaravana;
+        this.idProducto = idProducto;
+        this.idCiudad = idCiudad;
         this.tipo = tipo;
         this.cantidad = cantidad;
         this.precioUnitario = precioUnitario;
@@ -27,6 +33,30 @@ public class TransaccionDTO {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getIdCaravana() {
+        return idCaravana;
+    }
+
+    public void setIdCaravana(Long idCaravana) {
+        this.idCaravana = idCaravana;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
+    }
+
+    public Long getIdCiudad() {
+        return idCiudad;
+    }
+
+    public void setIdCiudad(Long idCiudad) {
+        this.idCiudad = idCiudad;
     }
 
     public String getTipo() {

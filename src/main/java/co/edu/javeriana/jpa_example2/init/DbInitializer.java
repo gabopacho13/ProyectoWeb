@@ -84,8 +84,8 @@ public class DbInitializer implements CommandLineRunner {
             ciudades.add(ciudad);
         }
 
-        // Crear 10 rutas aleatorias
-        for (int i = 0; i < 10; i++) {
+        // Crear 100 rutas aleatorias
+        for (int i = 0; i < 150; i++) {
             float distancia = 5 + random.nextFloat() * 95; // Distancia entre 5 y 100 km
             boolean esSegura = random.nextBoolean(); // Aleatorio entre true o false
             float dano = random.nextFloat() * 50; // Daño entre 0 y 50%

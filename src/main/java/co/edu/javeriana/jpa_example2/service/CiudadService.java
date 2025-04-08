@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import co.edu.javeriana.jpa_example2.dto.CaravanaCiudadDTO;
 import co.edu.javeriana.jpa_example2.dto.CiudadDTO;
 import co.edu.javeriana.jpa_example2.dto.CiudadRutasDestinoDTO;
 import co.edu.javeriana.jpa_example2.dto.CiudadRutasOrigenDTO;
@@ -14,6 +15,7 @@ import co.edu.javeriana.jpa_example2.model.Ciudad;
 import co.edu.javeriana.jpa_example2.model.Ruta;
 import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
 import co.edu.javeriana.jpa_example2.repository.RutaRepository;
+import co.edu.javeriana.jpa_example2.model.Caravana;
 
 @Service
 public class CiudadService {
@@ -89,5 +91,29 @@ public class CiudadService {
         ciudad.getRutasDestino().clear();
         ciudad.getRutasDestino().addAll(selectedRutas);
         ciudadRepository.save(ciudad);
+    }
+
+    public CaravanaCiudadDTO listarCaravanasPorCiudad(Long idCiudad){
+        Optional<Ciudad> ciudadOpt = ciudadRepository.findById(idCiudad);
+        if (ciudadOpt.isEmpty()) {
+            return null;
+        }
+        Ciudad ciudad = ciudadOpt.get();
+        List<Long> caravanas = ciudad.getCaravanas().stream().map(Caravana::getId).toList();
+        return new CaravanaCiudadDTO(ciudad.getId(), caravanas);
+    }
+
+    public CaravanaCiudadDTO editarCaravanasPorCiudad(Long idCiudad, List<Long> caravanas) {
+        Optional<Ciudad> ciudadOpt = ciudadRepository.findById(idCiudad);
+        if (ciudadOpt.isEmpty()) {
+            return null; // O lanzar una excepción si prefieres
+        }
+        Ciudad ciudad = ciudadOpt.get();
+        List<Caravana> caravanasList = ciudad.getCaravanas().stream().filter(caravana -> caravanas.contains(caravana.getId())).toList();
+        for (Caravana caravana : caravanasList) {
+            caravana.setCiudad_actual(ciudad);
+            ciudadRepository.save(ciudad);
+        }
+        return new CaravanaCiudadDTO(ciudad.getId(), caravanasList.stream().map(Caravana::getId).toList());
     }
 }
