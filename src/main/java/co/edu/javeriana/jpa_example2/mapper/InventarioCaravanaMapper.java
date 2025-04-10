@@ -33,6 +33,7 @@ public class InventarioCaravanaMapper {
             return null;
         }
         InventarioCaravana inventarioCaravana = new InventarioCaravana();
+        inventarioCaravana.setId(inventarioCaravanaDTO.getId());
         inventarioCaravana.setCaravana(caravanaService.buscarCaravana(inventarioCaravanaDTO.getCaravanaId()).map(CaravanaMapper::toEntity).orElse(null));
         inventarioCaravana.setProducto(productoService.buscarProducto(inventarioCaravanaDTO.getProductoId()).map(ProductoMapper::toEntity).orElse(null));
         inventarioCaravana.setCantidad(inventarioCaravanaDTO.getCantidad());

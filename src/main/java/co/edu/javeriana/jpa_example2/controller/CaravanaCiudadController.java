@@ -24,8 +24,9 @@ public class CaravanaCiudadController {
         return ciudadService.listarCaravanasPorCiudad(idCiudad);
     }
 
-    @PutMapping("/{idCiudad}")
-    public CaravanaCiudadDTO editarCaravanas(@PathVariable("idCiudad") Long idCiudad, @RequestBody List<Long> caravanas) {
+    @PutMapping("/actualizar/{idCiudad}")
+    public CaravanaCiudadDTO editarCaravanas(@PathVariable("idCiudad") Long idCiudad, @RequestBody CaravanaCiudadDTO caravanaCiudadDTO) {
+        List<Long> caravanas = caravanaCiudadDTO.getCaravanasIds();
         return ciudadService.editarCaravanasPorCiudad(idCiudad, caravanas);
     }
 }

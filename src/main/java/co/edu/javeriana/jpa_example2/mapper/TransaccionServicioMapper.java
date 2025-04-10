@@ -40,6 +40,7 @@ public class TransaccionServicioMapper {
             return null;
         }
         TransaccionServicio transaccion = new TransaccionServicio();
+        transaccion.setId(transaccionDTO.getId());
         transaccion.setTipo(transaccionDTO.getTipo());
         transaccion.setCantidad(transaccionDTO.getCantidad());
         transaccion.setPrecio_unitario(transaccionDTO.getPrecioUnitario());

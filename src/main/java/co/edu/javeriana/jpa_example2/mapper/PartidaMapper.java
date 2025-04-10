@@ -25,6 +25,7 @@ public class PartidaMapper {
             return null;
         }
         Partida partida = new Partida();
+        partida.setId(partidaDTO.getId());
         partida.setTiempoLimite(partidaDTO.getTiempoLimite());
         partida.setGananciaMinima(partidaDTO.getGananciaMinima());
         partida.setTiempoInicio(partidaDTO.getTiempoInicio());

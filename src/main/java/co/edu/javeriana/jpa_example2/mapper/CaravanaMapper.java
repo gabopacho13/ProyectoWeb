@@ -32,6 +32,7 @@ public class CaravanaMapper {
             return null;
         }
         Caravana caravana = new Caravana();
+        caravana.setId(caravanaDTO.getId());
         caravana.setNombre(caravanaDTO.getNombre());
         caravana.setVelocidad_base(caravanaDTO.getVelocidadBase());
         caravana.setVelocidad_actual(caravanaDTO.getVelocidadActual());

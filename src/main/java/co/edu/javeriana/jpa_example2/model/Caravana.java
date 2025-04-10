@@ -76,6 +76,10 @@ public class Caravana {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public LocalDateTime getFecha_creacion() {
         return fecha_creacion;
     }

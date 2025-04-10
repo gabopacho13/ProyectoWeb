@@ -34,6 +34,10 @@ public class ServicioCiudad {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public int getPrecio() {
         return precio;
     }

@@ -16,6 +16,7 @@ import co.edu.javeriana.jpa_example2.model.Ruta;
 import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
 import co.edu.javeriana.jpa_example2.repository.RutaRepository;
 import co.edu.javeriana.jpa_example2.model.Caravana;
+import co.edu.javeriana.jpa_example2.repository.CaravanaRepository;
 
 @Service
 public class CiudadService {
@@ -23,6 +24,8 @@ public class CiudadService {
     private CiudadRepository ciudadRepository;
     @Autowired
     private RutaRepository rutaRepository;
+    @Autowired
+    private CaravanaRepository caravanaRepository;
 
     public List<CiudadDTO> listarCiudades(){
         return ciudadRepository.findAll().stream()
@@ -109,10 +112,10 @@ public class CiudadService {
             return null; // O lanzar una excepción si prefieres
         }
         Ciudad ciudad = ciudadOpt.get();
-        List<Caravana> caravanasList = ciudad.getCaravanas().stream().filter(caravana -> caravanas.contains(caravana.getId())).toList();
+        List<Caravana> caravanasList = caravanaRepository.findAllById(caravanas).stream().toList();
         for (Caravana caravana : caravanasList) {
             caravana.setCiudad_actual(ciudad);
-            ciudadRepository.save(ciudad);
+            caravanaRepository.save(caravana);
         }
         return new CaravanaCiudadDTO(ciudad.getId(), caravanasList.stream().map(Caravana::getId).toList());
     }

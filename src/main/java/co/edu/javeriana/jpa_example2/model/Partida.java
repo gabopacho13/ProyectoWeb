@@ -41,6 +41,10 @@ public class Partida {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getTiempoLimite() {
         return tiempoLimite;
     }

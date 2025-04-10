@@ -37,6 +37,10 @@ public class ServiciosComprados {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Date getFecha_compra() {
         return fecha_compra;
     }

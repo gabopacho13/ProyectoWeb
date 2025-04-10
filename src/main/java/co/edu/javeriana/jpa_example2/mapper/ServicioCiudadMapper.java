@@ -33,6 +33,7 @@ public class ServicioCiudadMapper {
             return null;
         }
         ServicioCiudad servicioCiudad = new ServicioCiudad();
+        servicioCiudad.setId(servicioCiudadDTO.getId());
         servicioCiudad.setServicio(servicioService.buscarServicio(servicioCiudadDTO.getIdServicio()).map(ServicioMapper::toEntity).orElse(null));
         servicioCiudad.setCiudad(ciudadService.buscarCiudad(servicioCiudadDTO.getIdCiudad()).map(CiudadMapper::toEntity).orElse(null));
         servicioCiudad.setPrecio(servicioCiudadDTO.getPrecio());

@@ -33,6 +33,7 @@ public class ServiciosCompradosMapper {
             return null;
         }
         ServiciosComprados serviciosComprados = new ServiciosComprados();
+        serviciosComprados.setId(serviciosCompradosDTO.getId());
         serviciosComprados.setServicio(servicioService.buscarServicio(serviciosCompradosDTO.getIdServicio()).map(ServicioMapper::toEntity).orElse(null));
         serviciosComprados.setCaravana(caravanaService.buscarCaravana(serviciosCompradosDTO.getIdCaravana()).map(CaravanaMapper::toEntity).orElse(null));
         serviciosComprados.setFecha_compra(serviciosCompradosDTO.getFechaCompra());

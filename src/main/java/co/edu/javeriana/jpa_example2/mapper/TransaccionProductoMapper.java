@@ -40,6 +40,7 @@ public class TransaccionProductoMapper {
             return null;
         }
         TransaccionProducto transaccion = new TransaccionProducto();
+        transaccion.setId(transaccionDTO.getId());
         transaccion.setTipo(transaccionDTO.getTipo());
         transaccion.setCantidad(transaccionDTO.getCantidad());
         transaccion.setPrecio_unitario(transaccionDTO.getPrecioUnitario());

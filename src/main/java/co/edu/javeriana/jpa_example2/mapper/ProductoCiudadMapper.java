@@ -35,6 +35,7 @@ public class ProductoCiudadMapper {
             return null;
         }
         ProductoCiudad productoCiudad = new ProductoCiudad();
+        productoCiudad.setId(productoCiudadDTO.getId());
         productoCiudad.setProducto(productoService.buscarProducto(productoCiudadDTO.getProductoId()).map(ProductoMapper::toEntity).orElse(null));
         productoCiudad.setCiudad(ciudadService.buscarCiudad(productoCiudadDTO.getCiudadId()).map(CiudadMapper::toEntity).orElse(null));
         productoCiudad.setFactor_demanda(productoCiudadDTO.getFactorDemanda());
