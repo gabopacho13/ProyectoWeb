@@ -25,7 +25,8 @@ public class CaravanaJugadoresController {
     }
 
     @PutMapping("/{idCaravana}")
-    public CaravanaJugadoresDTO editarJugadores(@PathVariable("idCaravana") Long idCaravana, @RequestBody List<Long> jugadores) {
+    public CaravanaJugadoresDTO editarJugadores(@PathVariable("idCaravana") Long idCaravana, @RequestBody CaravanaJugadoresDTO caravanaJugadoresDTO) {
+        List<Long> jugadores = caravanaJugadoresDTO.getJugadoresIds();
         return caravanaService.editarJugadoresPorCaravana(idCaravana, jugadores);
     }
 }
