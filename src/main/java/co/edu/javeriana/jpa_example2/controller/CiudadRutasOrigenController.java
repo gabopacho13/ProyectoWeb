@@ -29,7 +29,7 @@ public class CiudadRutasOrigenController {
     }
 
     @PutMapping("/actualizar")
-    public void updateCiudadRutasOrigen(@RequestBody CiudadRutasOrigenDTO ciudadRutasOrigenDTO) {
-        ciudadService.updateCiudadRutasOrigen(ciudadRutasOrigenDTO);
+    public CiudadRutasOrigenDTO updateCiudadRutasOrigen(@RequestBody CiudadRutasOrigenDTO ciudadRutasOrigenDTO) {
+        return ciudadService.updateCiudadRutasOrigen(ciudadRutasOrigenDTO);
     }
 }

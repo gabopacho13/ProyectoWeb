@@ -1,0 +1,16 @@
+@base_url = http://localhost:8080/ciudad/origen
+
+###
+GET {{base_url}}/rutas
+
+###
+GET {{base_url}}/3
+
+###
+PUT {{base_url}}/actualizar
+Content-Type: application/json
+
+{
+    "ciudadId": 2,
+    "rutasOrigenIds": [93]
+}

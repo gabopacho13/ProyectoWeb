@@ -1,0 +1,42 @@
+@base_url = http://localhost:8080/transaccion/servicios
+
+###
+GET {{base_url}}/caravana/1
+
+###
+GET {{base_url}}/lista
+
+###
+POST {{base_url}}
+Content-Type: application/json
+
+{
+    "idCaravana": 1,
+    "idProducto": 1,
+    "idCiudad": 1,
+    "tipo": "compra",
+    "cantidad": 10,
+    "precioUnitario": 1000,
+    "fecha": "2023-10-01"
+}
+
+###
+GET {{base_url}}/1
+
+###
+PUT {{base_url}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "idCaravana": 1,
+    "idProducto": 1,
+    "idCiudad": 1,
+    "tipo": "compra",
+    "cantidad": 11,
+    "precioUnitario": 1000,
+    "fecha": "2023-10-01"
+}
+
+###
+DELETE {{base_url}}/1

@@ -1,0 +1,31 @@
+@base_url = http://localhost:8080/caravana/servicios
+
+###
+GET {{base_url}}/1
+
+###
+GET {{base_url}}/lista
+
+###
+POST {{base_url}}
+Content-Type: application/json
+
+{
+    "idServicio": 1,
+    "idCaravana": 1,
+    "fechaCompra": "2023-10-01"
+}
+
+###
+PUT {{base_url}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "idServicio": 2,
+    "idCaravana": 1,
+    "fechaCompra": "2023-10-01"
+}
+
+###
+DELETE {{base_url}}/1

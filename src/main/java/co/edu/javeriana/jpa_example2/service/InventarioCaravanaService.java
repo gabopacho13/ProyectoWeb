@@ -15,9 +15,6 @@ import co.edu.javeriana.jpa_example2.model.InventarioCaravana;
 import co.edu.javeriana.jpa_example2.model.Producto;
 import co.edu.javeriana.jpa_example2.repository.ProductoRepository;
 
-
-
-
 @Service
 public class InventarioCaravanaService {
     
@@ -27,6 +24,10 @@ public class InventarioCaravanaService {
     private CaravanaRepository caravanaRepository;
     @Autowired
     private ProductoRepository productoRepository;
+    @Autowired
+    private CaravanaService caravanaService;
+    @Autowired
+    private ProductoService productoService;
 
     public List<InventarioCaravanaDTO> listarInventarioCaravanas() {
         return inventarioCaravanaRepository.findAll().stream()
@@ -40,8 +41,8 @@ public class InventarioCaravanaService {
     }
 
     public InventarioCaravanaDTO guardarInventarioCaravana(InventarioCaravanaDTO inventarioCaravanaDTO) {
-        inventarioCaravanaDTO.setCaravanaId(null);
-        return InventarioCaravanaMapper.toDTO(inventarioCaravanaRepository.save(InventarioCaravanaMapper.toEntity(inventarioCaravanaDTO)));
+        inventarioCaravanaDTO.setId(null);
+        return InventarioCaravanaMapper.toDTO(inventarioCaravanaRepository.save(InventarioCaravanaMapper.toEntity(inventarioCaravanaDTO, caravanaService, productoService)));
     }
 
     public InventarioCaravanaDTO actualizarInventarioCaravana(InventarioCaravanaDTO inventarioCaravanaDTO) {

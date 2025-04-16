@@ -23,6 +23,10 @@ public class ServiciosCompradosService {
     private ServicioRepository servicioRepository;
     @Autowired
     private CaravanaRepository caravanaRepository;
+    @Autowired
+    private ServicioService servicioService;
+    @Autowired
+    private CaravanaService caravanaService;
 
     public List<ServiciosCompradosDTO> listarServiciosComprados() {
         return serviciosCompradosRepository.findAll().stream()
@@ -46,7 +50,7 @@ public class ServiciosCompradosService {
 
     public ServiciosCompradosDTO guardarServicioscomprados(ServiciosCompradosDTO serviciosCompradosDTO) {
         serviciosCompradosDTO.setId(null);
-        return ServiciosCompradosMapper.toDTO(serviciosCompradosRepository.save(ServiciosCompradosMapper.toEntity(serviciosCompradosDTO)));
+        return ServiciosCompradosMapper.toDTO(serviciosCompradosRepository.save(ServiciosCompradosMapper.toEntity(serviciosCompradosDTO, servicioService, caravanaService)));
     }
 
     public ServiciosCompradosDTO actualizarServiciosComprados(ServiciosCompradosDTO serviciosCompradosDTO) {

@@ -1,19 +1,11 @@
 package co.edu.javeriana.jpa_example2.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import co.edu.javeriana.jpa_example2.dto.ServiciosCompradosDTO;
 import co.edu.javeriana.jpa_example2.model.ServiciosComprados;
 import co.edu.javeriana.jpa_example2.service.ServicioService;
 import co.edu.javeriana.jpa_example2.service.CaravanaService;
 
 public class ServiciosCompradosMapper {
-
-    @Autowired
-    private static ServicioService servicioService;
-    @Autowired
-    private static CaravanaService caravanaService;
-
     // Convierte de entidad a DTO
     public static ServiciosCompradosDTO toDTO(ServiciosComprados serviciosComprados) {
         if (serviciosComprados == null) {
@@ -28,7 +20,7 @@ public class ServiciosCompradosMapper {
     }
 
     // Convierte de DTO a entidad
-    public static ServiciosComprados toEntity(ServiciosCompradosDTO serviciosCompradosDTO) {
+    public static ServiciosComprados toEntity(ServiciosCompradosDTO serviciosCompradosDTO, ServicioService servicioService, CaravanaService caravanaService) {
         if (serviciosCompradosDTO == null) {
             return null;
         }

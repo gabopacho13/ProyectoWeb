@@ -27,6 +27,12 @@ public class TransaccionProductoService {
     private CiudadRepository ciudadRepository;
     @Autowired
     private ProductoRepository productoRepository;
+    @Autowired
+    private CaravanaService caravanaService;
+    @Autowired
+    private CiudadService ciudadService;
+    @Autowired
+    private ProductoService productoService;
 
     public List<TransaccionProductoDTO> listarTransacciones() {
         return transaccionRepository.findAll().stream()
@@ -50,7 +56,7 @@ public class TransaccionProductoService {
 
     public TransaccionProductoDTO guardarTransaccion(TransaccionProductoDTO transaccionDTO) {
         transaccionDTO.setId(null);
-        return TransaccionProductoMapper.toDTO(transaccionRepository.save(TransaccionProductoMapper.toEntity(transaccionDTO)));
+        return TransaccionProductoMapper.toDTO(transaccionRepository.save(TransaccionProductoMapper.toEntity(transaccionDTO, caravanaService, ciudadService, productoService)));
     }
 
     public TransaccionProductoDTO actualizarTransaccion(TransaccionProductoDTO transaccionDTO) {

@@ -80,20 +80,24 @@ public class CiudadService {
         return Optional.of(ciudadRutasDestinoDTO);
     }
 
-    public void updateCiudadRutasOrigen(CiudadRutasOrigenDTO ciudadRutasOrigenDTO){
+    public CiudadRutasOrigenDTO updateCiudadRutasOrigen(CiudadRutasOrigenDTO ciudadRutasOrigenDTO){
         Ciudad ciudad = ciudadRepository.findById(ciudadRutasOrigenDTO.getCiudadId()).orElseThrow();
         List<Ruta> selectedRutas = rutaRepository.findAllById(ciudadRutasOrigenDTO.getRutasOrigenIds());
-        ciudad.getRutasOrigen().clear();
-        ciudad.getRutasOrigen().addAll(selectedRutas);
-        ciudadRepository.save(ciudad);
+        for (Ruta ruta : selectedRutas) {
+            ruta.setOrigen(ciudad);
+            rutaRepository.save(ruta);
+        }
+        return new CiudadRutasOrigenDTO(ciudad.getId(), ciudad.getRutasOrigen().stream().map(Ruta::getId).toList());
     }
 
-    public void updateCiudadRutasDestino(CiudadRutasDestinoDTO ciudadRutasDestinoDTO){
+    public CiudadRutasDestinoDTO updateCiudadRutasDestino(CiudadRutasDestinoDTO ciudadRutasDestinoDTO){
         Ciudad ciudad = ciudadRepository.findById(ciudadRutasDestinoDTO.getCiudadId()).orElseThrow();
         List<Ruta> selectedRutas = rutaRepository.findAllById(ciudadRutasDestinoDTO.getRutasDestinoIds());
-        ciudad.getRutasDestino().clear();
-        ciudad.getRutasDestino().addAll(selectedRutas);
-        ciudadRepository.save(ciudad);
+        for (Ruta ruta : selectedRutas) {
+            ruta.setDestino(ciudad);
+            rutaRepository.save(ruta);
+        }
+        return new CiudadRutasDestinoDTO(ciudad.getId(), ciudad.getRutasDestino().stream().map(Ruta::getId).toList());
     }
 
     public CaravanaCiudadDTO listarCaravanasPorCiudad(Long idCiudad){

@@ -23,6 +23,10 @@ public class ServicioCiudadService {
     private ServicioRepository servicioRepository;
     @Autowired
     private CiudadRepository ciudadRepository;
+    @Autowired
+    private ServicioService servicioService;
+    @Autowired
+    private CiudadService ciudadService;
 
     public List<ServicioCiudadDTO> listarServicioCiudades() {
         return servicioCiudadRepository.findAll().stream()
@@ -46,7 +50,7 @@ public class ServicioCiudadService {
 
     public ServicioCiudadDTO guardarServicioCiudad(ServicioCiudadDTO servicioCiudadDTO) {
         servicioCiudadDTO.setId(null);
-        return ServicioCiudadMapper.toDTO(servicioCiudadRepository.save(ServicioCiudadMapper.toEntity(servicioCiudadDTO)));
+        return ServicioCiudadMapper.toDTO(servicioCiudadRepository.save(ServicioCiudadMapper.toEntity(servicioCiudadDTO, servicioService, ciudadService)));
     }
 
     public ServicioCiudadDTO actualizarServicioCiudad(ServicioCiudadDTO servicioCiudadDTO) {

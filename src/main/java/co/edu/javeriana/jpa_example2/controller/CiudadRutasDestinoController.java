@@ -33,7 +33,7 @@ public class CiudadRutasDestinoController {
     }
 
     @PutMapping("/actualizar")
-    public void updateCiudadRutasDestino(@RequestBody CiudadRutasDestinoDTO ciudadRutasOrigenDTO) {
-        ciudadService.updateCiudadRutasDestino(ciudadRutasOrigenDTO);
+    public CiudadRutasDestinoDTO updateCiudadRutasDestino(@RequestBody CiudadRutasDestinoDTO ciudadRutasOrigenDTO) {
+        return ciudadService.updateCiudadRutasDestino(ciudadRutasOrigenDTO);
     }
 }

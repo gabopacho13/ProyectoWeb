@@ -1,7 +1,5 @@
 package co.edu.javeriana.jpa_example2.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import co.edu.javeriana.jpa_example2.dto.TransaccionProductoDTO;
 import co.edu.javeriana.jpa_example2.model.TransaccionProducto;
 import co.edu.javeriana.jpa_example2.service.CaravanaService;
@@ -9,13 +7,6 @@ import co.edu.javeriana.jpa_example2.service.CiudadService;
 import co.edu.javeriana.jpa_example2.service.ProductoService;
 
 public class TransaccionProductoMapper {
-
-    @Autowired
-    private static CaravanaService caravanaService;
-    @Autowired
-    private static ProductoService productoService;
-    @Autowired
-    private static CiudadService ciudadService;
 
     // Convierte de entidad a DTO
     public static TransaccionProductoDTO toDTO(TransaccionProducto transaccion) {
@@ -35,7 +26,7 @@ public class TransaccionProductoMapper {
     }
 
     // Convierte de DTO a entidad
-    public static TransaccionProducto toEntity(TransaccionProductoDTO transaccionDTO) {
+    public static TransaccionProducto toEntity(TransaccionProductoDTO transaccionDTO, CaravanaService caravanaService, CiudadService ciudadService, ProductoService productoService) {
         if (transaccionDTO == null) {
             return null;
         }

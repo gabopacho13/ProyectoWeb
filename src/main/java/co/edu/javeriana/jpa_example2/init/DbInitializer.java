@@ -137,13 +137,12 @@ public class DbInitializer implements CommandLineRunner {
         
         // Lista para almacenar los jugadores
         List<Jugador> jugadores = new ArrayList<>();
-
+        List<Integer> idsCaravanas = new ArrayList<>();
+        for (int j= 0; j < caravanas.size(); j++) {
+            idsCaravanas.add(j);
+        }
+        Collections.shuffle(idsCaravanas);
         for (int i = 0; i < 10; i++) {
-            List<Integer> idsCaravanas = new ArrayList<>();
-            for (int j= 0; j < caravanas.size(); j++) {
-                idsCaravanas.add(j);
-            }
-            Collections.shuffle(idsCaravanas);
             Jugador jugador = jugadorRepository.save(new Jugador("jugador_" + i , "rol_" + i, caravanas.get(idsCaravanas.get(i)))); 
             jugadores.add(jugador);
         }

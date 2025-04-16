@@ -1,18 +1,14 @@
 package co.edu.javeriana.jpa_example2.mapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import co.edu.javeriana.jpa_example2.dto.InventarioCaravanaDTO;
 import co.edu.javeriana.jpa_example2.model.InventarioCaravana;
 import co.edu.javeriana.jpa_example2.service.CaravanaService;
 import co.edu.javeriana.jpa_example2.service.ProductoService;
 
+@Component
 public class InventarioCaravanaMapper {
-
-    @Autowired
-    private static CaravanaService caravanaService;
-    @Autowired
-    private static ProductoService productoService;
 
     // Convierte de entidad a DTO
     public static InventarioCaravanaDTO toDTO(InventarioCaravana inventarioCaravana) {
@@ -28,7 +24,7 @@ public class InventarioCaravanaMapper {
     }
 
     // Convierte de DTO a entidad
-    public static InventarioCaravana toEntity(InventarioCaravanaDTO inventarioCaravanaDTO) {
+    public static InventarioCaravana toEntity(InventarioCaravanaDTO inventarioCaravanaDTO, CaravanaService caravanaService, ProductoService productoService) {
         if (inventarioCaravanaDTO == null) {
             return null;
         }

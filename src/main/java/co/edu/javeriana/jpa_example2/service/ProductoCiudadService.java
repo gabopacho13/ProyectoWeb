@@ -25,6 +25,10 @@ public class ProductoCiudadService {
     private ProductoRepository productoRepository;
     @Autowired
     private CiudadRepository ciudadRepository;
+    @Autowired
+    private ProductoService productoService;
+    @Autowired
+    private CiudadService ciudadService;
 
     public List<ProductoCiudadDTO> listarProductosCiudades() {
         return productoCiudadRepository.findAll().stream()
@@ -39,14 +43,14 @@ public class ProductoCiudadService {
 
     public ProductoCiudadDTO guardarProductoCiudad(ProductoCiudadDTO productoCiudadDTO) {
         productoCiudadDTO.setId(null);
-        return ProductoCiudadMapper.toDTO(productoCiudadRepository.save(ProductoCiudadMapper.toEntity(productoCiudadDTO)));
+        return ProductoCiudadMapper.toDTO(productoCiudadRepository.save(ProductoCiudadMapper.toEntity(productoCiudadDTO, productoService, ciudadService)));
     }
 
     public ProductoCiudadDTO actualizarProductoCiudad(ProductoCiudadDTO productoCiudadDTO) {
         if (productoCiudadDTO.getId() == null) {
             throw new IllegalArgumentException("El id del producto ciudad no puede ser nulo");
         }
-        ProductoCiudad productoCiudad = ProductoCiudadMapper.toEntity(productoCiudadDTO);
+        ProductoCiudad productoCiudad = ProductoCiudadMapper.toEntity(productoCiudadDTO, productoService, ciudadService);
         Optional<Producto> productoOpt = productoRepository.findById(productoCiudadDTO.getProductoId());
         if (productoOpt.isPresent()){
             Producto producto = productoOpt.get();

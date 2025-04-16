@@ -1,0 +1,12 @@
+@base_url = http://localhost:8080/caravana/jugadores
+
+###
+GET {{base_url}}/1
+
+###
+PUT {{base_url}}/1
+Content-Type: application/json
+
+{
+    "jugadoresIds": [5, 2]
+}

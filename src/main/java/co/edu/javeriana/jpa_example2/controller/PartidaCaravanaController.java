@@ -24,7 +24,7 @@ public class PartidaCaravanaController {
         return partidaService.listarCaravanasPorPartida(idPartida);
     }
 
-    @PutMapping("/{idCaravana}")
+    @PutMapping("/{idPartida}")
     public PartidaCaravanasDTO editarPartidas(@PathVariable("idPartida") Long idPartida, @RequestBody PartidaCaravanasDTO partidaCaravanasDTO) {
         List<Long> caravanas = partidaCaravanasDTO.getCaravanasIds();
         return partidaService.editarCaravanasPorPartida(idPartida, caravanas);
