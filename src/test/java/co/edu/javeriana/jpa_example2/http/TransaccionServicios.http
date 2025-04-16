@@ -12,7 +12,7 @@ Content-Type: application/json
 
 {
     "idCaravana": 1,
-    "idProducto": 1,
+    "idServicio": 1,
     "idCiudad": 1,
     "tipo": "compra",
     "cantidad": 10,
@@ -30,7 +30,7 @@ Content-Type: application/json
 {
     "id": 1,
     "idCaravana": 1,
-    "idProducto": 1,
+    "idServicio": 1,
     "idCiudad": 1,
     "tipo": "compra",
     "cantidad": 11,
