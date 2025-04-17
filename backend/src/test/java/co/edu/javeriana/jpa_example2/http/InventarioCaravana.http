@@ -1,0 +1,31 @@
+@base_url = http://localhost:8080/Caravana/Inventario
+
+###
+GET {{base_url}}/lista
+
+###
+GET {{base_url}}/1
+
+###
+POST {{base_url}}
+Content-Type: application/json
+
+{
+    "caravanaId": 1,
+    "productoId": 1,
+    "cantidad": 10
+}
+
+###
+PUT {{base_url}}
+Content-Type: application/json
+
+{
+    "id": 1,
+    "caravanaId": 1,
+    "productoId": 1,
+    "cantidad": 20
+}
+
+###
+DELETE {{base_url}}/1

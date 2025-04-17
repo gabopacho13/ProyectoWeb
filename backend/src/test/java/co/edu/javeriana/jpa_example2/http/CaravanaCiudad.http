@@ -1,0 +1,12 @@
+@base_url = http://localhost:8080/ciudad/caravanas
+
+###
+GET {{base_url}}/97
+
+###
+PUT {{base_url}}/actualizar/97
+Content-Type: application/json
+
+{
+    "caravanasIds": [1, 2]
+}

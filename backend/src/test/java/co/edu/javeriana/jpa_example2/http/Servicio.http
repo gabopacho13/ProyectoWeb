@@ -1,0 +1,26 @@
+@base_url = http://localhost:8080/servicio
+
+###
+GET {{base_url}}/lista
+
+###
+GET {{base_url}}/view/2
+
+###
+POST {{base_url}}/crear
+Content-Type: application/json
+
+{
+    "tipo": "reparacion"
+}
+
+###
+PUT {{base_url}}/actualizar/51
+Content-Type: application/json
+
+{
+    "tipo": "pintura"
+}
+
+###
+DELETE {{base_url}}/eliminar/51

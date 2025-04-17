@@ -1,0 +1,13 @@
+<div>
+    <h1>Ciudad Lista</h1>
+
+    <app-ciudad-view [ciudad]="selectedCiudad"></app-ciudad-view>
+
+    <ul>
+        <li *ngFor="let ciudad of ciudades"
+            (click)="seleccionarCiudad(ciudad)"
+        >
+            {{ciudad.id}} {{ciudad.nombre}} {{ciudad.impuesto_entrada}}
+        </li>
+    </ul>
+</div>
