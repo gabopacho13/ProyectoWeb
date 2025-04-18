@@ -1,3 +1,7 @@
 <div>
-    <p *ngIf="ciudad">{{ciudad.nombre}} {{ciudad.impuesto_entrada}}</p>
+    <h1>Ciudad View</h1>
+    @if(parametroCiudad){
+        <p>{{parametroCiudad.nombre}} {{parametroCiudad.impuesto_entrada}}</p>
+    }
+    <button (click)="back()" >Volver</button>
 </div>

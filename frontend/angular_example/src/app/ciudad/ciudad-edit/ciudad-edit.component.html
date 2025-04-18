@@ -1,0 +1,15 @@
+<div>
+    @if(ciudad){
+        <form (ngSubmit)="onSubmit()">
+
+            <label for="txtId">Id</label>
+            <input type="text" name="id" id="txtId" [(ngModel)]="ciudad.id">
+            <label for="txtNombre">Nombre</label>
+            <input type="text" name="nombre" id="txtNombre" [(ngModel)]="ciudad.nombre">
+            <label for="txtLastName">Impuesto</label>
+            <input type="text" name="impuesto_entrada" id="txtLastName" [(ngModel)]="ciudad.impuesto_entrada">
+            
+            <button type="submit">Save</button>
+        </form>
+    }
+</div>

@@ -1,13 +1,38 @@
 <div>
     <h1>Ciudad Lista</h1>
 
-    <app-ciudad-view [ciudad]="selectedCiudad"></app-ciudad-view>
-
-    <ul>
-        <li *ngFor="let ciudad of ciudades"
-            (click)="seleccionarCiudad(ciudad)"
-        >
-            {{ciudad.id}} {{ciudad.nombre}} {{ciudad.impuesto_entrada}}
-        </li>
-    </ul>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Impuesto</th>
+                <th>Edit</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for(ciudad of ciudades; track $index){
+            <tr>
+                <td>
+                    <a [routerLink]="['/ciudad/view', ciudad.id]">
+                        {{ciudad.id}} 
+                    </a>
+                </td>
+                <td>
+                    <a [routerLink]="['/ciudad/view', ciudad.id]">
+                        {{ciudad.nombre}} 
+                    </a>
+                </td>
+                <td>
+                    <a [routerLink]="['/ciudad/view', ciudad.id]">
+                        {{ciudad.impuesto_entrada}} 
+                    </a>
+                </td>
+                <td>
+                    <a [routerLink]="['/ciudad/edit', ciudad.id]">Edit</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
 </div>

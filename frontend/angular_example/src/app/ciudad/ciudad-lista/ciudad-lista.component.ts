@@ -3,10 +3,11 @@ import { CiudadDto } from '../../dto/ciudad-dto';
 import { CiudadService } from './../ciudad.service';
 import { Component } from '@angular/core';
 import { CiudadViewComponent } from "../ciudad-view/ciudad-view.component";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-ciudad-lista',
-  imports: [CommonModule, CiudadViewComponent],
+  imports: [CommonModule, RouterModule],
   templateUrl: './ciudad-lista.component.html',
   styleUrl: './ciudad-lista.component.css'
 })
