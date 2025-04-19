@@ -14,7 +14,7 @@ export class PartidaInicioComponent {
     id: 0,
     tiempoLimite: 0,
     gananciaMinima: 0,
-    tiempoInicio: '',  // Usa string para datetime (formato ISO)
+    tiempoInicio: getLocalDateTimeString(),
     tiempoActual: 0
   };
 
@@ -27,9 +27,15 @@ export class PartidaInicioComponent {
       this.partidaService.crearPartida(this.partida)
     .subscribe(
       nuevaPartida =>{
-        console.log("partida credaa", nuevaPartida);
+        console.log("partida creada", nuevaPartida);
       }
     )
     }
-  }
+  } 
+}
+
+function getLocalDateTimeString(): string {
+  const ahora = new Date();
+  ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset()); // ajusta a la zona local
+  return ahora.toISOString().slice(0, 16); // formato compatible con datetime-local
 }
