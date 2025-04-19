@@ -1,7 +1,8 @@
 import { PartidaDto } from './../dto/partida-dto';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
+import { ContadorService } from '../contador/contador.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,14 +17,27 @@ export class PartidaService {
   }
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private contadorService: ContadorService
   ) { }
+
+  listarPartida() : Observable<PartidaDto[]>{
+    return this.http.get<PartidaDto[]>(`http://localhost:8080/partida/lista`);
+  }
+
+  recuperarPartida(id: number): Observable<PartidaDto>{
+    return this.http.get<PartidaDto>(`http://localhost:8080/partida/${id}`);
+  }
 
   crearPartida(partida: PartidaDto): Observable<PartidaDto>{
     return this.http.post<PartidaDto>(
       `http://localhost:8080/partida`,
       partida,
       this.httpOptions
+    ).pipe(
+      tap(nuevaPartida => {
+        this.contadorService.setTiempoLimite(nuevaPartida.tiempoLimite);
+      })
     );
   }
 }

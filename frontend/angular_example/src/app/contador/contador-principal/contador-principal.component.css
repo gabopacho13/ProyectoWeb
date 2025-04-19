@@ -1,0 +1,16 @@
+.contador {
+    text-align: center;
+    padding: 1.5rem;
+    background: #2c1810;
+    border-radius: 10px;
+    color: #faf4e1;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  .tiempo {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #d4af37;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
