@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { CiudadListaComponent } from "./ciudad/ciudad-lista/ciudad-lista.component";
+import { PartidaInicioComponent } from "./partida/partida-inicio/partida-inicio.component";
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CiudadListaComponent],
+  imports: [RouterOutlet, PartidaInicioComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

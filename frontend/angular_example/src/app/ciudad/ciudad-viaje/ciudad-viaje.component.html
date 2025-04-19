@@ -1,0 +1,27 @@
+<div *ngIf="ciudad">
+    <h1>Ciudad Actual</h1>
+    <h2>{{ ciudad?.nombre }}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Ruta ID</th>
+          <th>Daño</th>
+          <th>Distancia</th>
+          <th>Segura?</th>
+          <th>Ruta de Origen</th>
+          <th>Ruta de Destino</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let ruta of rutasDef; let i = index">
+          <td>{{ ruta.id }}</td>
+          <td>{{ ruta.dano }}</td>
+          <td>{{ ruta.distancia }}</td>
+          <td>{{ ruta.es_segura }}</td>
+          <td>{{ ruta.rutasOrigenIds }}</td>
+          <td>{{ ruta.rutasDestinoIds }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,0 +1,77 @@
+/* partida-inicio.component.css */
+.container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #faf4e1;
+    border: 3px solid #6b4f2e;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-family: 'MedievalSharp', cursive;
+  }
+  
+  h1 {
+    color: #5a2a0a;
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    color: #7a3b11;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  label {
+    font-weight: bold;
+    color: #4a2c1a;
+    font-size: 1.1rem;
+  }
+  
+  input {
+    padding: 0.8rem;
+    border: 2px solid #6b4f2e;
+    border-radius: 5px;
+    background: #fff9ec;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  input:focus {
+    outline: none;
+    border-color: #8a6d4b;
+    box-shadow: 0 0 5px rgba(138, 109, 75, 0.5);
+  }
+  
+  button[type="submit"] {
+    background: #6b4f2e;
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 1rem;
+  }
+  
+  button[type="submit"]:hover {
+    background: #8a6d4b;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Para añadir la fuente medieval */
+  @import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');

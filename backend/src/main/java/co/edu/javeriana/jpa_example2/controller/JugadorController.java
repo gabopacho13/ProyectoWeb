@@ -24,9 +24,8 @@ public class JugadorController {
 
     private Logger log = LoggerFactory.getLogger(getClass());
 
-    @GetMapping
+    @GetMapping("/lista")
     public List<JugadorDTO> listarJugadores() {
-        log.info("Listando todos los jugadores");
         return jugadorService.listarJugadores();
     }
 
