@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PartidaDto } from '../../dto/partida-dto';
 import { PartidaService } from '../partida.service';
+import { ContadorPrincipalComponent } from "../../contador/contador-principal/contador-principal.component";
 
 @Component({
   selector: 'app-partida-inicio',
-  imports: [FormsModule],
+  imports: [FormsModule, ContadorPrincipalComponent],
   templateUrl: './partida-inicio.component.html',
   styleUrl: './partida-inicio.component.css'
 })
