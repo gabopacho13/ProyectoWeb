@@ -80,4 +80,30 @@ public class Partida {
     public List<Caravana> getCaravanas() {
         return caravanas;
     }
+
+    public void setCaravanas(List<Caravana> caravanas) {
+        this.caravanas = caravanas;
+    }
+
+    public void addCaravana(Caravana caravana) {
+        this.caravanas.add(caravana);
+        caravana.setPartida(this);
+    }
+
+    public void addCaravanas(List<Caravana> caravanas) {
+        for (Caravana caravana : caravanas) {
+            this.addCaravana(caravana);
+        }
+    }
+
+    public void removeCaravanas(List<Caravana> caravanas) {
+        for (Caravana caravana : caravanas) {
+            this.removeCaravana(caravana);
+        }
+    }
+
+    public void removeCaravana(Caravana caravana) {
+        this.caravanas.remove(caravana);
+        caravana.setPartida(null);
+    }
 }

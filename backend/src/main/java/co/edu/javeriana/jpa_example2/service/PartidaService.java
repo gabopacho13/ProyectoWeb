@@ -70,4 +70,11 @@ public class PartidaService {
         }
         return new PartidaCaravanasDTO(partidaOptional.get().getId(), caravanasList.stream().map(Caravana::getId).toList());
     }
+
+    public PartidaCaravanasDTO crearPartidaConCaravanas(List<Long> caravanas) {
+        Partida partida = new Partida();
+        partida.addCaravanas(caravanaRepository.findAllById(caravanas));
+        partida = partidaRepository.save(partida);
+        return new PartidaCaravanasDTO(partida.getId(), partida.getCaravanas().stream().map(Caravana::getId).toList());
+    }
 }

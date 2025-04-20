@@ -7,7 +7,7 @@ export class TransaccionProductoDto {
         public tipo: string,
         public cantidad: number,
         public precioUnitario: number,
-        public fecha: Date
+        public fecha: string
     ) {}
 }
 

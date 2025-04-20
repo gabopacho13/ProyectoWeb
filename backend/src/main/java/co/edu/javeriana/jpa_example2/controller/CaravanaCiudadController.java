@@ -22,7 +22,7 @@ public class CaravanaCiudadController {
     @GetMapping("/{idCiudad}")
     public CaravanaCiudadDTO listarCaravanas(@PathVariable("idCiudad") Long idCiudad) {
         return ciudadService.listarCaravanasPorCiudad(idCiudad);
-    }
+    } 
 
     @PutMapping("/actualizar/{idCiudad}")
     public CaravanaCiudadDTO editarCaravanas(@PathVariable("idCiudad") Long idCiudad, @RequestBody CaravanaCiudadDTO caravanaCiudadDTO) {

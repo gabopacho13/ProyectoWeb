@@ -1,9 +1,20 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PartidaDto } from '../../dto/partida-dto';
+import { PartidaCaravanaDto } from '../../dto/partida-caravana-dto';
+import { PartidaCaravanaService } from '../caravana.service';
+import { CaravanaJugadorDto } from '../../dto/caravana-jugador-dto';
+import { CaravanaDto } from '../../dto/caravana-dto';
+import { JugadorDto } from '../../dto/jugador-dto';
+import { CaravanaJugadorService } from '../../caravana/jugador.service';
+import { CiudadCaravanaService } from '../../ciudad/ciudad-caravana.service'; 
+import { CaravanaCiudadDto } from '../../dto/caravana-ciudad-dto';
+import { CaravanaService } from '../../caravana/caravana.service';
+import { JugadorService } from '../../jugador/jugador.service';
 import { PartidaService } from '../partida.service';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router'; 
+import { Router } from '@angular/router';
+import { switchMap } from 'rxjs/operators'; 
 
 @Component({
   selector: 'app-partida-inicio',
@@ -16,28 +27,60 @@ export class PartidaInicioComponent {
   partida: PartidaDto = {
     id: 0,
     tiempoLimite: 15,
-    gananciaMinima: 100,
+    gananciaMinima: 1000,
     tiempoInicio: getLocalDateTimeString(),
     tiempoActual: 0
   };
 
   constructor(
     private partidaService: PartidaService,
-    private router: Router 
+    private partidaCaravanaService: PartidaCaravanaService,
+    private caravanaJugadorService: CaravanaJugadorService,
+    private caravanaService: CaravanaService,
+    private jugadorService: JugadorService,
+    private ciudadCaravanaService: CiudadCaravanaService,
+    private router: Router
   ) {}
 
   onSubmit() {
     if (this.partida && this.partida.tiempoLimite > 0) {
-      this.partidaService.crearPartida(this.partida)
-        .subscribe({
-          next: nuevaPartida => {
-            console.log("partida creada, respuesta recibida en componente:", nuevaPartida);
-            this.router.navigate(['/ciudad/lista']);
-          },
-          error: err => {
-            console.error("Error al crear la partida:", err);
-          }
-        });
+      this.partidaService.crearPartida(this.partida).pipe(
+        switchMap(nuevaPartida => {
+          console.log("Partida creada:", nuevaPartida);
+          const caravana = new CaravanaDto(0, getLocalDateTimeString(), "Caravana 1", 5, 40, 200, 100, 0);
+          return this.caravanaService.crearCaravana(caravana).pipe(
+            switchMap(nuevaCaravana => {
+              console.log("Caravana creada:", nuevaCaravana);
+              const jugador = new JugadorDto(0, "Jugador 1", "rol 1");
+              return this.jugadorService.crearJugador(jugador).pipe(
+                switchMap(nuevoJugador => {
+                  console.log("Jugador creado:", nuevoJugador);
+                  const caravanaJugador = new CaravanaJugadorDto(nuevaCaravana.id, [nuevoJugador.id]);
+                  return this.caravanaJugadorService.actualizarCaravanaJugador(nuevoJugador.id, caravanaJugador).pipe(
+                    switchMap(() => {
+                      const partidaCaravana = new PartidaCaravanaDto(nuevaPartida.id, [nuevaCaravana.id]);
+                      return this.partidaCaravanaService.actualizarPartidaCaravana(nuevaPartida.id, partidaCaravana);
+                    }),
+                    switchMap(() => this.ciudadCaravanaService.recuperarCaravanaCiudad(1)),
+                    switchMap(caravanaCiudad => {
+                      caravanaCiudad.caravanasIds.push(nuevaCaravana.id);
+                      return this.ciudadCaravanaService.actualizarCaravanaCiudad(1, caravanaCiudad);
+                    })
+                  );
+                })
+              );
+            })
+          );
+        })
+      ).subscribe({
+        next: () => {
+          console.log("Todo se creó correctamente. Redirigiendo...");
+          this.router.navigate(['/ciudad/lista']);
+        },
+        error: err => {
+          console.error("Ocurrió un error en la cadena de creación:", err);
+        }
+      });
     } else {
       console.warn("El tiempo límite debe ser mayor a 0");
     }

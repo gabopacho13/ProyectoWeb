@@ -2,6 +2,6 @@ import { ProductoCiudadDto } from './producto-ciudad-dto';
 
 describe('ProductoCiudadDto', () => {
   it('should create an instance', () => {
-    expect(new ProductoCiudadDto()).toBeTruthy();
+    expect(new ProductoCiudadDto(0, 0, 0, 0, 0, 0)).toBeTruthy();
   });
 });

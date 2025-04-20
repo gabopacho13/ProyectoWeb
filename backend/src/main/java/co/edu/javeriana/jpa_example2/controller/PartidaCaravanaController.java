@@ -9,6 +9,7 @@ import co.edu.javeriana.jpa_example2.service.PartidaService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,6 +24,12 @@ public class PartidaCaravanaController {
     public PartidaCaravanasDTO listarCaravanas(@PathVariable("idPartida") Long idPartida) {
         return partidaService.listarCaravanasPorPartida(idPartida);
     }
+
+   @PostMapping
+    public PartidaCaravanasDTO crearPartidas(@RequestBody PartidaCaravanasDTO partidaCaravanasDTO) {
+        List<Long> caravanas = partidaCaravanasDTO.getCaravanasIds();
+        return partidaService.crearPartidaConCaravanas(caravanas);
+    } 
 
     @PutMapping("/{idPartida}")
     public PartidaCaravanasDTO editarPartidas(@PathVariable("idPartida") Long idPartida, @RequestBody PartidaCaravanasDTO partidaCaravanasDTO) {
