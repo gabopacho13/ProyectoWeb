@@ -9,6 +9,7 @@
                 <th>Impuesto</th>
                 <th>Edit</th>
                 <th>Rutas</th>
+                <th>Productos</th>
             </tr>
         </thead>
         <tbody>
@@ -34,6 +35,9 @@
                 </td>
                 <td>
                     <a [routerLink]="['/ciudad/rutas', ciudad.id]">Rutas</a>
+                </td>
+                <td>
+                    <a [routerLink]="['/ciudad/producto', ciudad.id]">Productos</a>
                 </td>
             </tr>
             }

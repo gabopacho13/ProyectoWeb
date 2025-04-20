@@ -1,0 +1,45 @@
+<div>
+    <h1>Productos</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Ciudad Id</th>
+                <th>Producto Id</th>
+                <th> Demanda</th>
+                <th> Oferta</th>
+                <th> Stock </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (producto of parametroProductoCiudadLista; track $index) {
+                <tr>
+                    <td>
+                        <p [routerLink]="['/ciudad/producto', producto.productoId]">
+                            {{producto.productoId}}
+                        </p>
+                    </td>
+                    <td>
+                        <p [routerLink]="['/ciudad/producto', producto.ciudadId]">
+                            {{producto.ciudadId}}
+                        </p>
+                    </td>
+                    <td>
+                        <p [routerLink]="['/ciudad/producto', producto.factorDemanda]">
+                            {{producto.factorDemanda}}
+                        </p>
+                    </td>
+                    <td>
+                        <p [routerLink]="['/ciudad/producto', producto.factorOferta]">
+                            {{producto.factorOferta}}
+                        </p>
+                    </td>
+                    <td>
+                        <p [routerLink]="['/ciudad/producto', producto.stock]">
+                            {{producto.stock}}
+                        </p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
