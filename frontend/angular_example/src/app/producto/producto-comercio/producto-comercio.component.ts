@@ -1,8 +1,10 @@
+import { CiudadService } from './../../ciudad/ciudad.service';
 import { ProductoService } from './../producto.service';
 import { Component, Input } from '@angular/core';
 import { ProductoCiudadDto } from '../../dto/producto-ciudad-dto';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { ProductoDto } from '../../dto/producto-dto';
 
 @Component({
   selector: 'app-producto-comercio',
@@ -12,7 +14,6 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductoComercioComponent {
   parametroProductoCiudadLista: ProductoCiudadDto[] = [];
-
   constructor(
     private productoService : ProductoService,
     private router : Router

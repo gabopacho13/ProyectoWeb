@@ -5,37 +5,43 @@
             <tr>
                 <th>Ciudad Id</th>
                 <th>Producto Id</th>
-                <th> Demanda</th>
-                <th> Oferta</th>
-                <th> Stock </th>
+                <th>Demanda</th>
+                <th>Oferta</th>
+                <th>Stock </th>
+                <th>Detalle</th>
             </tr>
         </thead>
         <tbody>
             @for (producto of parametroProductoCiudadLista; track $index) {
                 <tr>
                     <td>
-                        <p [routerLink]="['/ciudad/producto', producto.productoId]">
+                        <p>
                             {{producto.productoId}}
                         </p>
                     </td>
                     <td>
-                        <p [routerLink]="['/ciudad/producto', producto.ciudadId]">
+                        <p>
                             {{producto.ciudadId}}
                         </p>
                     </td>
                     <td>
-                        <p [routerLink]="['/ciudad/producto', producto.factorDemanda]">
+                        <p>
                             {{producto.factorDemanda}}
                         </p>
                     </td>
                     <td>
-                        <p [routerLink]="['/ciudad/producto', producto.factorOferta]">
+                        <p>
                             {{producto.factorOferta}}
                         </p>
                     </td>
                     <td>
-                        <p [routerLink]="['/ciudad/producto', producto.stock]">
+                        <p>
                             {{producto.stock}}
+                        </p>
+                    </td>
+                    <td>
+                        <p [routerLink]="['/producto', producto.ciudadId]">
+                            ver
                         </p>
                     </td>
                 </tr>
