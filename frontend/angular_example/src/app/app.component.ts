@@ -1,17 +1,31 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import { PartidaInicioComponent } from "./partida/partida-inicio/partida-inicio.component";
-import { ContadorPrincipalComponent } from "./contador/contador-principal/contador-principal.component";
+import { Component, OnInit, OnDestroy } from '@angular/core'; 
+import { Subscription } from 'rxjs'; 
+import { ContadorService } from './contador/contador.service'; 
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, PartidaInicioComponent, ContadorPrincipalComponent],
+  imports: [CommonModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  title: string = 'angular_example';
-  cambiarTexto() {
-    this.title = "cambiazo"
+export class AppComponent implements OnInit, OnDestroy {
+  title = 'tu-proyecto';
+
+  private tiempoTerminadoSubscription: Subscription | null = null;
+
+  constructor(private contadorService: ContadorService) {}
+
+  ngOnInit(): void {
+    this.tiempoTerminadoSubscription = this.contadorService.tiempoTerminado$.subscribe(() => {
+
+      alert('¡Se acabó el tiempo! Has perdido.');
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.tiempoTerminadoSubscription) {
+      this.tiempoTerminadoSubscription.unsubscribe();
+    }
   }
 }

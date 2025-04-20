@@ -1,4 +1,5 @@
-<div class="contador">
-    <h3>Tiempo restante:</h3>
-    <div class="tiempo">{{ minutos }}:{{ segundos | number:'2.0' }}</div>
+<div class="contador" *ngIf="tiempoRestante !== null"> <h3>Tiempo restante:</h3>
+  <div class="tiempo">{{ minutos }}:{{ segundos | number:'2.0-0' }}</div>
+</div>
+<div class="contador" *ngIf="tiempoRestante === null">
   </div>

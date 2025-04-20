@@ -1,16 +1,14 @@
 <div>
     <h1>Bienvenido a Caravana Medieval</h1>
     <h2>Crea una partida!</h2>
-    @if(partida){
-        <form (ngSubmit)="onSubmit()">
-            <label for="txtLimite">Tiempo Limite(minutos)</label>
-            <input type="number" name="tiempoLimite" id="txtLimite" [(ngModel)]="partida.tiempoLimite">
-            <label for="txtGanancia">Ganancia Minima(Mo)</label>
-            <input type="number" name="ganancia_min" id="txtGanancia" [(ngModel)]="partida.gananciaMinima">
-            <label for="txtTiempo">Tiempo inicio</label>
-            <input type="datetime-local" name="tiempo_ini" id="txtTiempo" [(ngModel)]="partida.tiempoInicio" readonly>
-            
-            <button type="submit">Save</button>
-        </form>
-    }
-</div>
+    <form (ngSubmit)="onSubmit()">
+        <label for="txtLimite">Tiempo Limite(minutos)</label>
+        <input type="number" name="tiempoLimite" id="txtLimite" [(ngModel)]="partida.tiempoLimite">
+        <label for="txtGanancia">Ganancia Minima(Mo)</label>
+        <input type="number" name="ganancia_min" id="txtGanancia" [(ngModel)]="partida.gananciaMinima">
+        <label for="txtTiempo">Tiempo inicio</label>
+        <input type="datetime-local" name="tiempo_ini" id="txtTiempo" [(ngModel)]="partida.tiempoInicio" readonly>
+
+        <button type="submit">Save</button>
+    </form>
+    </div>

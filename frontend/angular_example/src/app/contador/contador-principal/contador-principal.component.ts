@@ -1,52 +1,50 @@
-import { Component } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ContadorService } from '../contador.service';
+import { Component, ChangeDetectionStrategy, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ContadorService } from '../contador.service';
+import { Subscription } from 'rxjs'; // Necesario para limpiar suscripción manualmente
 
 @Component({
   selector: 'app-contador-principal',
-  imports: [CommonModule],
+  standalone: true, 
+  imports: [CommonModule], 
   templateUrl: './contador-principal.component.html',
-  styleUrl: './contador-principal.component.css'
+  styleUrls: ['./contador-principal.component.css'], 
+  changeDetection: ChangeDetectionStrategy.OnPush // Buena práctica con observables
 })
-export class ContadorPrincipalComponent {
-  tiempoRestante!: number;
-  private subscription!: Subscription;
-  intervalo: any;
+export class ContadorPrincipalComponent implements OnDestroy {
+  // Propiedad para almacenar el valor actual del observable
+  tiempoRestante: number | null = null;
+  private tiempoSubscription: Subscription;
 
+  // Inyecta el servicio y ChangeDetectorRef
   constructor(
-    private contadorService: ContadorService
-  ){}
-
-  ngOnInit() {
-    this.subscription = this.contadorService.tiempoLimite$.subscribe(tiempo => {
-      this.tiempoRestante = tiempo * 60; // Convertir minutos a segundos
-      this.iniciarContador();
+    private contadorService: ContadorService,
+    private cdRef: ChangeDetectorRef // Para actualizar la vista cuando cambia el tiempo
+  ) {
+    this.tiempoSubscription = this.contadorService.tiempoRestante$.subscribe(tiempo => {
+      this.tiempoRestante = tiempo;
+      this.cdRef.markForCheck();
     });
   }
 
-  iniciarContador() {
-    if (this.intervalo) clearInterval(this.intervalo);
-    
-    this.intervalo = setInterval(() => {
-      if (this.tiempoRestante > 0) {
-        this.tiempoRestante--;
-      } else {
-        clearInterval(this.intervalo);
-      }
-    }, 1000);
-  }
-
+  // Getters para formatear el tiempo (manejan el caso null)
   get minutos(): number {
-    return Math.floor(this.tiempoRestante / 60);
+    return this.tiempoRestante !== null ? Math.floor(this.tiempoRestante / 60) : 0;
   }
 
   get segundos(): number {
-    return this.tiempoRestante % 60;
+    return this.tiempoRestante !== null ? this.tiempoRestante % 60 : 0;
+  }
+
+  // Devuelve true si el contador está activo 
+  get contadorActivo(): boolean {
+      return this.tiempoRestante !== null && this.tiempoRestante > 0;
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
-    clearInterval(this.intervalo);
+    // Limpia la suscripción cuando el componente se destruye
+    if (this.tiempoSubscription) {
+      this.tiempoSubscription.unsubscribe();
+    }
   }
 }

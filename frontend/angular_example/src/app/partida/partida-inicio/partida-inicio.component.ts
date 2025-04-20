@@ -2,41 +2,50 @@ import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PartidaDto } from '../../dto/partida-dto';
 import { PartidaService } from '../partida.service';
-import { ContadorPrincipalComponent } from "../../contador/contador-principal/contador-principal.component";
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router'; 
 
 @Component({
   selector: 'app-partida-inicio',
-  imports: [FormsModule, ContadorPrincipalComponent],
+  standalone: true,
+  imports: [FormsModule, CommonModule],
   templateUrl: './partida-inicio.component.html',
-  styleUrl: './partida-inicio.component.css'
+  styleUrls: ['./partida-inicio.component.css']
 })
 export class PartidaInicioComponent {
   partida: PartidaDto = {
     id: 0,
-    tiempoLimite: 0,
-    gananciaMinima: 0,
+    tiempoLimite: 15,
+    gananciaMinima: 100,
     tiempoInicio: getLocalDateTimeString(),
     tiempoActual: 0
   };
 
   constructor(
     private partidaService: PartidaService,
-  ){}
+    private router: Router 
+  ) {}
 
-  onSubmit(){
-    if(this.partida){
+  onSubmit() {
+    if (this.partida && this.partida.tiempoLimite > 0) {
       this.partidaService.crearPartida(this.partida)
-    .subscribe(
-      nuevaPartida =>{
-        console.log("partida creada", nuevaPartida);
-      }
-    )
+        .subscribe({
+          next: nuevaPartida => {
+            console.log("partida creada, respuesta recibida en componente:", nuevaPartida);
+            this.router.navigate(['/ciudad/lista']);
+          },
+          error: err => {
+            console.error("Error al crear la partida:", err);
+          }
+        });
+    } else {
+      console.warn("El tiempo límite debe ser mayor a 0");
     }
-  } 
+  }
 }
 
 function getLocalDateTimeString(): string {
   const ahora = new Date();
-  ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset()); // ajusta a la zona local
-  return ahora.toISOString().slice(0, 16); // formato compatible con datetime-local
+  ahora.setMinutes(ahora.getMinutes() - ahora.getTimezoneOffset());
+  return ahora.toISOString().slice(0, 16);
 }
