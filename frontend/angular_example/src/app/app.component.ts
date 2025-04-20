@@ -1,11 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'; 
 import { Subscription } from 'rxjs'; 
 import { ContadorService } from './contador/contador.service'; 
-import { CommonModule } from '@angular/common'; 
+import { CommonModule } from '@angular/common';
+import { ContadorPrincipalComponent } from "./contador/contador-principal/contador-principal.component"; 
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule],
+  imports: [CommonModule, ContadorPrincipalComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })

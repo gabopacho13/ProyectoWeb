@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CiudadViajeComponent } from './ciudad-viaje.component';
+import { CiudadViajeComponent } from './ciudad-ruta.component';
 
 describe('CiudadViajeComponent', () => {
   let component: CiudadViajeComponent;

@@ -11,11 +11,11 @@ import { RutaDestinoDto } from '../../dto/ruta-destino-dto';
 import { RutaDefDto } from '../../dto/ruta-def-dto';
 
 @Component({
-  selector: 'app-ciudad-viaje',
+  selector: 'app-ciudad-ruta',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './ciudad-viaje.component.html',
-  styleUrls: ['./ciudad-viaje.component.css']
+  templateUrl: './ciudad-ruta.component.html',
+  styleUrls: ['./ciudad-ruta.component.css']
 })
 export class CiudadViajeComponent {
   ciudad?: CiudadDto;
