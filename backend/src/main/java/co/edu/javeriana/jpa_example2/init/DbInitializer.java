@@ -46,11 +46,25 @@ public class DbInitializer implements CommandLineRunner {
             ciudades.add(ciudad);
         }
 
-        // Crear 150 rutas aleatorias
-        for (int i = 0; i < 150; i++) {
+        // Crear 100 rutas aleatorias
+        for (int i = 0; i < 100; i++) {
             float distancia = 5 + random.nextFloat() * 95;
             boolean esSegura = random.nextBoolean();
-            float dano = random.nextFloat() * 50;
+            float dano = esSegura? 0:random.nextFloat() * 50;
+            Ciudad origen = ciudades.get(i);
+            Ciudad destino = ciudades.get(random.nextInt(ciudades.size()));
+            while (origen.equals(destino) || destino.getRutasDestino().size() >= 5) {
+                destino = ciudades.get(random.nextInt(ciudades.size()));
+            }
+            Ruta ruta = rutaRepository.save(new Ruta(distancia, esSegura, dano, origen, destino));
+            rutas.add(ruta);
+        }
+        
+        // Crear 200 rutas aleatorias mas
+        for (int i = 0; i < 200; i++) {
+            float distancia = 5 + random.nextFloat() * 95;
+            boolean esSegura = random.nextBoolean();
+            float dano = esSegura? 0:random.nextFloat() * 50;
             Ciudad origen = ciudades.get(random.nextInt(ciudades.size()));
             while (origen.getRutasOrigen().size() >= 5) {
                 origen = ciudades.get(random.nextInt(ciudades.size()));
