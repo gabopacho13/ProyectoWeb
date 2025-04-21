@@ -10,10 +10,15 @@ import { PartidaDto } from '../../dto/partida-dto';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { CaravanaDto } from '../../dto/caravana-dto';
 import { RutaDto } from '../../dto/ruta-dto';
+import { CiudadOrigenService } from '../ciudad-origen.service';
+import { RutaService } from '../../ruta/ruta.service';
+import { CiudadDestinoService } from '../ciudad-destino.service';
+import { forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-viajar',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './viajar.component.html',
   styleUrl: './viajar.component.css'
 })
@@ -22,14 +27,20 @@ export class ViajarComponent {
   public ciudad !: CiudadDto;
   public caravana !: CaravanaDto;
   public rutas !: RutaDto[];
+  public ciudadesConectadas!: CiudadDto[];
+  public ciudadesConRuta: CiudadConRuta[] = [];
   private partidaId!: number;
   private ciudadId!: number;
   private caravanaId!: number;
+  private rutasIds!: number[];
   constructor(
     private route: ActivatedRoute,
     private ciudadCaravanaService: CiudadCaravanaService,
+    private ciudadOrigenService: CiudadOrigenService,
+    private ciudadDestinoService: CiudadDestinoService,
     private caravanaService: CaravanaService,
     private ciudadService: CiudadService,
+    private rutaService: RutaService,
     private router: Router
   ) {} 
 
@@ -37,15 +48,48 @@ export class ViajarComponent {
     this.partidaId = Number(this.route.snapshot.paramMap.get('idPartida'));
     this.ciudadId = Number(this.route.snapshot.paramMap.get('idCiudad'));
     this.caravanaId = Number(this.route.snapshot.paramMap.get('idCaravana'));
-
+  
     this.caravanaService.recuperarCaravana(this.caravanaId).subscribe(caravana => {
       this.caravana = caravana;
-    }
-    );
+    });
+  
     this.ciudadService.recuperarCiudad(this.ciudadId).subscribe(ciudad => {
       this.ciudad = ciudad;
-    }
-    );
+    });
+  
+    forkJoin({
+      rutasOrigen: this.ciudadOrigenService.getCiudadRutasOrigen(this.ciudadId),
+      rutasDestino: this.ciudadDestinoService.getCiudadRutasDestino(this.ciudadId)
+    }).subscribe(({ rutasOrigen, rutasDestino }) => {
+      this.rutasIds = [...rutasOrigen.rutasOrigenIds, ...rutasDestino.rutasDestinoIds];
+  
+      for (let rutaId of this.rutasIds) {
+        this.rutaService.obtenerRuta(rutaId).subscribe(ruta => {
+          this.rutaService.obtenerConexiones(rutaId).subscribe(ciudades => {
+            for (let ciudad of ciudades) {
+              if (ciudad.id !== this.ciudadId) {
+                this.ciudadesConRuta.push({ ciudad, ruta });
+              }
+            }
+          });
+        });
+      }
+    });
   }
 
+  viajarA(ciudadId: number): void {
+    this.router.navigate([
+      '/partida',
+      this.partidaId,
+      'ciudad',
+      ciudadId,
+      'caravana',
+      this.caravanaId
+    ]);
+  }
+}
+
+interface CiudadConRuta {
+  ciudad: CiudadDto;
+  ruta: RutaDto;
 }

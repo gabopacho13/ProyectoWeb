@@ -6,7 +6,7 @@ import { RutaOrigenDto} from '../dto/ruta-origen-dto';
 @Injectable({
   providedIn: 'root'
 })
-export class CiudadRutaService {
+export class CiudadOrigenService {
   private httpOptions = {
     headers: new HttpHeaders({
       "Content-Type": "application/json"

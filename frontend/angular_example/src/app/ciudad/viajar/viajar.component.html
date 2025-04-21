@@ -1,1 +1,17 @@
-<p>viajar works!</p>
+<h2>Puedes viajar a estas ciudades:</h2>
+
+<div *ngIf="ciudadesConRuta.length > 0; else noCiudades">
+  <div class="botones">
+    <div *ngFor="let item of ciudadesConRuta">
+      <button (click)="viajarA(item.ciudad.id)">
+        {{ item.ciudad.nombre }} 
+        (impuesto de entrada: {{ item.ciudad.impuesto_entrada }}, 
+        {{ item.ruta.es_segura ? 'ruta segura' : 'ruta no segura' }})
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #noCiudades>
+  <p>No hay ciudades disponibles para viajar.</p>
+</ng-template>

@@ -3,6 +3,8 @@ package co.edu.javeriana.jpa_example2.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import co.edu.javeriana.jpa_example2.dto.CiudadDTO;
 import co.edu.javeriana.jpa_example2.dto.RutaDTO;
 import co.edu.javeriana.jpa_example2.service.RutaService;
 
@@ -22,6 +24,11 @@ public class RutaController {
     public RutaDTO obtenerRuta(@PathVariable Long id) {
         return rutaService.buscarRutas(id).orElseThrow();
     }
+
+    @GetMapping("conexiones/{id}")
+    public List<CiudadDTO> obtenerConexiones(@PathVariable Long id) {
+        return rutaService.obtenerConexiones(id).orElseThrow();
+    } 
 
     @PostMapping("/crear")
     public RutaDTO crearRuta(@RequestBody RutaDTO rutaDto) {
