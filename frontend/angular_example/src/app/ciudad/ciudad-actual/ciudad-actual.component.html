@@ -1,1 +1,16 @@
-<p>ciudad-actual works!</p>
+<div class="container">
+  <h2 class="titulo">{{ caravana?.nombre }}, ¡bienvenida a {{ ciudad?.nombre }}!</h2>
+  <div class="info-caravana">
+    <p>Velocidad actual: {{ caravana?.velocidadActual }}</p>
+    <p>Capacidad actual: {{ caravana?.capacidadActual }}</p>
+    <p>Dinero: {{ caravana?.dinero }}</p>
+    <p>Salud: {{ caravana?.saludActual }}</p>
+    <p>Guardias: {{ caravana?.tieneGuardias ? 'Sí' : 'No' }}</p>
+  </div>
+  <div class="botones">
+    <button (click)="viajar()">Viajar</button>
+    <button disabled>Servicios</button>
+    <button disabled>Productos</button>
+  </div>
+</div>
+  

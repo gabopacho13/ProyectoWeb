@@ -8,7 +8,6 @@ import { CaravanaDto } from '../../dto/caravana-dto';
 import { JugadorDto } from '../../dto/jugador-dto';
 import { CaravanaJugadorService } from '../../caravana/jugador.service';
 import { CiudadCaravanaService } from '../../ciudad/ciudad-caravana.service'; 
-import { CaravanaCiudadDto } from '../../dto/caravana-ciudad-dto';
 import { CaravanaService } from '../../caravana/caravana.service';
 import { JugadorService } from '../../jugador/jugador.service';
 import { PartidaService } from '../partida.service';
@@ -44,13 +43,18 @@ export class PartidaInicioComponent {
 
   onSubmit() {
     if (this.partida && this.partida.tiempoLimite > 0) {
+      let partidaId : number;
+      let caravanaId : number;
+      let ciudadId : number;
       this.partidaService.crearPartida(this.partida).pipe(
         switchMap(nuevaPartida => {
           console.log("Partida creada:", nuevaPartida);
+          partidaId = nuevaPartida.id;
           const caravana = new CaravanaDto(0, getLocalDateTimeString(), "Caravana 1", 5, 40, 200, 100, 0);
           return this.caravanaService.crearCaravana(caravana).pipe(
             switchMap(nuevaCaravana => {
               console.log("Caravana creada:", nuevaCaravana);
+              caravanaId = nuevaCaravana.id;
               const jugador = new JugadorDto(0, "Jugador 1", "rol 1");
               return this.jugadorService.crearJugador(jugador).pipe(
                 switchMap(nuevoJugador => {
@@ -64,6 +68,7 @@ export class PartidaInicioComponent {
                     switchMap(() => this.ciudadCaravanaService.recuperarCaravanaCiudad(1)),
                     switchMap(caravanaCiudad => {
                       caravanaCiudad.caravanasIds.push(nuevaCaravana.id);
+                      ciudadId = caravanaCiudad.idCiudad;
                       return this.ciudadCaravanaService.actualizarCaravanaCiudad(1, caravanaCiudad);
                     })
                   );
@@ -75,7 +80,7 @@ export class PartidaInicioComponent {
       ).subscribe({
         next: () => {
           console.log("Todo se creó correctamente. Redirigiendo...");
-          this.router.navigate(['/ciudad/lista']);
+          this.router.navigate(['/partida', partidaId, 'ciudad', ciudadId, 'caravana', caravanaId]);
         },
         error: err => {
           console.error("Ocurrió un error en la cadena de creación:", err);
