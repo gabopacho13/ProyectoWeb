@@ -3,13 +3,15 @@ package co.edu.javeriana.jpa_example2.dto;
 public class ServicioDTO {
     private Long id;
     private String tipo;
+    private String efecto;
 
     public ServicioDTO() {
     }
 
-    public ServicioDTO(Long id, String tipo) {
+    public ServicioDTO(Long id, String tipo, String efecto) {
         this.id = id;
         this.tipo = tipo;
+        this.efecto = efecto;
     }
 
     public Long getId() {
@@ -28,4 +30,12 @@ public class ServicioDTO {
         this.tipo = tipo;
     }
 
+
+    public String getEfecto() {
+        return this.efecto;
+    }
+
+    public void setEfecto(String efecto) {
+        this.efecto = efecto;
+    }
 }

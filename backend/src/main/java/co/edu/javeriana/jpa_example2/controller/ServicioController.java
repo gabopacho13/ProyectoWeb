@@ -25,7 +25,7 @@ public class ServicioController {
         return servicioService.listarServicios();
     }
 
-    @GetMapping("/view/{id}")
+    @GetMapping("/{id}")
     public ServicioDTO obtenerServicio(@PathVariable Long id) {
         return servicioService.buscarServicio(id).orElseThrow();
     }
