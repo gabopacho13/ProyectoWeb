@@ -50,7 +50,7 @@ export class PartidaInicioComponent {
         switchMap(nuevaPartida => {
           console.log("Partida creada:", nuevaPartida);
           partidaId = nuevaPartida.id;
-          const caravana = new CaravanaDto(0, getLocalDateTimeString(), "Caravana 1", 5, 40, 200, 100, 0);
+          const caravana = new CaravanaDto(0, getLocalDateTimeString(), "Caravana 1", 5, 40, 1000, 100, 0);
           return this.caravanaService.crearCaravana(caravana).pipe(
             switchMap(nuevaCaravana => {
               console.log("Caravana creada:", nuevaCaravana);
