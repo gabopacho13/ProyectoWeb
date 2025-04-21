@@ -29,6 +29,7 @@ export class ViajarComponent {
   public rutas !: RutaDto[];
   public ciudadesConectadas!: CiudadDto[];
   public ciudadesConRuta: CiudadConRuta[] = [];
+  private ciudadEscogida!: CiudadDto;
   private partidaId!: number;
   private ciudadId!: number;
   private caravanaId!: number;
@@ -77,17 +78,46 @@ export class ViajarComponent {
     });
   }
 
-  viajarA(ciudadId: number): void {
-    this.router.navigate([
-      '/partida',
-      this.partidaId,
-      'ciudad',
-      ciudadId,
-      'caravana',
-      this.caravanaId
-    ]);
+    viajarA(ciudadId: number): void {
+    console.log("Ciudad seleccionada:", ciudadId);
+    
+    this.ciudadService.recuperarCiudad(ciudadId).subscribe(ciudad => {
+      this.ciudadEscogida = ciudad;
+      console.log("Ciudad escogida:", this.ciudadEscogida);
+      
+      if (!this.ciudadEscogida) {
+        alert("Error al recuperar la ciudad.");
+        return;
+      }
+  
+      if (this.caravana.dinero.valueOf() < this.ciudadEscogida.impuesto_entrada.valueOf()) {
+        alert("No tienes suficiente dinero para viajar a esta ciudad");
+        return;
+      }
+  
+      this.caravana.dinero -= this.ciudadEscogida.impuesto_entrada.valueOf();
+      this.caravanaService.actualizarCaravana(this.caravana).subscribe(() => {
+        console.log("Caravana actualizada:", this.caravana);
+      });
+  
+      this.ciudadCaravanaService.recuperarCaravanaCiudad(ciudadId).subscribe(caravanaCiudad => {
+        caravanaCiudad.caravanasIds.push(this.caravanaId);
+        this.ciudadCaravanaService.actualizarCaravanaCiudad(ciudadId, caravanaCiudad).subscribe(() => {
+          console.log("Caravana ciudad actualizada:", caravanaCiudad);
+        });
+      });
+  
+      this.router.navigate([
+        '/partida',
+        this.partidaId,
+        'ciudad',
+        ciudadId,
+        'caravana',
+        this.caravanaId
+      ]);
+    });
   }
-}
+}  
 
 interface CiudadConRuta {
   ciudad: CiudadDto;
