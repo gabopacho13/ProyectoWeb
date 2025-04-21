@@ -14,6 +14,7 @@ import { CiudadOrigenService } from '../ciudad-origen.service';
 import { RutaService } from '../../ruta/ruta.service';
 import { CiudadDestinoService } from '../ciudad-destino.service';
 import { forkJoin, of } from 'rxjs';
+import { PartidaCaravanaService } from '../../partida/caravana.service';
 
 @Component({
   selector: 'app-viajar',
@@ -42,6 +43,7 @@ export class ViajarComponent {
     private caravanaService: CaravanaService,
     private ciudadService: CiudadService,
     private rutaService: RutaService,
+    private partidaCaravanaService: PartidaCaravanaService,
     private router: Router
   ) {} 
 
@@ -106,7 +108,14 @@ export class ViajarComponent {
           console.log("Caravana ciudad actualizada:", caravanaCiudad);
         });
       });
-  
+      
+      this.partidaCaravanaService.recuperarPartidaCaravana(this.partidaId).subscribe(partidaCaravana => {
+        partidaCaravana.caravanasIds.push(this.caravanaId);
+        this.partidaCaravanaService.actualizarPartidaCaravana(this.partidaId, partidaCaravana).subscribe(() => {
+          console.log("Partida caravana actualizada:", partidaCaravana);
+        });
+      });
+      
       this.router.navigate([
         '/partida',
         this.partidaId,
