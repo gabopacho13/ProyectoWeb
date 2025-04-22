@@ -1,51 +1,29 @@
 <div>
     <h1>Productos</h1>
     <table>
-        <thead>
-            <tr>
-                <th>Ciudad Id</th>
-                <th>Producto Id</th>
-                <th>Demanda</th>
-                <th>Oferta</th>
-                <th>Stock </th>
-                <th>Detalle</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (producto of parametroProductoCiudadLista; track $index) {
-                <tr>
-                    <td>
-                        <p>
-                            {{producto.productoId}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.ciudadId}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.factorDemanda}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.factorOferta}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.stock}}
-                        </p>
-                    </td>
-                    <td>
-                        <p [routerLink]="['/producto', producto.ciudadId]">
-                            ver
-                        </p>
-                    </td>
-                </tr>
-            }
-        </tbody>
+      <thead>
+        <tr>
+          <th>Ciudad ID</th>
+          <th>Producto ID</th>
+          <th>Demanda</th>
+          <th>Oferta</th>
+          <th>Stock</th>
+          <th>Detalle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let producto of parametroProductoCiudadLista; index as i">
+          <td>{{ producto.ciudadId }}</td>
+          <td>{{ producto.productoId }}</td>
+          <td>{{ producto.factorDemanda }}</td>
+          <td>{{ producto.factorOferta }}</td>
+          <td>{{ producto.stock }}</td>
+          <td>
+            <a [routerLink]="['/producto', producto.productoId]" style="color: #6b4f2e; font-weight: bold; text-decoration: underline; cursor: pointer;">
+                ver
+              </a>              
+          </td>
+        </tr>
+      </tbody>
     </table>
-</div>
+  </div>  

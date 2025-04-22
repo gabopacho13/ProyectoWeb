@@ -1,27 +1,30 @@
-<div>
-    <form (ngSubmit)="comprarProducto()">
-      <table>
-        <thead>
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Comprar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>
-              <p>{{parametroProducto?.id}}</p>
-            </td>
-            <td>
-              <p>{{parametroProducto?.nombre}}</p>
-            </td>
-            <td>
-              <button type="submit">Comprar</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </form>
-  </div>
-  
+<div *ngIf="producto">
+  <form>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Cantidad</th>
+          <th>Comprar</th>
+          <th>Vender</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ producto.id }}</td>
+          <td>{{ producto.nombre }}</td>
+          <td>
+            <input type="number" [(ngModel)]="cantidad" name="cantidad" min="1">
+          </td>
+          <td>
+            <button type="button" (click)="comprar()">Comprar</button>
+          </td>
+          <td>
+            <button type="button" (click)="vender()">Vender</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
