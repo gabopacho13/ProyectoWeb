@@ -17,6 +17,8 @@ import { switchMap } from 'rxjs/operators';
 import { CiudadDto } from '../../dto/ciudad-dto';
 import { CiudadService } from '../ciudad.service';
 import { CaravanaCiudadDto } from '../../dto/caravana-ciudad-dto';
+import { ServicioService } from '../../servicio/servicio.service';
+import { ServicioDto } from '../../dto/servicio-dto';
 
 @Component({
   selector: 'app-ciudad-actual',
@@ -28,13 +30,16 @@ export class CiudadActualComponent {
   public partida!: PartidaDto;
   public ciudad !: CiudadDto;
   public caravana !: CaravanaDto;
+  public servicio !: ServicioDto;
   private partidaId!: number;
   private ciudadId!: number;
   private caravanaId!: number;
+  private servicioId!: number;
   constructor(
     private route: ActivatedRoute,
     private caravanaService: CaravanaService,
     private ciudadService: CiudadService,
+    private servicioService: ServicioService,
     private router: Router
   ) {} 
 
@@ -42,6 +47,7 @@ export class CiudadActualComponent {
     this.partidaId = Number(this.route.snapshot.paramMap.get('idPartida'));
     this.ciudadId = Number(this.route.snapshot.paramMap.get('idCiudad'));
     this.caravanaId = Number(this.route.snapshot.paramMap.get('idCaravana'));
+    this.servicioId = Number(this.route.snapshot.paramMap.get('idServicio'));
 
     this.caravanaService.recuperarCaravana(this.caravanaId).subscribe(caravana => {
       this.caravana = caravana;
@@ -49,6 +55,10 @@ export class CiudadActualComponent {
     );
     this.ciudadService.recuperarCiudad(this.ciudadId).subscribe(ciudad => {
       this.ciudad = ciudad;
+    }
+    );
+    this.servicioService.recuperarServicio(this.servicioId).subscribe(servicio => {
+      this.servicio = servicio;
     }
     );
   }
@@ -61,7 +71,7 @@ export class CiudadActualComponent {
     this.router.navigate([`producto/ciudad/${this.ciudadId}`]);
   }
 
-  servicio(): void {
+  servicios(): void {
     this.router.navigate([`servicio/ciudad/${this.ciudadId}`]);
   }
 }

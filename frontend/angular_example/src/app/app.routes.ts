@@ -9,6 +9,7 @@ import { ProductoDetalleComponent } from './producto/producto-detalle/producto-d
 import{ CiudadActualComponent } from './ciudad/ciudad-actual/ciudad-actual.component';
 import { ViajarComponent } from './ciudad/viajar/viajar.component';
 import { ServicioComercioComponent } from './servicio/servicio-comercio/servicio-comercio.component';
+import { ServicioViewComponent } from './servicio/servicio-view/servicio-view.component';
 import { FinPartidaComponent } from './partida/fin-partida/fin-partida.component';
 
 export const routes: Routes = [
@@ -20,7 +21,8 @@ export const routes: Routes = [
     { path: 'producto/:id', component: ProductoDetalleComponent },
     { path: 'inicio', component: PartidaInicioComponent },
     { path: 'partida/:idPartida/ciudad/:idCiudad/caravana/:idCaravana', component: CiudadActualComponent } ,  
-    { path: 'partida/:idPartida/ciudad/:idCiudad/caravana/:idCaravana/viajar', component: ViajarComponent }, 
+    { path: 'partida/:idPartida/ciudad/:idCiudad/caravana/:idCaravana/viajar', component: ViajarComponent },
+    { path: 'servicio/:id', component: ServicioViewComponent },
     { path: 'partida/:idPartida/ciudad/:idCiudad/caravana/:idCaravana/fin', component: FinPartidaComponent },
     { path: 'servicio/ciudad/:id', component: ServicioComercioComponent },
     { path: '', pathMatch: 'full', redirectTo: 'inicio' }

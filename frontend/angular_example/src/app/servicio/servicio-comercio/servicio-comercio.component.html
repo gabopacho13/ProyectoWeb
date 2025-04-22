@@ -1,1 +1,33 @@
-<p>servicio-comercio works!</p>
+<div>
+    <h1>Servicios</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Servicio Id</th>
+                <th>Precio Id</th>
+                <th>Detalle</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (servicios of serviciosCiudad; track $index) {
+                <tr>
+                    <td>
+                        <p>
+                            {{servicios.idServicio}}
+                        </p>
+                    </td>
+                    <td>
+                        <p>
+                            {{servicios.precio}}
+                        </p>
+                    </td>
+                    <td>
+                        <p [routerLink]="['/servicio', servicios.idServicio]">
+                            ver
+                        </p>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

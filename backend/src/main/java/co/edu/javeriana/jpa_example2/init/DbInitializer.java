@@ -109,13 +109,6 @@ public class DbInitializer implements CommandLineRunner {
             partidas.add(partida);
         }
 
-        // Crear servicios
-        List<Servicio> servicios = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            Servicio servicio = servicioRepository.save(new Servicio("servicio_" + i, "efecto_" + i));
-            servicios.add(servicio);
-        }
-
         // Crear caravanas
         List<Caravana> caravanas = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
@@ -133,6 +126,70 @@ public class DbInitializer implements CommandLineRunner {
         for (int i = 0; i < 10; i++) {
             Jugador jugador = jugadorRepository.save(new Jugador("jugador_" + i, "rol_" + i, caravanas.get(idsCaravanas.get(i))));
             jugadores.add(jugador);
+        }
+
+        
+        // --- Creación de Servicios (Específicos del Juego)
+        log.info("Creando servicios globales...");
+        List<Servicio> servicios = new ArrayList<>(); // Inicializa la lista
+
+        // Añade los servicios definidos en las reglas del juego
+        servicios.add(servicioRepository.save(new Servicio("Reparar Caravana", "Recupera puntos de vida de la caravana.")));
+        servicios.add(servicioRepository.save(new Servicio("Ampliar Bodega", "Aumenta la capacidad máxima de carga (hasta +400% original).")));
+        servicios.add(servicioRepository.save(new Servicio("Mejorar Ejes", "Aumenta la velocidad máxima de la caravana (hasta +50% original).")));
+        servicios.add(servicioRepository.save(new Servicio("Contratar Guardias", "Reduce daño en rutas inseguras en 25% (compra única).")));
+
+        // --- Asociar Productos y Servicios a Ciudades ---
+        log.info("Asociando productos y servicios a ciudades...");
+        int minProductosPorCiudad = 5;
+        int maxProductosPorCiudad = 15;
+
+        for (Ciudad ciudad : ciudades) {
+            // --- Asociar Productos ---
+            int numProductosEnCiudad = minProductosPorCiudad + random.nextInt(maxProductosPorCiudad - minProductosPorCiudad + 1);
+            Set<Producto> productosAsignados = new HashSet<>();
+            List<Producto> productosMezclados = new ArrayList<>(productos);
+            Collections.shuffle(productosMezclados);
+
+            for (int i = 0; i < numProductosEnCiudad && i < productosMezclados.size(); i++) {
+                 Producto producto = productosMezclados.get(i);
+                 if (productosAsignados.add(producto)) {
+                     float factorDemanda = 0.5f + random.nextFloat() * 1.5f;
+                     float factorOferta = 0.5f + random.nextFloat() * 1.5f;
+                     float stock = 10 + random.nextInt(491);
+                     ProductoCiudad productoCiudad = new ProductoCiudad(factorDemanda, factorOferta, stock, producto, ciudad);
+                     productoCiudadRepository.save(productoCiudad);
+                 }
+            }
+
+            // --- Asociar Servicios --- 
+            // Define el rango basado en los servicios que REALMENTE existen
+            int minServiciosPorCiudad = 1;
+            int maxServiciosPorCiudad = servicios.size(); // Usa el tamaño real de la lista de servicios
+            // Asegura que min no sea mayor que max si solo hay 1 servicio o ninguno
+            if (minServiciosPorCiudad > maxServiciosPorCiudad) {
+                minServiciosPorCiudad = maxServiciosPorCiudad;
+            }
+
+            int numServiciosEnCiudad = 0;
+            if (maxServiciosPorCiudad > 0) { // Solo asigna si hay servicios definidos
+                 // Calcula el número aleatorio de servicios para esta ciudad (entre min y max)
+                 numServiciosEnCiudad = minServiciosPorCiudad + random.nextInt(maxServiciosPorCiudad - minServiciosPorCiudad + 1);
+            }
+
+            Set<Servicio> serviciosAsignados = new HashSet<>();
+            List<Servicio> serviciosMezclados = new ArrayList<>(servicios);
+            Collections.shuffle(serviciosMezclados);
+
+            // Asigna el número calculado de servicios distintos a la ciudad
+            for (int i = 0; i < numServiciosEnCiudad && i < serviciosMezclados.size(); i++) {
+                 Servicio servicio = serviciosMezclados.get(i);
+                 if (serviciosAsignados.add(servicio)) {
+                    int precio = 50 + random.nextInt(951); // Precio aleatorio
+                    ServicioCiudad servicioCiudad = new ServicioCiudad(precio, servicio, ciudad);
+                    servicioCiudadRepository.save(servicioCiudad);
+                 }
+            }
         }
     }
 }
