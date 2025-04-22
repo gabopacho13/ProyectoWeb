@@ -145,6 +145,15 @@ export class ProductoComercioComponent implements OnInit, OnDestroy {
     }
     return true;
   }
+  mostrarStockEntero(stock: number): number {
+    if (stock < 1) { 
+      // Si el stock es menor que 1 (positivo decimal, cero o negativo)
+      return 0; 
+    } else {
+      // Si el stock es 1 o mayor, muestra solo la parte entera (sin redondear hacia arriba)
+      return Math.floor(stock); 
+    }
+  }
 
   // Método auxiliar para manejar errores de API
   manejarErrorTransaccion(error: any, tipo: 'compra' | 'venta'): void {

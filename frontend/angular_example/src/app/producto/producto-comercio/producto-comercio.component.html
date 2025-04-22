@@ -18,7 +18,7 @@
             @for (producto of parametroProductoCiudadLista; track producto.id) {
             <tr>
                 <td>{{ producto.productoId }}</td>
-                <td>{{ producto.stock | number:'1.0-0'}}</td>
+                <td>{{ mostrarStockEntero(producto.stock)}}</td>
 
                 <td>{{ calcularPrecioCompra(producto) | number:'1.2-2' }} MO</td>
 
