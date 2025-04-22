@@ -48,9 +48,11 @@ public class DbInitializer implements CommandLineRunner {
 
         // Crear 100 rutas aleatorias
         for (int i = 0; i < 100; i++) {
-            float distancia = 5 + random.nextFloat() * 95;
             boolean esSegura = random.nextBoolean();
             float dano = esSegura? 0:random.nextFloat() * 50;
+            float distancia = esSegura 
+                ? 80 + random.nextFloat() * 70    // 80 a 150
+                : 20 + random.nextFloat() * 50;   // 20 a 70
             Ciudad origen = ciudades.get(random.nextInt(ciudades.size()));
             Ciudad destino = ciudades.get(random.nextInt(ciudades.size()));
             while (origen.equals(destino) || destino.getRutasDestino().size() >= 5) {
@@ -62,9 +64,11 @@ public class DbInitializer implements CommandLineRunner {
 
         // Crear 200 rutas aleatorias mas
         for (int i = 0; i < 200; i++) {
-            float distancia = 5 + random.nextFloat() * 95;
             boolean esSegura = random.nextBoolean();
             float dano = esSegura? 0:random.nextFloat() * 50;
+            float distancia = esSegura 
+                ? 80 + random.nextFloat() * 70    // 80 a 150
+                : 20 + random.nextFloat() * 50;   // 20 a 70
             Ciudad origen = ciudades.get(random.nextInt(ciudades.size()));
             while (origen.getRutasDestino().size() >= 5) {
                 origen = ciudades.get(random.nextInt(ciudades.size()));
