@@ -1,0 +1,46 @@
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap');
+
+.fin-partida-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background: #faf4e1;
+  border: 3px solid #6b4f2e;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'MedievalSharp', cursive;
+  text-align: center;
+}
+
+.fin-partida-container h1 {
+  color: #5a2a0a;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.fin-partida-container p {
+  color: #4a2c1a;
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.fin-partida-container button {
+  background: #6b4f2e;
+  color: white;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.fin-partida-container button:hover {
+  background: #8a6d4b;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
