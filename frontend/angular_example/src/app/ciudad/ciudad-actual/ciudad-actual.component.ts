@@ -68,7 +68,11 @@ export class CiudadActualComponent {
   }
 
   Productos(): void {
-    this.router.navigate([`producto/ciudad/${this.ciudadId}`]);
+    this.router.navigate([
+        '/caravana', this.caravanaId, 
+        'ciudad', this.ciudadId,    
+        'comercio'                   
+    ]);
   }
 
   servicios(): void {

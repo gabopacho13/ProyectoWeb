@@ -1,11 +1,10 @@
 <div>
-    <form (ngSubmit)="comprarProducto()">
+    <form>
       <table>
         <thead>
           <tr>
             <th>Id</th>
             <th>Nombre</th>
-            <th>Comprar</th>
           </tr>
         </thead>
         <tbody>
@@ -15,9 +14,6 @@
             </td>
             <td>
               <p>{{parametroProducto?.nombre}}</p>
-            </td>
-            <td>
-              <button type="submit">Comprar</button>
             </td>
           </tr>
         </tbody>

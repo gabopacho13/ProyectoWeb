@@ -4,22 +4,23 @@
   font-family: 'MedievalSharp', cursive;
 }
 
-.container {
-  max-width: 900px;
+div {
+  max-width: 1000px;
   margin: 2rem auto;
   padding: 2rem;
   background: #faf4e1;
   border: 3px solid #6b4f2e;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'MedievalSharp', cursive;
 }
 
 h1 {
   color: #5a2a0a;
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 2.3rem;
+  margin-bottom: 1.5rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 table {
@@ -49,15 +50,65 @@ tr:hover {
   background-color: #f0e6d2;
 }
 
-p {
-  margin: 0;
-  cursor: pointer;
+input[type="number"] {
+  padding: 5px;
+  border: 1px solid #bfa46d;
+  border-radius: 5px;
+  width: 60px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 1rem;
+  background-color: #fffef9;
   color: #5a2a0a;
+}
+
+button {
+  margin: 0 5px;
+  padding: 6px 12px;
+  background-color: #8a6d4b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-family: 'MedievalSharp', cursive;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #a37c56;
+}
+
+button:disabled {
+  background-color: #d3c0a8;
+  cursor: not-allowed;
+}
+
+a {
+  color: #5a2a0a;
+  text-decoration: none;
   font-weight: bold;
   transition: color 0.3s ease;
 }
 
-p:hover {
+a:hover {
   color: #8a6d4b;
   text-decoration: underline;
+}
+
+p {
+  font-size: 1.1rem;
+  text-align: center;
+  color: #6b4f2e;
+}
+
+.acciones {
+  display: flex;
+  justify-content: center;
+  gap: 10px; /* Espacio entre los botones */
+}
+
+.sin-borde {
+  border: none !important;
+  background-color: transparent !important; /* se ajusta al fondo del form */
+  box-shadow: none !important;
 }

@@ -1,51 +1,51 @@
 <div>
-    <h1>Productos</h1>
+    <h1>Productos en Comercio (Ciudad ID: {{ ciudadActualId }})</h1>
+
+    @if (parametroProductoCiudadLista && parametroProductoCiudadLista.length > 0) {
     <table>
         <thead>
             <tr>
-                <th>Ciudad Id</th>
                 <th>Producto Id</th>
-                <th>Demanda</th>
-                <th>Oferta</th>
-                <th>Stock </th>
+                <th>Stock</th>
+                <th>Precio Compra (PC)</th>
+                <th>Precio Venta (PV)</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
                 <th>Detalle</th>
             </tr>
         </thead>
         <tbody>
-            @for (producto of parametroProductoCiudadLista; track $index) {
-                <tr>
-                    <td>
-                        <p>
-                            {{producto.productoId}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.ciudadId}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.factorDemanda}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.factorOferta}}
-                        </p>
-                    </td>
-                    <td>
-                        <p>
-                            {{producto.stock}}
-                        </p>
-                    </td>
-                    <td>
-                        <p [routerLink]="['/producto', producto.ciudadId]">
-                            ver
-                        </p>
-                    </td>
-                </tr>
+            @for (producto of parametroProductoCiudadLista; track producto.id) {
+            <tr>
+                <td>{{ producto.productoId }}</td>
+                <td>{{ producto.stock }}</td>
+
+                <td>{{ calcularPrecioCompra(producto) | number:'1.2-2' }} MO</td>
+
+                <td>{{ calcularPrecioVenta(producto) | number:'1.2-2' }} MO</td>
+
+                <td>
+                    <input type="number" [(ngModel)]="cantidades[producto.id]" min="1" [max]="producto.stock"
+                        style="width: 60px;" [attr.aria-label]="'Cantidad para producto ' + producto.productoId">
+                </td>
+                <td>
+                    <div class="acciones sin-borde">
+                        <button type="button" (click)="comprar(producto)"
+                            [disabled]="!cantidades[producto.id] || cantidades[producto.id] <= 0 || cantidades[producto.id] > producto.stock">Comprar</button>
+                        <button type="button" (click)="vender(producto)"
+                            [disabled]="!cantidades[producto.id] || cantidades[producto.id] <= 0">Vender</button>
+                    </div>
+                </td>
+                <td>
+                    <a [routerLink]="['/producto', producto.productoId]">
+                        ver
+                    </a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
+    } @else {
+    <p>No hay productos disponibles para comerciar en esta ciudad o la información aún no ha cargado.</p>
+    }
 </div>

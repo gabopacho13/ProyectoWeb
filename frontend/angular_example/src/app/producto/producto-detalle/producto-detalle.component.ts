@@ -26,8 +26,4 @@ export class ProductoDetalleComponent {
       producto => this.parametroProducto = producto
     )
   }
-
-  comprarProducto() {
-
-  }
 }
