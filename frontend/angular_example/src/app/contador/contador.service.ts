@@ -13,6 +13,7 @@ export class ContadorService {
 
   private intervalo: any = null;
   private tiempoFinalEpoch: number | null = null;
+  private tiempoAcumulado: number = 0; // Variable para almacenar el tiempo acumulado
 
   constructor() {
   }
@@ -20,42 +21,17 @@ export class ContadorService {
   iniciarContador(tiempoLimiteMinutos: number) {
     console.log('ContadorService: Iniciando contador con', tiempoLimiteMinutos, 'minutos');
     this.detenerContadorInterno(); 
-
+  
     if (tiempoLimiteMinutos <= 0) {
       this.tiempoRestanteSource.next(null);
       this.tiempoFinalEpoch = null;
       return;
     }
-
-    this.tiempoLimiteInicialSegundos = tiempoLimiteMinutos * 60; 
-    const ahoraEpoch = Date.now();
-    this.tiempoFinalEpoch = ahoraEpoch + (this.tiempoLimiteInicialSegundos * 1000);
-
-    this.actualizarTiempoRestante(); 
-
-    this.intervalo = setInterval(() => {
-      this.actualizarTiempoRestante();
-    }, 1000);
-  }
-
-  private actualizarTiempoRestante() {
-    if (this.tiempoFinalEpoch === null) {
-      this.detenerContadorInterno(); 
-      this.tiempoRestanteSource.next(null); 
-      return;
-    }
-
-    const ahoraEpoch = Date.now();
-    const restanteMs = this.tiempoFinalEpoch - ahoraEpoch;
-    const restanteSegundos = Math.max(0, Math.floor(restanteMs / 1000));
-
-    this.tiempoRestanteSource.next(restanteSegundos);
-
-    if (restanteSegundos <= 0) {
-      console.log('ContadorService: Tiempo finalizado');
-      this.detenerContadorInterno(); 
-      this.tiempoTerminadoSource.next();
-    }
+  
+    this.tiempoLimiteInicialSegundos = tiempoLimiteMinutos * 60;
+  
+    // Establecer el tiempo restante sin iniciar intervalo
+    this.tiempoRestanteSource.next(this.tiempoLimiteInicialSegundos);
   }
 
   detenerContador() {
@@ -71,5 +47,6 @@ export class ContadorService {
       this.intervalo = null;
     }
   }
+  
   private tiempoLimiteInicialSegundos: number = 0; 
 }

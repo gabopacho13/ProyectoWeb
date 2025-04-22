@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { ContadorService } from '../contador/contador.service'; // Verifica la ruta
+import { CaravanaDto } from '../dto/caravana-dto';
 
 @Injectable({
   providedIn: 'root'

@@ -3,11 +3,11 @@
 <div *ngIf="ciudadesConRuta.length > 0; else noCiudades">
   <div class="botones">
     <div *ngFor="let item of ciudadesConRuta">
-      <button (click)="viajarA(item.ciudad.id)">
+      <button (click)="confirmarViaje(item)">
         {{ item.ciudad.nombre }} 
         (impuesto de entrada: {{ item.ciudad.impuesto_entrada }}, 
         {{ item.ruta.es_segura ? 'ruta segura' : 'ruta no segura' }})
-      </button>
+      </button>      
     </div>
   </div>
 </div>
@@ -15,3 +15,14 @@
 <ng-template #noCiudades>
   <p>No hay ciudades disponibles para viajar.</p>
 </ng-template>
+
+<div *ngIf="mostrarPopup" class="popup-confirmacion">
+  <div class="popup-contenedor">
+    <div class="popup-contenido">
+      <p [innerHTML]="mensajeConfirmacion"></p>
+      <button (click)="viajarAConfirmado()">Sí</button>
+      <button (click)="mostrarPopup = false">No</button>
+    </div>
+  </div>
+</div>
+

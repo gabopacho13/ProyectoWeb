@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
@@ -15,6 +14,9 @@ import { RutaService } from '../../ruta/ruta.service';
 import { CiudadDestinoService } from '../ciudad-destino.service';
 import { forkJoin, of } from 'rxjs';
 import { PartidaCaravanaService } from '../../partida/caravana.service';
+import { PartidaService } from '../../partida/partida.service';
+import { ContadorService } from '../../contador/contador.service';
+import { switchMap, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-viajar',
@@ -30,6 +32,9 @@ export class ViajarComponent {
   public rutas !: RutaDto[];
   public ciudadesConectadas!: CiudadDto[];
   public ciudadesConRuta: CiudadConRuta[] = [];
+  public mensajeConfirmacion: string = '';
+  public mostrarPopup: boolean = false;
+  public ciudadSeleccionadaParaViajar: any = null;
   private ciudadEscogida!: CiudadDto;
   private partidaId!: number;
   private ciudadId!: number;
@@ -37,6 +42,7 @@ export class ViajarComponent {
   private rutasIds!: number[];
   constructor(
     private route: ActivatedRoute,
+    private partidaService: PartidaService,
     private ciudadCaravanaService: CiudadCaravanaService,
     private ciudadOrigenService: CiudadOrigenService,
     private ciudadDestinoService: CiudadDestinoService,
@@ -44,6 +50,7 @@ export class ViajarComponent {
     private ciudadService: CiudadService,
     private rutaService: RutaService,
     private partidaCaravanaService: PartidaCaravanaService,
+    private contadorService: ContadorService,
     private router: Router
   ) {} 
 
@@ -52,41 +59,80 @@ export class ViajarComponent {
     this.ciudadId = Number(this.route.snapshot.paramMap.get('idCiudad'));
     this.caravanaId = Number(this.route.snapshot.paramMap.get('idCaravana'));
   
-    this.caravanaService.recuperarCaravana(this.caravanaId).subscribe(caravana => {
-      this.caravana = caravana;
-    });
-  
-    this.ciudadService.recuperarCiudad(this.ciudadId).subscribe(ciudad => {
-      this.ciudad = ciudad;
-    });
-  
     forkJoin({
+      caravana: this.caravanaService.recuperarCaravana(this.caravanaId),
+      ciudad: this.ciudadService.recuperarCiudad(this.ciudadId),
+      partida: this.partidaService.recuperarPartida(this.partidaId),
       rutasOrigen: this.ciudadOrigenService.getCiudadRutasOrigen(this.ciudadId),
       rutasDestino: this.ciudadDestinoService.getCiudadRutasDestino(this.ciudadId)
-    }).subscribe(({ rutasOrigen, rutasDestino }) => {
+    }).subscribe(({ caravana, ciudad, partida, rutasOrigen, rutasDestino }) => {
+      this.caravana = caravana;
+      this.ciudad = ciudad;
+      this.partida = partida;
       this.rutasIds = [...rutasOrigen.rutasOrigenIds, ...rutasDestino.rutasDestinoIds];
   
-      for (let rutaId of this.rutasIds) {
-        this.rutaService.obtenerRuta(rutaId).subscribe(ruta => {
-          this.rutaService.obtenerConexiones(rutaId).subscribe(ciudades => {
-            for (let ciudad of ciudades) {
-              if (ciudad.id !== this.ciudadId) {
-                this.ciudadesConRuta.push({ ciudad, ruta });
+      let dineroSuficiente = false;
+  
+      const rutaObservables = this.rutasIds.map(rutaId =>
+        this.rutaService.obtenerRuta(rutaId).pipe(
+          switchMap(ruta =>
+            this.rutaService.obtenerConexiones(rutaId).pipe(
+              map(ciudades => ({ ruta, ciudades }))
+            )
+          )
+        )
+      );
+  
+      forkJoin(rutaObservables).subscribe(rutasConCiudades => {
+        for (const item of rutasConCiudades) {
+          const { ruta, ciudades } = item;
+          for (const ciudad of ciudades) {
+            if (ciudad.id !== this.ciudadId) {
+              this.ciudadesConRuta.push({ ciudad, ruta });
+              if (this.caravana.dinero.valueOf() >= ciudad.impuesto_entrada.valueOf()) {
+                dineroSuficiente = true;
               }
             }
-          });
-        });
-      }
+          }
+        }
+  
+        if (!dineroSuficiente) {
+          alert("No tienes suficiente dinero para viajar a ninguna ciudad.");
+          this.router.navigate([
+            '/partida',
+            this.partidaId,
+            'ciudad',
+            this.ciudadId,
+            'caravana',
+            this.caravanaId,
+            'fin'
+          ]);
+        }
+      });
     });
   }
+  
 
-    viajarA(ciudadId: number): void {
-    console.log("Ciudad seleccionada:", ciudadId);
-    
+  confirmarViaje(item: any): void {
+    const tiempoEstimado = item.ruta.distancia / this.caravana.velocidadActual;
+    let mensaje = `Tardarás aproximadamente ${tiempoEstimado.toFixed(2)} minutos.<br>`;
+    mensaje += item.ruta.es_segura
+      ? "La ruta es segura.<br>"
+      : "La ruta no es segura. Perderás 10 puntos de vida si viajas por ella.<br>";
+    mensaje += `El coste de entrada a la ciudad es de ${item.ciudad.impuesto_entrada} monedas.<br>`;
+    mensaje += `¿Quieres viajar a ${item.ciudad.nombre}?`;
+  
+    this.ciudadSeleccionadaParaViajar = item;
+    this.mensajeConfirmacion = mensaje;
+    this.mostrarPopup = true;
+  }
+  
+  viajarAConfirmado(): void {
+    const item = this.ciudadSeleccionadaParaViajar;
+    const ciudadId = item.ciudad.id;
+  
     this.ciudadService.recuperarCiudad(ciudadId).subscribe(ciudad => {
       this.ciudadEscogida = ciudad;
-      console.log("Ciudad escogida:", this.ciudadEscogida);
-      
       if (!this.ciudadEscogida) {
         alert("Error al recuperar la ciudad.");
         return;
@@ -98,6 +144,8 @@ export class ViajarComponent {
       }
   
       this.caravana.dinero -= this.ciudadEscogida.impuesto_entrada.valueOf();
+      this.caravana.saludActual -= item.ruta.es_segura ? 0 : 10;
+      this.caravana.tiempoAcumulado += item.ruta.distancia / this.caravana.velocidadActual;
       this.caravanaService.actualizarCaravana(this.caravana).subscribe(() => {
         console.log("Caravana actualizada:", this.caravana);
       });
@@ -108,24 +156,49 @@ export class ViajarComponent {
           console.log("Caravana ciudad actualizada:", caravanaCiudad);
         });
       });
-      
+  
       this.partidaCaravanaService.recuperarPartidaCaravana(this.partidaId).subscribe(partidaCaravana => {
         partidaCaravana.caravanasIds.push(this.caravanaId);
         this.partidaCaravanaService.actualizarPartidaCaravana(this.partidaId, partidaCaravana).subscribe(() => {
           console.log("Partida caravana actualizada:", partidaCaravana);
         });
       });
-      
-      this.router.navigate([
-        '/partida',
-        this.partidaId,
-        'ciudad',
-        ciudadId,
-        'caravana',
-        this.caravanaId
-      ]);
+
+      const tiempoRestante = this.partida.tiempoLimite - this.caravana.tiempoAcumulado;
+      this.contadorService.iniciarContador(tiempoRestante);
+
+
+      if (this.caravana.saludActual > 0){
+        this.router.navigate([
+          '/partida',
+          this.partidaId,
+          'ciudad',
+          ciudadId,
+          'caravana',
+          this.caravanaId
+        ]);
+      }
+      else {
+        if (this.caravana.saludActual <= 0) {
+          alert("Tu caravana ha muerto en el viaje.");
+        }
+        else if (this.caravana.tiempoAcumulado > this.partida.tiempoLimite) {
+          alert("La partida ha finaizado.");
+        }
+        this.router.navigate([
+          '/partida',
+          this.partidaId,
+          'ciudad',
+          ciudadId,
+          'caravana',
+          this.caravanaId,
+          'fin'
+        ]);
+      }
     });
-  }
+  
+    this.mostrarPopup = false;
+  }  
 }  
 
 interface CiudadConRuta {
