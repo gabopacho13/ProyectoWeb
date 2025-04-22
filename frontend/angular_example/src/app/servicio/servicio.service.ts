@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { ServicioDto } from '../dto/servicio-dto';
 import { Observable } from 'rxjs';
 import { ServicioCiudadDto } from '../dto/servicio-ciudad-dto';
+import { ServiciosCompradosDto } from '../dto/servicios-comprados-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,13 @@ export class ServicioService {
 
   listarServiciosCiudad(id: number): Observable<ServicioCiudadDto[]>{
     return this.http.get<ServicioCiudadDto[]>(`http://localhost:8080/ciudad/servicios/${id}`);
+  }
+
+  crearServiciosComprados(servicioComprado : ServiciosCompradosDto){
+    return this.http.post<ServiciosCompradosDto>(
+      `http://localhost:8080/caravana/servicios`,
+      servicioComprado,
+      this.httpOptions
+    )
   }
 }

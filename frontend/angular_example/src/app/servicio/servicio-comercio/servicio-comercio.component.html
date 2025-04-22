@@ -1,15 +1,17 @@
 <div>
     <h1>Servicios</h1>
-    <table>
-        <thead>
-            <tr>
-                <th>Servicio Id</th>
-                <th>Precio Id</th>
-                <th>Detalle</th>
-            </tr>
-        </thead>
-        <tbody>
-            @for (servicios of serviciosCiudad; track $index) {
+    @for (servicios of serviciosCiudad; track $index) {
+    <form (ngSubmit)="comprarServicio(servicios.idServicio)">
+        <table>
+            <thead>
+                <tr>
+                    <th>Servicio Id</th>
+                    <th>Precio Id</th>
+                    <th>Detalle</th>
+                    <th>Comprar</th>
+                </tr>
+            </thead>
+            <tbody>
                 <tr>
                     <td>
                         <p>
@@ -26,8 +28,12 @@
                             ver
                         </p>
                     </td>
+                    <td>
+                        <button type="submit" [disabled]="yaCompradoLocalmente(servicios.idServicio)">Comprar</button>
+                    </td>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </form>
+    }
 </div>

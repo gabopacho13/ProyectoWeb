@@ -67,3 +67,19 @@ p[routerLink]:hover {
   color: #8a6d4b;
   text-decoration: underline;
 }
+
+form button {
+  padding: 0.5rem 1rem;
+  background-color: #6b4f2e;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+  font-family: 'MedievalSharp', cursive;
+}
+
+form button:hover {
+  background-color: #8a6d4b;
+}

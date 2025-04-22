@@ -24,6 +24,6 @@ export const routes: Routes = [
     { path: 'partida/:idPartida/ciudad/:idCiudad/caravana/:idCaravana/viajar', component: ViajarComponent },
     { path: 'servicio/:id', component: ServicioViewComponent },
     { path: 'partida/:idPartida/ciudad/:idCiudad/caravana/:idCaravana/fin', component: FinPartidaComponent },
-    { path: 'servicio/ciudad/:id', component: ServicioComercioComponent },
+    { path: 'partida/:idPartida/ciudad/:idCiudad/caravana/:idCaravana/servicios', component: ServicioComercioComponent },
     { path: '', pathMatch: 'full', redirectTo: 'inicio' }
 ];

@@ -4,17 +4,26 @@
   font-family: 'MedievalSharp', cursive;
 }
 
-form {
-  margin-top: 2rem;
-  font-family: 'MedievalSharp', cursive;
-  background-color: #faf4e1;
-  padding: 1rem;
+div {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: #faf4e1;
   border: 3px solid #6b4f2e;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  font-family: 'MedievalSharp', cursive;
 }
 
-form table {
+h1 {
+  color: #5a2a0a;
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+table {
   width: 100%;
   border-collapse: collapse;
   background: #fff9ec;
@@ -22,14 +31,14 @@ form table {
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-form th, form td {
+th, td {
   padding: 1rem;
   text-align: center;
   border-bottom: 1px solid #d2b48c;
   font-size: 1.1rem;
 }
 
-form th {
+th {
   background-color: #6b4f2e;
   color: white;
   font-weight: bold;
@@ -37,13 +46,26 @@ form th {
   letter-spacing: 1px;
 }
 
-form tr:hover {
+tr:hover {
   background-color: #f0e6d2;
 }
 
-form p {
+p {
   margin: 0;
   font-size: 1.1rem;
+}
+
+p[routerLink] {
+  color: #5a2a0a;
+  cursor: pointer;
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+p[routerLink]:hover {
+  color: #8a6d4b;
+  text-decoration: underline;
 }
 
 form button {

@@ -72,6 +72,11 @@ export class CiudadActualComponent {
   }
 
   servicios(): void {
-    this.router.navigate([`servicio/ciudad/${this.ciudadId}`]);
+    this.router.navigate([
+      '/partida', this.partidaId,
+      'ciudad', this.ciudadId,
+      'caravana', this.caravanaId,
+      'servicios' 
+    ]);
   }
 }

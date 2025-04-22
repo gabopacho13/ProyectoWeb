@@ -4,6 +4,7 @@ import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ServicioDto } from '../../dto/servicio-dto';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-servicio-view',
@@ -14,7 +15,7 @@ import { ServicioDto } from '../../dto/servicio-dto';
 export class ServicioViewComponent {
   servicio : ServicioDto | undefined;
   constructor(
-    private servicioService : ServicioService
+    private servicioService : ServicioService,
   ){}
 
   @Input()
@@ -23,9 +24,5 @@ export class ServicioViewComponent {
     .subscribe(
       servicio => this.servicio = servicio
     )
-  }
-
-  comprarServicio() {
-
-  }
+  }  
 }
