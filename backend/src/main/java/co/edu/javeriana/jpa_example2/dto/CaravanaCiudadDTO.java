@@ -29,4 +29,8 @@ public class CaravanaCiudadDTO {
     public void setCaravanasIds(List<Long> caravanasIds) {
         this.caravanasIds = caravanasIds;
     }
+
+    public Object getCiudadId() {
+        return idCiudad;
+    }
 }

@@ -1,0 +1,105 @@
+package co.edu.javeriana.jpa_example2.controller;
+
+import java.time.LocalDateTime;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.reactive.server.WebTestClient;
+
+import co.edu.javeriana.jpa_example2.dto.CaravanaJugadoresDTO;
+import co.edu.javeriana.jpa_example2.model.Caravana;
+import co.edu.javeriana.jpa_example2.model.Jugador;
+import co.edu.javeriana.jpa_example2.repository.CaravanaRepository;
+import co.edu.javeriana.jpa_example2.repository.JugadorRepository;
+
+@SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
+@DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
+@ActiveProfiles("integration-testing")
+public class CaravanaJugadoresControllerIntegrationTest {
+
+    private String SERVER_URL;
+
+    @Autowired
+    private CaravanaRepository caravanaRepository;
+
+    @Autowired
+    private JugadorRepository jugadorRepository;
+
+    @Autowired
+    private WebTestClient webTestClient;
+
+    public CaravanaJugadoresControllerIntegrationTest(@Value("${server.port}") int serverPort) {
+        this.SERVER_URL = "http://localhost:" + serverPort + "/";
+    }
+
+    @BeforeEach
+    void init() {
+        // Crear caravanas de prueba
+        Caravana c1 = new Caravana();
+        c1.setFecha_creacion(LocalDateTime.now());
+        c1.setNombre("caravana-test-1");
+        c1.setVelocidad_base(10.0f);
+        c1.setVelocidad_actual(9.5f);
+        c1.setCapacidad_base(100.0f);
+        c1.setCapacidad_actual(85.0f);
+        c1.setDinero(1000);
+        c1.setSalud_actual(90.0f);
+        c1.setSalud_maxima(100.0f);
+        c1.setTiempo_acumulado(3600L);
+        c1.setTiene_guardias(true);
+        c1 = caravanaRepository.save(c1);
+
+        Caravana c2 = new Caravana();
+        c2.setFecha_creacion(LocalDateTime.now());
+        c2.setNombre("caravana-test-2");
+        c2.setVelocidad_base(8.0f);
+        c2.setVelocidad_actual(8.0f);
+        c2.setCapacidad_base(120.0f);
+        c2.setCapacidad_actual(120.0f);
+        c2.setDinero(1500);
+        c2.setSalud_actual(100.0f);
+        c2.setSalud_maxima(100.0f);
+        c2.setTiempo_acumulado(2400L);
+        c2.setTiene_guardias(false);
+        c2 = caravanaRepository.save(c2);
+
+        // Crear jugadores de prueba
+        Jugador j1 = new Jugador("Jugador-Test-1", "Lider", c1);
+        jugadorRepository.save(j1);
+
+        Jugador j2 = new Jugador("Jugador-Test-2", "Explorador", c1);
+        jugadorRepository.save(j2);
+
+        Jugador j3 = new Jugador("Jugador-Test-3", "Comerciante", c1);
+        jugadorRepository.save(j3);
+
+        Jugador j4 = new Jugador("Jugador-Test-4", "Guardian", c2);
+        jugadorRepository.save(j4);
+
+        Jugador j5 = new Jugador("Jugador-Test-5", "Medico");
+        jugadorRepository.save(j5);
+    }
+
+    @Test
+    void listarJugadoresPorCaravanaDevuelveJugadoresCorrectamente() {
+        webTestClient.get()
+                .uri(SERVER_URL + "caravana/jugadores/1")
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(CaravanaJugadoresDTO.class)
+                .value(resultado -> {
+                    assert resultado != null;
+                    assert resultado.getIdCaravana().equals(1L);
+                    assert resultado.getJugadoresIds().size() == 3;
+                    assert resultado.getJugadoresIds().contains(1L);
+                    assert resultado.getJugadoresIds().contains(2L);
+                    assert resultado.getJugadoresIds().contains(3L);
+                });
+    }
+}

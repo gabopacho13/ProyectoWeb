@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import co.edu.javeriana.jpa_example2.model.*;
@@ -13,6 +14,7 @@ import co.edu.javeriana.jpa_example2.repository.*;
 import co.edu.javeriana.jpa_example2.service.CiudadService;
 import jakarta.transaction.Transactional;
 
+@Profile({"default"})
 @Component
 public class DbInitializer implements CommandLineRunner {
 

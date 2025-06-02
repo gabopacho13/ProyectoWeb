@@ -199,4 +199,9 @@ public class Caravana {
     public void setPartida(Partida partida) {
         this.partida = partida;
     }
+
+    public void setFecha_creacion(LocalDateTime fecha_creacion) {
+        this.fecha_creacion = fecha_creacion;
+    }
+
 }
