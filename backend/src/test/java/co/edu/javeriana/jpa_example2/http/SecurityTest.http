@@ -1,0 +1,71 @@
+### Alice es ADMIN
+# @name login
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email": "alice@alice.com",
+    "password": "alice123"
+}
+
+### Login incorrecto
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email": "alice@alice123.com",
+    "password": "alice123"
+}
+### Bob es USER
+# @name login
+
+POST http://localhost:8080/auth/login
+Content-Type: application/json
+
+{
+    "email": "bob@bob.com",
+    "password": "bob123"
+}
+
+### Petición con token inválido
+POST http://localhost:8080/cuenta/1/retirar 
+Content-Type: application/json
+
+### Petición con token inválido
+POST http://localhost:8080/cuenta/1/retirar 
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOJib2JAYm9iLmNvbSIsImlhdCI6MTcxNDU4MTMzMSwiZXhwIjoxNzE0NjE3MzMxfQ.4JnhlJAoesdJZBNM9JK2SOi_PY_gqQ6mUMQZStBPFcuLFhzjEOelQk7WiI5Ymqzg
+
+
+### Alice: Denegado, Bob: Autorizado
+@token = {{login.response.body.$.token}}
+POST http://localhost:8080/cuenta/1/retirar 
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+
+10.00
+
+### Alice: Autorizado, Bob: Denegado
+@token = {{login.response.body.$.token}}
+GET http://localhost:8080/cuenta 
+Authorization: Bearer {{token}}
+
+
+
+###
+
+POST http://localhost:8080/auth/signup
+Content-Type: application/json
+
+{
+    "firstName": "Carla",
+    "lastName": "Carlson",
+    "email": "carla@carla.com",
+    "password": "carla123"
+}
+
+
+###
+GET http://localhost:8080/h2

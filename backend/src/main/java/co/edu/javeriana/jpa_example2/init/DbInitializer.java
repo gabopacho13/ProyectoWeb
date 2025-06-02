@@ -13,11 +13,17 @@ import co.edu.javeriana.jpa_example2.model.*;
 import co.edu.javeriana.jpa_example2.repository.*;
 import co.edu.javeriana.jpa_example2.service.CiudadService;
 import jakarta.transaction.Transactional;
+import co.edu.javeriana.jpa_example2.model.Role;
+import co.edu.javeriana.jpa_example2.model.User;
+import co.edu.javeriana.jpa_example2.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Profile({"default"})
 @Component
 public class DbInitializer implements CommandLineRunner {
 
+    @Autowired private PasswordEncoder passwordEncoder;
+    @Autowired private UserRepository userRepository;
     @Autowired private CaravanaRepository caravanaRepository;
     @Autowired private CiudadRepository ciudadRepository;
     @Autowired private InventarioCaravanaRepository inventarioCaravanaRepository;
@@ -130,7 +136,12 @@ public class DbInitializer implements CommandLineRunner {
             jugadores.add(jugador);
         }
 
-        
+        // Crear usuarios
+        userRepository.save(
+                new User("Alice", "Alisson", "alice@alice.com", passwordEncoder.encode("alice123"), Role.COMERCIANTE));
+        userRepository.save(
+                new User("Bob", "Bobson", "bob@bob.com", passwordEncoder.encode("bob123"), Role.CARAVANERO));
+            
         // --- Creación de Servicios (Específicos del Juego)
         log.info("Creando servicios globales...");
         List<Servicio> servicios = new ArrayList<>(); // Inicializa la lista

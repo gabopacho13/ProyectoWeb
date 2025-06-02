@@ -14,6 +14,11 @@ public class JugadorDTO {
         this.rol = rol;
     }
 
+    public JugadorDTO(String nombre, String rol) {
+        this.nombre = nombre;
+        this.rol = rol;
+    }
+
 
     public Long getId() {
         return this.id;
