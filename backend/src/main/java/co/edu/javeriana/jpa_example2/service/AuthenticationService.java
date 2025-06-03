@@ -34,12 +34,14 @@ public class AuthenticationService {
     private AuthenticationManager authenticationManager;
 
     public JwtAuthenticationResponse signup(UserRegistrationDTO request) {
+        Role selectedRole = Role.valueOf(request.getRole().toUpperCase());
         User user = new User(
                 request.getFirstName(),
                 request.getLastName(),
                 request.getEmail(),
                 passwordEncoder.encode(request.getPassword()),
-                Role.COMERCIANTE);
+                //Role.COMERCIANTE);
+                selectedRole);
         userRepository.save(user);
         jugadorRepository.save(new Jugador(user.getFirstName() + " " + user.getLastName(), user.getRole().toString()));
         String jwt = jwtService.generateToken(user.getUsername());

@@ -1,0 +1,13 @@
+<div class="login-container">
+  <h2>Iniciar Sesión</h2>
+
+  <input [(ngModel)]="loginDTO.email" placeholder="Correo electrónico" name="email" />
+  <input [(ngModel)]="loginDTO.password" type="password" placeholder="Contraseña" name="password" />
+
+  <button (click)="enviar()">Ingresar</button>
+  <p>
+    ¿No tienes cuenta?
+    <a [routerLink]="['/register']">Regístrate aquí</a>
+  </p>
+  
+</div>

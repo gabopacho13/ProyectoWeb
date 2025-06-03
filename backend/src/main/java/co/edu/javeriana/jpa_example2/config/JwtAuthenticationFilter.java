@@ -1,6 +1,7 @@
 package co.edu.javeriana.jpa_example2.config;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -35,22 +36,34 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
-            @NonNull FilterChain filterChain)
+                                    @NonNull FilterChain filterChain)
             throws ServletException, IOException {
+
+        // 🛑 Saltar el filtro para rutas públicas como login y registro
+        List<String> excludedPaths = List.of("/auth/login", "/auth/signup");
+        String path = request.getRequestURI();
+        if (excludedPaths.stream().anyMatch(path::startsWith)) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         try {
             final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
             final String jwt;
             final String userEmail;
+
             if (StringUtils.isEmpty(authHeader) || !StringUtils.startsWith(authHeader, "Bearer ")) {
                 filterChain.doFilter(request, response);
                 return;
             }
+
             jwt = authHeader.substring(7);
             userEmail = jwtService.extractUserName(jwt);
+
             if (StringUtils.isNotEmpty(userEmail)
                     && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = userService.userDetailsService()
-                        .loadUserByUsername(userEmail);
+                UserDetails userDetails = userService.userDetailsService().loadUserByUsername(userEmail);
+
                 if (jwtService.isTokenValid(jwt, userDetails.getUsername())) {
                     SecurityContext context = SecurityContextHolder.createEmptyContext();
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(

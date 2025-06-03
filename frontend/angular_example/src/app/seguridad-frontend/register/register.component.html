@@ -1,0 +1,15 @@
+<div class="register-container">
+    <h2>Registrarse</h2>
+  
+    <input type="text" [(ngModel)]="firstName" placeholder="Nombre" name="firstName" />
+    <input type="text" [(ngModel)]="lastName" placeholder="Apellido" name="lastName" />
+    <select [(ngModel)]="role" name="role">
+      <option value="COMERCIANTE">Comerciante</option>
+      <option value="CARAVANERO">Caravanero</option>
+      <option value="ADMIN">Administrador</option>
+    </select>
+    <input type="email" [(ngModel)]="email" placeholder="Correo electrónico" name="email" />
+    <input type="password" [(ngModel)]="password" placeholder="Contraseña" name="password" />
+  
+    <button (click)="registrar()">Crear cuenta</button>
+  </div>
