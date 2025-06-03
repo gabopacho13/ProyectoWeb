@@ -21,7 +21,7 @@ public class CaravanaJugadoresController {
     @Autowired
     CaravanaService caravanaService;
 
-    @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE})
+    @Secured({Role.Code.ADMIN})
     @GetMapping("/{idCaravana}")
     public CaravanaJugadoresDTO listarJugadores(@PathVariable("idCaravana") Long idCaravana) {
         return caravanaService.listarJugadoresPorCaravana(idCaravana);

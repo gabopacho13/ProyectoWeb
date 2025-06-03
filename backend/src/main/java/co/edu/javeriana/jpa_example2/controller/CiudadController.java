@@ -26,30 +26,32 @@ public class CiudadController {
 
     private Logger log = LoggerFactory.getLogger(getClass());
     
-    @Secured({Role.Code.CARAVANERO})
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
     @GetMapping("/lista")
     public List<CiudadDTO> listarCiudades(){
         log.info("Lista de Ciudades");
         return ciudadService.listarCiudades();
     }
 
-    @Secured({Role.Code.CARAVANERO})
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
     @GetMapping("/{idCiudad}")
     public CiudadDTO listarCiudad(@PathVariable("idCiudad") Long id){
         return ciudadService.buscarCiudad(id).orElseThrow();
     }
 
-    
+    @Secured({Role.Code.ADMIN})
     @PostMapping
     public CiudadDTO crearCiudad(@RequestBody CiudadDTO ciudadDTO){
         return ciudadService.guardarCiudad(ciudadDTO);
     }
 
+    @Secured({Role.Code.ADMIN})
     @PutMapping
     public CiudadDTO editarCiudad(@RequestBody CiudadDTO ciudadDTO) {
         return ciudadService.actualizarCiudad(ciudadDTO);
     }
 
+    @Secured({Role.Code.ADMIN})
     @DeleteMapping("/{idCiudad}")
     public void borrarCiudad(@PathVariable("idCiudad") Long id){
         ciudadService.borrarCiudad(id);

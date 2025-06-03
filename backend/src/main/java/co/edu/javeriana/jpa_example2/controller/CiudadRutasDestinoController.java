@@ -25,19 +25,19 @@ public class CiudadRutasDestinoController {
     @Autowired
     private RutaService rutaService;
 
-    @Secured({Role.Code.CARAVANERO})
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
     @GetMapping("/{ciudadId}")
     public CiudadRutasDestinoDTO getCiudadRutasDestino(@PathVariable Long ciudadId) {
         return ciudadService.getCiudadRutasDestino(ciudadId).orElseThrow();
     }
 
-    @Secured({Role.Code.CARAVANERO})
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
     @GetMapping("/rutas")
     public List<RutaDTO> getAllRutas() {
         return rutaService.listarRutas();
     }
     
-    
+    @Secured({Role.Code.ADMIN})
     @PutMapping("/actualizar")
     public CiudadRutasDestinoDTO updateCiudadRutasDestino(@RequestBody CiudadRutasDestinoDTO ciudadRutasOrigenDTO) {
         return ciudadService.updateCiudadRutasDestino(ciudadRutasOrigenDTO);

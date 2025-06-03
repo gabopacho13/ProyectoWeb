@@ -47,13 +47,13 @@ public class CaravanaController {
         return caravanaService.guardarCaravana(caravanaDTO);
     }
 
-    @Secured(Role.Code.CARAVANERO)
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
     @PutMapping
     public CaravanaDTO editarCaravana(@RequestBody CaravanaDTO caravanaDTO) {
         return caravanaService.actualizarCaravana(caravanaDTO);
     }
 
-    @Secured(Role.Code.CARAVANERO)
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
     @DeleteMapping("/{idCaravana}")
     public void borrarCaravana(@PathVariable("idCaravana") Long id) {
         caravanaService.borrarCaravana(id);

@@ -3,8 +3,10 @@ package co.edu.javeriana.jpa_example2.controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 
 import co.edu.javeriana.jpa_example2.dto.PartidaCaravanasDTO;
+import co.edu.javeriana.jpa_example2.model.Role;
 import co.edu.javeriana.jpa_example2.service.PartidaService;
 import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,17 +22,20 @@ public class PartidaCaravanaController {
     @Autowired
     private PartidaService partidaService;
 
+    @Secured({Role.Code.ADMIN})
     @GetMapping("/{idPartida}")
     public PartidaCaravanasDTO listarCaravanas(@PathVariable("idPartida") Long idPartida) {
         return partidaService.listarCaravanasPorPartida(idPartida);
     }
 
-   @PostMapping
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
+    @PostMapping
     public PartidaCaravanasDTO crearPartidas(@RequestBody PartidaCaravanasDTO partidaCaravanasDTO) {
         List<Long> caravanas = partidaCaravanasDTO.getCaravanasIds();
         return partidaService.crearPartidaConCaravanas(caravanas);
     } 
 
+    @Secured({Role.Code.CARAVANERO, Role.Code.ADMIN})
     @PutMapping("/{idPartida}")
     public PartidaCaravanasDTO editarPartidas(@PathVariable("idPartida") Long idPartida, @RequestBody PartidaCaravanasDTO partidaCaravanasDTO) {
         List<Long> caravanas = partidaCaravanasDTO.getCaravanasIds();

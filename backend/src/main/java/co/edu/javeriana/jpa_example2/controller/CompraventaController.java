@@ -7,6 +7,7 @@ import co.edu.javeriana.jpa_example2.model.*;
 import co.edu.javeriana.jpa_example2.repository.*;
 import co.edu.javeriana.jpa_example2.service.CompraventaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -22,6 +23,7 @@ public class CompraventaController {
     @Autowired private CompraventaService compraventaService;
     @Autowired private CompraventaMapper compraventaMapper;
 
+    @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
     @GetMapping("/precio-compra")
     public ProductoCiudadDTO obtenerPrecioCompra(@RequestParam Long ciudadId, @RequestParam Long productoId) {
         Ciudad ciudad = ciudadRepository.findById(ciudadId)
@@ -34,7 +36,8 @@ public class CompraventaController {
 
         return compraventaMapper.toProductoCiudadDTO(pc);
     }
-
+    
+    @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
     @GetMapping("/precio-venta")
     public ProductoCiudadDTO obtenerPrecioVenta(@RequestParam Long ciudadId, @RequestParam Long productoId) {
         Ciudad ciudad = ciudadRepository.findById(ciudadId)
@@ -48,6 +51,7 @@ public class CompraventaController {
         return compraventaMapper.toProductoCiudadDTO(pc);
     }
 
+        @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
     @PostMapping("/comprar")
     public InventarioCaravanaDTO comprar(
             @RequestParam Long caravanaId,
@@ -72,6 +76,7 @@ public class CompraventaController {
         return compraventaMapper.toInventarioCaravanaDTO(inventario);
     }
 
+        @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
     @PostMapping("/vender")
     public InventarioCaravanaDTO vender(
             @RequestParam Long caravanaId,
