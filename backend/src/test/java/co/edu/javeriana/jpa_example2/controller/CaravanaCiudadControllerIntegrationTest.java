@@ -1,5 +1,7 @@
 package co.edu.javeriana.jpa_example2.controller;
 
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,16 +9,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.RequestEntity;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.DirtiesContext.ClassMode;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import co.edu.javeriana.jpa_example2.dto.CaravanaCiudadDTO;
+import co.edu.javeriana.jpa_example2.dto.JwtAuthenticationResponse;
+import co.edu.javeriana.jpa_example2.dto.LoginDTO;
 import co.edu.javeriana.jpa_example2.model.Caravana;
 import co.edu.javeriana.jpa_example2.model.Ciudad;
+import co.edu.javeriana.jpa_example2.model.Role;
+import co.edu.javeriana.jpa_example2.model.User;
 import co.edu.javeriana.jpa_example2.repository.CaravanaRepository;
 import co.edu.javeriana.jpa_example2.repository.CiudadRepository;
+import co.edu.javeriana.jpa_example2.repository.UserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @DirtiesContext(classMode = ClassMode.BEFORE_EACH_TEST_METHOD)
@@ -34,12 +45,29 @@ public class CaravanaCiudadControllerIntegrationTest {
     @Autowired
     private WebTestClient webTestClient;
 
+    @Autowired
+	private TestRestTemplate rest;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public CaravanaCiudadControllerIntegrationTest(@Value("${server.port}") int serverPort) {
         this.SERVER_URL = "http://localhost:" + serverPort + "/";
     }
 
     @BeforeEach
     void init() {
+
+        userRepository.save(
+                new User("Alice", "Alisson", "alice@alice.com", passwordEncoder.encode("alice123"), Role.COMERCIANTE));
+        userRepository.save(
+                new User("Bob", "Bobson", "bob@bob.com", passwordEncoder.encode("bob123"), Role.CARAVANERO));
+        userRepository.save(
+                new User("Charlie", "Charlson", "charlie@charlie.com", passwordEncoder.encode("charlie123"), Role.ADMIN));
+
         // Crear ciudades de prueba
         Ciudad ciudad1 = new Ciudad("Ciudad-Test-1", 50);
         ciudad1 = ciudadRepository.save(ciudad1);
@@ -94,19 +122,54 @@ public class CaravanaCiudadControllerIntegrationTest {
         caravanaRepository.save(c3);
     }
 
+    private JwtAuthenticationResponse login(String email, String password) {
+
+		RequestEntity<LoginDTO> request = RequestEntity.post(SERVER_URL + "/auth/login")
+				.body(new LoginDTO(email, password));
+		ResponseEntity<JwtAuthenticationResponse> jwtResponse = rest.exchange(request, JwtAuthenticationResponse.class);
+		JwtAuthenticationResponse body = jwtResponse.getBody();
+		assertNotNull(body);
+		return body;
+	}
+
     @Test
-    void listarCaravanasPorCiudadDevuelveCaravanasCorrectamente() {
-        webTestClient.get()
-                .uri(SERVER_URL + "ciudad/caravanas/1")
-                .exchange()
-                .expectStatus().isOk()
-                .expectBody(CaravanaCiudadDTO.class)
-                .value(resultado -> {
-                    assert resultado != null;
-                    assert resultado.getCiudadId().equals(1L);
-                    assert resultado.getCaravanasIds().size() == 2;
-                    assert resultado.getCaravanasIds().contains(1L);
-                    assert resultado.getCaravanasIds().contains(2L);
-                });
-    }
+void listarCaravanasPorCiudadDevuelveCaravanasCorrectamente() {
+    // Login con ADMIN
+    String adminToken = login("charlie@charlie.com", "charlie123").getToken();
+
+    // Admin debe tener acceso
+    webTestClient.get()
+            .uri(SERVER_URL + "ciudad/caravanas/1")
+            .header("Authorization", "Bearer " + adminToken)
+            .exchange()
+            .expectStatus().isOk()
+            .expectBody(CaravanaCiudadDTO.class)
+            .value(resultado -> {
+                assert resultado != null;
+                assert resultado.getCiudadId().equals(1L);
+                assert resultado.getCaravanasIds().size() == 2;
+                assert resultado.getCaravanasIds().contains(1L);
+                assert resultado.getCaravanasIds().contains(2L);
+            });
+
+    // Login con COMERCIANTE
+    String comercianteToken = login("alice@alice.com", "alice123").getToken();
+
+    // Comerciante debe ser rechazado
+    webTestClient.get()
+            .uri(SERVER_URL + "ciudad/caravanas/1")
+            .header("Authorization", "Bearer " + comercianteToken)
+            .exchange()
+            .expectStatus().isForbidden();
+
+    // Login con CARAVANERO
+    String caravaneroToken = login("bob@bob.com", "bob123").getToken();
+
+    // Caravanero debe ser rechazado
+    webTestClient.get()
+            .uri(SERVER_URL + "ciudad/caravanas/1")
+            .header("Authorization", "Bearer " + caravaneroToken)
+            .exchange()
+            .expectStatus().isForbidden();
+}
 }

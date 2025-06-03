@@ -141,6 +141,8 @@ public class DbInitializer implements CommandLineRunner {
                 new User("Alice", "Alisson", "alice@alice.com", passwordEncoder.encode("alice123"), Role.COMERCIANTE));
         userRepository.save(
                 new User("Bob", "Bobson", "bob@bob.com", passwordEncoder.encode("bob123"), Role.CARAVANERO));
+        userRepository.save(
+                new User("Charlie", "Charlson", "charlie@charlie.com", passwordEncoder.encode("charlie123"), Role.ADMIN));
             
         // --- Creación de Servicios (Específicos del Juego)
         log.info("Creando servicios globales...");
