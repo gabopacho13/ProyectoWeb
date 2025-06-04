@@ -37,6 +37,12 @@ public class JugadorController {
         return jugadorService.buscarJugador(id).orElseThrow();
     }
 
+   @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
+    @GetMapping("/email/{email}") 
+    public JugadorDTO obtenerJugadorPorEmail(@PathVariable String email) {
+        return jugadorService.buscarJugadorPorEmail(email).orElseThrow();
+    }
+
     @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
      @PostMapping
     public JugadorDTO crearJugador(@RequestBody JugadorDTO jugadorDTO) {

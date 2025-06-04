@@ -1,23 +1,16 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter, withComponentInputBinding } from '@angular/router';
-import { HttpClientModule, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
+import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { AuthGuard } from './seguridad-frontend/guard/auth.guard';
-import { AuthInterceptor } from './seguridad-frontend/interceptor/auth.interceptor';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './seguridad-frontend/interceptor/auth.interceptor'; 
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes, withComponentInputBinding()),
+    provideRouter(routes),
 
-    importProvidersFrom(HttpClientModule),
-    provideHttpClient(withInterceptorsFromDi()),
-
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ]
+    // To enable HttpClient with the authInterceptor
+    provideHttpClient(withInterceptors([authInterceptor])),
+  ],
 };

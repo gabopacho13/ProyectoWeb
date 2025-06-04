@@ -27,6 +27,11 @@ public class JugadorService {
                 .map(JugadorMapper::toDTO);
     }
 
+    public Optional<JugadorDTO> buscarJugadorPorEmail(String email){
+        return jugadorRepository.findByUsuario(email)
+                .map(JugadorMapper::toDTO);
+    }
+
     public JugadorDTO actualizarJugador(JugadorDTO jugadorDTO){
         if(jugadorDTO.getId() == null){
             throw new IllegalArgumentException("El id del jugador no puede ser nulo");

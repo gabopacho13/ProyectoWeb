@@ -27,7 +27,7 @@ public class CaravanaJugadoresController {
         return caravanaService.listarJugadoresPorCaravana(idCaravana);
     }
 
-    @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE})
+    @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
     @PutMapping("/{idCaravana}")
     public CaravanaJugadoresDTO editarJugadores(@PathVariable("idCaravana") Long idCaravana, @RequestBody CaravanaJugadoresDTO caravanaJugadoresDTO) {
         List<Long> jugadores = caravanaJugadoresDTO.getJugadoresIds();

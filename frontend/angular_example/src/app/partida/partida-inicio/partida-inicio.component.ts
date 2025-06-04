@@ -38,7 +38,7 @@ export class PartidaInicioComponent {
     private caravanaService: CaravanaService,
     private jugadorService: JugadorService,
     private ciudadCaravanaService: CiudadCaravanaService,
-    private router: Router
+    private router: Router,
   ) {}
 
   onSubmit() {
@@ -46,6 +46,7 @@ export class PartidaInicioComponent {
       let partidaId : number;
       let caravanaId : number;
       let ciudadId : number;
+      const email = sessionStorage.getItem('user-email');
       this.partidaService.crearPartida(this.partida).pipe(
         switchMap(nuevaPartida => {
           console.log("Partida creada:", nuevaPartida);
@@ -55,12 +56,15 @@ export class PartidaInicioComponent {
             switchMap(nuevaCaravana => {
               console.log("Caravana creada:", nuevaCaravana);
               caravanaId = nuevaCaravana.id;
-              const jugador = new JugadorDto(0, "Jugador 1", "rol 1");
-              return this.jugadorService.crearJugador(jugador).pipe(
-                switchMap(nuevoJugador => {
-                  console.log("Jugador creado:", nuevoJugador);
-                  const caravanaJugador = new CaravanaJugadorDto(nuevaCaravana.id, [nuevoJugador.id]);
-                  return this.caravanaJugadorService.actualizarCaravanaJugador(nuevoJugador.id, caravanaJugador).pipe(
+              if (!email) {
+                console.warn("No se encontró el email del jugador en sessionStorage");
+                return [];
+              }
+              return this.jugadorService.recuperarJugadorPorEmail(email).pipe(
+                switchMap(jugadorExistente => {
+                  console.log("Jugador recuperado:", jugadorExistente);
+                  const caravanaJugador = new CaravanaJugadorDto(nuevaCaravana.id, [jugadorExistente.id]);
+                  return this.caravanaJugadorService.actualizarCaravanaJugador(jugadorExistente.id, caravanaJugador).pipe(
                     switchMap(() => {
                       const partidaCaravana = new PartidaCaravanaDto(nuevaPartida.id, [nuevaCaravana.id]);
                       return this.partidaCaravanaService.actualizarPartidaCaravana(nuevaPartida.id, partidaCaravana);

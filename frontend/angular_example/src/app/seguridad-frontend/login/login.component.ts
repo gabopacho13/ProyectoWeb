@@ -23,7 +23,7 @@ export class LoginComponent {
     this.authService.login(this.loginDTO).subscribe({
       next: res => {
         console.log(res);
-        //this.redirigirPorRol(res.role);
+        this.router.navigate(['/inicio'])
       },
       error: () => alert('Credenciales incorrectas')
     });

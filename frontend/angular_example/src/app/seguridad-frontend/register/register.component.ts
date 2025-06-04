@@ -33,7 +33,8 @@ export class RegisterComponent {
       next: res => {
 
         console.log(res);
-        //this.redirigirPorRol(res.role);
+        this.router.navigate(['/login']);
+        alert('Usuario registrado exitosamente');
       },
       error: () => alert('Error al registrar usuario')
     });

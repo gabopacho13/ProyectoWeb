@@ -19,6 +19,12 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/signup`, data);
   }   
 
+  private emailUsuarioActual: string = "";
+
+  obtenerEmailActual(): string {
+    return this.emailUsuarioActual;
+  }
+
   login(loginDto: LoginDto): Observable<JwtAuthenticationResponse> {
     console.log(loginDto);
     return this.http

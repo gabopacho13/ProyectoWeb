@@ -24,10 +24,13 @@
                         </p>
                     </td>
                     <td>
-                        <p [routerLink]="['/servicio', servicios.idServicio]">
-                            ver
-                        </p>
-                    </td>
+                        <a 
+                          (click)="verDetalle(servicios.idServicio); $event.stopPropagation()" 
+                          [routerLink]="['/servicio', servicios.idServicio]"
+                        >
+                          ver
+                        </a>
+                      </td>
                     <td>
                         <button type="submit" [disabled]="yaCompradoLocalmente(servicios.idServicio)">Comprar</button>
                     </td>

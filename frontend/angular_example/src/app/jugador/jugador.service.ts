@@ -20,6 +20,10 @@ export class JugadorService {
     return this.http.get<JugadorDto[]>(`${this.apiUrl}/lista`);
   }
 
+  recuperarJugadorPorEmail(email: string): Observable<JugadorDto> {
+    return this.http.get<JugadorDto>(`${this.apiUrl}/email/${email}`);
+  } 
+
   recuperarJugador(id: number): Observable<JugadorDto> {
     return this.http.get<JugadorDto>(`${this.apiUrl}/${id}`);
   }

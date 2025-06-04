@@ -139,7 +139,7 @@ public class JugadorControllerIntegrationTest {
                     assert jugador != null;
                     assert jugador.getId().equals(2L);
                     assert jugador.getNombre().equals("María García");
-                    assert jugador.getRol().equals("Médico");
+                    assert jugador.getUsuario().equals("Médico");
                 });
 
         // Validar acceso con token de comerciante
@@ -153,7 +153,7 @@ public class JugadorControllerIntegrationTest {
                     assert jugador != null;
                     assert jugador.getId().equals(2L);
                     assert jugador.getNombre().equals("María García");
-                    assert jugador.getRol().equals("Médico");
+                    assert jugador.getUsuario().equals("Médico");
                 });
 
         // Validar acceso con token de caravanero
@@ -167,7 +167,7 @@ public class JugadorControllerIntegrationTest {
                     assert jugador != null;
                     assert jugador.getId().equals(2L);
                     assert jugador.getNombre().equals("María García");
-                    assert jugador.getRol().equals("Médico");
+                    assert jugador.getUsuario().equals("Médico");
                 });
     }
 }

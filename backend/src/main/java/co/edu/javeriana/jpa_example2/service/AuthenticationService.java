@@ -43,7 +43,7 @@ public class AuthenticationService {
                 //Role.COMERCIANTE);
                 selectedRole);
         userRepository.save(user);
-        jugadorRepository.save(new Jugador(user.getFirstName() + " " + user.getLastName(), user.getRole().toString()));
+        jugadorRepository.save(new Jugador(user.getFirstName() + " " + user.getLastName(), user.getEmail()));
         String jwt = jwtService.generateToken(user.getUsername());
         return new JwtAuthenticationResponse(jwt, user.getEmail(), user.getRole());
     }

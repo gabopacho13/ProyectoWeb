@@ -13,7 +13,7 @@ public class Jugador {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String nombre;
-    private String rol;
+    private String usuario;
 
     @ManyToOne
     private Caravana caravana;
@@ -21,15 +21,15 @@ public class Jugador {
     public Jugador() {
     }
 
-    public Jugador(String nombre, String rol, Caravana caravana) {
+    public Jugador(String nombre, String usuario, Caravana caravana) {
         this.nombre = nombre;
-        this.rol = rol;
+        this.usuario = usuario;
         this.caravana = caravana;
     }
 
-    public Jugador(String nombre, String rol) {
+    public Jugador(String nombre, String usuario) {
         this.nombre = nombre;
-        this.rol = rol;
+        this.usuario = usuario;
         this.caravana = null;
     }
 
@@ -49,12 +49,12 @@ public class Jugador {
         this.nombre = nombre;
     }
 
-    public String getRol() {
-        return rol;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
     public Caravana getCaravana() {

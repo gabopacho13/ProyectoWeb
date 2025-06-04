@@ -58,6 +58,10 @@ export class ServicioComercioComponent implements OnInit, OnDestroy {
     });
   }
 
+  verDetalle(id: number) {
+    console.log('Servicio a ver:', id);
+  }
+
   cargarServiciosCiudad(): void {
     console.log(`Intentando cargar servicios para Ciudad ID ${this.ciudadId}`);
     // Limpiar el set de compras locales SIEMPRE que cargamos servicios para una ciudad

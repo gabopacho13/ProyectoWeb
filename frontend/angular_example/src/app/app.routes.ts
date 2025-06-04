@@ -39,6 +39,6 @@ export const routes: Routes = [
   { path: 'admin', component: AdminComponent, canActivate: [AuthGuard] },
   { path: 'caravana', component: CaravanaComponent, canActivate: [AuthGuard] },
 
-  { path: '', pathMatch: 'full', redirectTo: 'inicio' },
+  { path: '', pathMatch: 'full', redirectTo: 'login' },
   { path: '**', redirectTo: 'login' }
 ];

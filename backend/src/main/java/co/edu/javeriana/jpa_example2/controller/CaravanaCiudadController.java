@@ -21,13 +21,13 @@ public class CaravanaCiudadController {
     @Autowired
     CiudadService ciudadService;
 
-    @Secured(Role.Code.ADMIN)
+    @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
     @GetMapping("/{idCiudad}")
     public CaravanaCiudadDTO listarCaravanas(@PathVariable("idCiudad") Long idCiudad) {
         return ciudadService.listarCaravanasPorCiudad(idCiudad);
     } 
 
-    @Secured(Role.Code.ADMIN)
+    @Secured({Role.Code.CARAVANERO, Role.Code.COMERCIANTE, Role.Code.ADMIN})
     @PutMapping("/actualizar/{idCiudad}")
     public CaravanaCiudadDTO editarCaravanas(@PathVariable("idCiudad") Long idCiudad, @RequestBody CaravanaCiudadDTO caravanaCiudadDTO) {
         List<Long> caravanas = caravanaCiudadDTO.getCaravanasIds();

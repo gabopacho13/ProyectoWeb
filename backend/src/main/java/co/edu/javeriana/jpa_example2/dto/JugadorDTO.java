@@ -3,20 +3,20 @@ package co.edu.javeriana.jpa_example2.dto;
 public class JugadorDTO {
     private Long id;
     private String nombre;
-    private String rol;
+    private String usuario;
 
     public JugadorDTO() {
     }
    
-    public JugadorDTO(Long id, String nombre, String rol) {
+    public JugadorDTO(Long id, String nombre, String usuario) {
         this.id = id;
         this.nombre = nombre;
-        this.rol = rol;
+        this.usuario = usuario;
     }
 
-    public JugadorDTO(String nombre, String rol) {
+    public JugadorDTO(String nombre, String usuario) {
         this.nombre = nombre;
-        this.rol = rol;
+        this.usuario = usuario;
     }
 
 
@@ -36,12 +36,12 @@ public class JugadorDTO {
         this.nombre = nombre;
     }
 
-    public String getRol() {
-        return this.rol;
+    public String getUsuario() {
+        return this.usuario;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
     }
 
 }

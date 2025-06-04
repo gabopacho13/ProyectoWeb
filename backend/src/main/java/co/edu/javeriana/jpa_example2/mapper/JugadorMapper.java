@@ -10,7 +10,7 @@ public class JugadorMapper {
         JugadorDTO jugadorDTO = new JugadorDTO();
         jugadorDTO.setId(jugador.getId());
         jugadorDTO.setNombre(jugador.getNombre());
-        jugadorDTO.setRol(jugador.getRol());
+        jugadorDTO.setUsuario(jugador.getUsuario());
 
         return jugadorDTO;
     }
@@ -18,7 +18,7 @@ public class JugadorMapper {
         Jugador jugador = new Jugador();
         jugador.setId(jugadorDTO.getId());
         jugador.setNombre(jugadorDTO.getNombre());
-        jugador.setRol(jugadorDTO.getRol());
+        jugador.setUsuario(jugadorDTO.getUsuario());
         
         return jugador;
     }

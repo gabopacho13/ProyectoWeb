@@ -126,15 +126,6 @@ public class DbInitializer implements CommandLineRunner {
             caravanas.add(caravana);
         }
 
-        // Crear jugadores
-        List<Jugador> jugadores = new ArrayList<>();
-        List<Integer> idsCaravanas = new ArrayList<>();
-        for (int j = 0; j < caravanas.size(); j++) idsCaravanas.add(j);
-        Collections.shuffle(idsCaravanas);
-        for (int i = 0; i < 10; i++) {
-            Jugador jugador = jugadorRepository.save(new Jugador("jugador_" + i, "rol_" + i, caravanas.get(idsCaravanas.get(i))));
-            jugadores.add(jugador);
-        }
 
         // Crear usuarios
         userRepository.save(
@@ -143,6 +134,29 @@ public class DbInitializer implements CommandLineRunner {
                 new User("Bob", "Bobson", "bob@bob.com", passwordEncoder.encode("bob123"), Role.CARAVANERO));
         userRepository.save(
                 new User("Charlie", "Charlson", "charlie@charlie.com", passwordEncoder.encode("charlie123"), Role.ADMIN));
+
+        // Crear jugadores
+        List<Jugador> jugadores = new ArrayList<>();
+        List<Integer> idsCaravanas = new ArrayList<>();
+        for (int j = 0; j < caravanas.size(); j++) idsCaravanas.add(j);
+        Collections.shuffle(idsCaravanas);
+        for (int i = 0; i < 3; i++) {
+            if (i == 0){
+                Jugador jugador = new Jugador("Alice", "alice@alice.com", caravanas.get(idsCaravanas.get(i)));
+                jugadorRepository.save(jugador);
+                jugadores.add(jugador);
+            }
+            else if (i == 1){
+                Jugador jugador = new Jugador("Bob", "bob@bob.com", caravanas.get(idsCaravanas.get(i)));
+                jugadorRepository.save(jugador);
+                jugadores.add(jugador);
+            } 
+            else {
+                Jugador jugador = new Jugador("Charlie", "charlie@charlie.com", caravanas.get(idsCaravanas.get(i)));
+                jugadorRepository.save(jugador);
+                jugadores.add(jugador);
+            } 
+        }
             
         // --- Creación de Servicios (Específicos del Juego)
         log.info("Creando servicios globales...");
